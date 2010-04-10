@@ -15,11 +15,43 @@ options {
 
 
 //this is a simple arithmetic grammar
-arithmetic : exp ;
-exp : term (('+' | '-') term )* ;
-term : factor (('*' | '/') factor)*;
-factor : INTEGER ;
 
+arithExpr : 
+					logicExpr
+					;
+
+logicExpr :	
+					relExpr (('and' | 'or') relExpr)*
+					;
+//DO WE WANT LOGICAL EXPRESSIONS; DO WE WANT TO USE AND, OR?	
+
+relExpr :	
+				addExpr (('=' | '!=' | '<' | '>' | '<=' | '>=') addExpr)*
+				;
+//DO WE WANT != FOR NOT EQUALS?				
+											
+addExpr : 
+					multExpr (('+' | '-') multExpr)*
+					;
+
+multExpr :	
+					unaryExpr (('*' | '/' | '%') unaryExpr)*
+					;
+											
+unaryExpr :	
+					('+' | '-')* negation
+					;
+														
+negation :	
+					'not'* term
+					;
+//DO WE WANT TO USE 'NOT' FOR NEGATION?
+											
+term : 	ID
+				| '('logicExpr')'
+				| INTEGER
+				;
+																			
 program : (line | station | population)* ;
 
 //just a test

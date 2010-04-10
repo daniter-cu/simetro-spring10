@@ -20,7 +20,7 @@ exp : term (('+' | '-') term )* ;
 term : factor (('*' | '/') factor)*;
 factor : INTEGER ;
 
-program : line ;
+program : (line | station | population)* ;
 
 //just a test
 strings : string+;

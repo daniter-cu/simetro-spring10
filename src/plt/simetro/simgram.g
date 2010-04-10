@@ -15,7 +15,7 @@ options {
 
 
 //this is a simple arithmetic grammar
-fullexp : exp ;
+arithmetic : exp ;
 exp : term (('+' | '-') term )* ;
 term : factor (('*' | '/') factor)*;
 factor : INTEGER ;

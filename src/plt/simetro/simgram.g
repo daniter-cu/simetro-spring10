@@ -22,6 +22,9 @@ factor : INTEGER ;
 
 program : line ;
 
+//just a test
+strings : string+;
+
 //lines
 line: 
     'Line' ID  '{'
@@ -34,8 +37,18 @@ line:
 
 idlist : ID (',' ID)* ;
 
+//defining strings
+string :
+        'String' ID '=' STRING ';'
+        ;
 
-
+STRING : '"'
+        {StringBuilder b = new StringBuilder();}
+        ( '\\' '"'  {b.appendCodePoint('"'); }
+        |  c = ~('"' | '\r' | '\n')   {b.appendCodePoint(c);  } 
+        )*
+        '"'  
+        {setText(b.toString()); };
 
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' | 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;

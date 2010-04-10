@@ -14,9 +14,6 @@ options {
 
 
 
-
-
-
 //this is a simple arithmetic grammar
 arithmetic : exp ;
 exp : term (('+' | '-') term )* ;
@@ -38,6 +35,21 @@ line:
     '}' 
     ;
 
+//Station
+station:
+	'Station' ID '{'
+	'Population' '(' ID ')' ';'
+	'}'
+	;
+
+
+//Population
+	
+population:
+	'Population' ID '{'
+	('('ID ','(ID|INTEGER)')'';')+
+	'}'
+	;
 
 idlist : ID (',' ID)* ;
 

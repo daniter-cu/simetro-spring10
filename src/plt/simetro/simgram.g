@@ -12,6 +12,15 @@ options {
   package plt.simetro;
 }
 
+//statement
+statement:
+					assignments
+					;
+
+//assignment expression
+assignments:
+					ID'='arithExpr';'
+					;
 
 
 //this is a simple arithmetic grammar

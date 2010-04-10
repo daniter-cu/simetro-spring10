@@ -39,4 +39,6 @@ idlist : ID (',' ID)* ;
 
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' | 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;
+COMMENT : '//' .* ('\n' | '\r') {$channel = HIDDEN;};
+MULTICOMMENT : '/*' .* '*/' {$channel = HIDDEN;};
 INTEGER: ('0' .. '9')+;

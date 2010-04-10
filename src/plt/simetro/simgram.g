@@ -35,7 +35,11 @@ addExpr :
 					;
 
 multExpr :	
-					unaryExpr (('*' | '/' | '%') unaryExpr)*
+					powerExpr (('*' | '/' | '%') powerExpr)*
+					;
+						
+powerExpr :
+					unaryExpr ('^' unaryExpr)*
 					;
 											
 unaryExpr :	

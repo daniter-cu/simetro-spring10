@@ -24,7 +24,7 @@ program : line ;
 
 //lines
 line: 
-    'Line' ID '{'
+    'Line' ID  '{'
     'Stations' '('idlist ')' ';' 
     'Frequency' '(' (ID | INTEGER) ')' ';'
     'Capacity' '('(ID | INTEGER) ')' ';'

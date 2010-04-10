@@ -35,7 +35,7 @@ logicExpr :
 //DO WE WANT LOGICAL EXPRESSIONS; DO WE WANT TO USE AND, OR?	
 
 relExpr :	
-				addExpr (('=' | '!=' | '<' | '>' | '<=' | '>=') addExpr)*
+				addExpr (('=' | '!=' | '==' | '<' | '>' | '<=' | '>=') addExpr)*
 				;
 //DO WE WANT != FOR NOT EQUALS?				
 											

@@ -39,13 +39,9 @@ multExpr :
 					;
 											
 unaryExpr :	
-					('+' | '-')* negation
+					('+' | '-')* term
 					;
 														
-negation :	
-					'not'* term
-					;
-//DO WE WANT TO USE 'NOT' FOR NEGATION?
 											
 term : 	ID
 				| '('logicExpr')'

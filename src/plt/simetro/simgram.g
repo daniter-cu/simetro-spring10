@@ -52,7 +52,7 @@ powerExpr :
 					;
 											
 unaryExpr :	
-					('+' | '-')* term
+					('+' | '-')* (term|procedures)
 					;
 														
 											
@@ -105,9 +105,50 @@ STRING : '"'
         |  c = ~('"' | '\r' | '\n')   {b.appendCodePoint(c);  } 
         )*
         '"'  
-        {setText(b.toString()); };
+        {setText(b.toString()); }
+        ;
         
+//primitive-type-declarator
+primitive_type_declarator:
+		PRIMITIVE_TYPE ID ';'
+		;
 
+		
+//initilizer
+primitive_type_initilizer:
+		primitive_type_declarator '=' arithExpr
+		|assignments
+		;
+        
+//Parameters
+param: 
+		PRIMITIVE_TYPE ID
+		|'Station' ID 
+		|'Line' ID 
+		|'Population' ID 
+		|'Time' ID
+		;
+		
+params:
+		(param',')*param		
+		;
+        
+//Procedures
+procedures:
+		FUNCTIONS '(' params ')'';'	
+		;
+//user-defined stat
+stat:
+		'Stat' ID '('params')' '{'
+		(statement|procedures)*
+		'return' ID ';'
+		'}'
+		;
+		
+		
+FUNCTIONS: 'getRate'|'getFreequeny'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
+MOD_FUNCTIONS: 'changeRate'|'changeFrequency'|'changeSpeed'|'skipStation';
+PRIMITIVE_TYPE: 'int'|'num'|'String';
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' | 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;
 COMMENT : '//' .* ('\n' | '\r') {$channel = HIDDEN;};

@@ -15,13 +15,17 @@ options {
 //statement
 statement:
 					assignments
+					| primitive_type_declarator
 					;
 
 //assignment expression
 assignments:
-					ID'='arithExpr';'
+					ID assigns+ ';'
 					;
 
+assigns: 
+        '=' arithExpr
+        ;
 
 //this is a simple arithmetic grammar
 
@@ -32,12 +36,12 @@ arithExpr :
 logicExpr :	
 					relExpr (('and' | 'or') relExpr)*
 					;
-//DO WE WANT LOGICAL EXPRESSIONS; DO WE WANT TO USE AND, OR?	
+
 
 relExpr :	
-				addExpr (('=' | '!=' | '==' | '<' | '>' | '<=' | '>=') addExpr)*
+				addExpr (( '!=' | '==' | '<' | '>' | '<=' | '>=') addExpr)*
 				;
-//DO WE WANT != FOR NOT EQUALS?				
+		
 											
 addExpr : 
 					multExpr (('+' | '-') multExpr)*
@@ -116,8 +120,7 @@ primitive_type_declarator:
 		
 //initilizer
 primitive_type_initilizer:
-		primitive_type_declarator '=' arithExpr
-		|assignments
+		primitive_type_declarator assignments
 		;
         
 //Parameters
@@ -130,7 +133,7 @@ param:
 		;
 		
 params:
-		(param',')*param		
+		 param ( ',' param)*		
 		;
         
 //Procedures
@@ -144,13 +147,41 @@ stat:
 		'return' ID ';'
 		'}'
 		;
+
+timetester : time ;		
 		
+time :
+      'Time' ID '[' (NUM | INTEGER) (',' (NUM | INTEGER))? ']' ';'
+      ; 		
 		
-FUNCTIONS: 'getRate'|'getFreequeny'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
+forloop :
+    'for' ID '[' (NUM | INTEGER) ',' (NUM | INTEGER) ']' blockstmt
+    ;
+    
+foreach :
+    'foreach' derived_type '[' (NUM | INTEGER) ',' (NUM | INTEGER) ']' blockstmt
+    ;
+ 		
+derived_type : 'Station' | 'Line' | 'Time' | 'Population' ;		
+ 		
+ifstmt :
+        'if' '(' (arithExpr | NUM)')' 
+        (blockstmt | statement) 
+        ('else' (blockstmt | statement))?
+ 		;
+		
+blockstmt :
+          '{' statement '}'
+          ;
+		
+
+FUNCTIONS: 'getRate'|'getFrequeny'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
 MOD_FUNCTIONS: 'changeRate'|'changeFrequency'|'changeSpeed'|'skipStation';
 PRIMITIVE_TYPE: 'int'|'num'|'String';
+//DERIVED_TYPE: 'Station' | 'Line' | 'Time' | 'Population';
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' | 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;
 COMMENT : '//' .* ('\n' | '\r') {$channel = HIDDEN;};
 MULTICOMMENT : '/*' .* '*/' {$channel = HIDDEN;};
 INTEGER: ('0' .. '9')+;
+NUM : INTEGER ('.'? INTEGER)? ;

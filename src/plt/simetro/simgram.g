@@ -18,6 +18,15 @@ statement:
 					| primitive_type_declarator
 					;
 
+//showGUI
+showgui :
+        'ShowGUI();' 
+        {
+        //instantiate ShowGui() object 
+        }
+        ;
+
+
 //assignment expression
 assignments:
 					ID assigns+ ';'

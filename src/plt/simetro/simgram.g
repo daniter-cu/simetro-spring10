@@ -14,7 +14,7 @@ options {
 
 
 
-program: (line|station|population|stat|simulate|statement|load)*																			
+program: (line|station|population|stat|simulate|statement|load|showgui)*																			
 		;
 
 //showGUI
@@ -32,7 +32,7 @@ load:
 		;
 
 simulate:
-		'Simulate''('NUM?')' blockstmt
+		'Simulate''('INTEGER?')' blockstmt
 		;
 
 
@@ -78,7 +78,7 @@ primitive_type_declarator:
 
 		
 //initilizer
-primitive_type_initilizer:
+primitive_type_initializer:
 		primitive_type_declarator ('='(assignsExpr|procedures))';'
 		;
         
@@ -159,7 +159,8 @@ forloop :
     ;
 
 ifstmt :
-        'if' '(' (assignsExpr)')' (('else'? blockstmt) | statement) 
+        'if' '(' (arithExpr)')' (('else'? blockstmt) | statement) 
+        'endif'
  		;
 
 //assignment expression

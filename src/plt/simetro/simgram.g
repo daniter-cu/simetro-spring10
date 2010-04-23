@@ -38,27 +38,26 @@ RETURN;
 }
 
 
-
-
-program: (line|station|population|stat|simulate|statement|load|showgui)*	 EOF!																		
+/*
+program: (line|station|population|stat|simulate|statement|load|showgui|string)*	 EOF!																		
 		;
-
-//showGUI
-showgui :
-        'ShowGUI();' -> ShowGUI
+*/
+program: 
+        (declarations |statements)*
+        EOF!
         ;
+        
+declarations:
+        types
+        |load
+        ;
+        
+types:
+    (line|station|population|stat|time|string|showgui)
+    ;
 
+//==DERIVED TYPES==
 
-
-load:
-		'load'^ ID '.map'! ';'!
-		;
-
-simulate:
-		'Simulate'^ '('! INTEGER ')'! blockstmt
-		;
-
-//lines
 line: 
     'Line' ID  '{'
     'Stations' '(' idlist ')' ';' 
@@ -69,171 +68,178 @@ line:
     -> ^(LINE ID ^(STATIONS idlist) ^(FREQUENCY $f) ^(CAPACITY $c) ^(SPEED $s) )
     ;
 
-//Station
 station:
 	'Station' ID '{'
-	'Coordinates' '(' i1=INTEGER ',' i2=INTEGER ')' ';'
-	'Population' '(' ID ')' ';'
+	(('Coordinates' '(' i1=INTEGER ',' i2=INTEGER ')' ';'))?
+	(('Population' '(' ID ')' ';'))*
 	'}'
-	-> ^(STATION ID ^(COORDINATES $i1 $i2) ^(POPULATION ID))
+	-> ^(STATION ID ^(COORDINATES $i1 $i2)? ^(POPULATION ID)?)
 	;
 
-
-//Population
-	
 population:
 	'Population' i=ID '{'
-	('('j+=ID ','k+=INTEGER')')+
+	('('j+=ID ','k+=primaryExpr')')+
 	'}' -> ^(POPULATION $i ^(POPITEM $j $k)*)
 	;
 
 idlist : i=ID (',' il+=ID)* -> ^(IDLIST $i $il*) ;
 
+//==OBJECT VARIABLES== 
+
+stat:
+        'Stat' ID '(' f=formal_params ')' '{'
+        (s+=statements)*
+        'return' r=ID ';'
+        '}' -> ^(STAT ID $f $s ^(RETURN $r))
+        ;
+
+//time
+time:
+        'Time' ID '[' i+=INTEGER (',' i+=INTEGER)? ']' ';' -> ^(TIME ID $i+)
+        ;
+
 //defining strings
-string :
+string:
         'String'^ ID '=' STRING ';'! 
         | 'String'^ ID ';'!
         ;
 
-
-       
 //primitive-type-declarator
 primitive_type_declarator:
-		PRIMITIVE_TYPE^ ID 
+        PRIMITIVE_TYPE^ ID		
 		;
 
-  
-formal_param: 
-		PRIMITIVE_TYPE^ ID  
-		|'Station'^ ID 
-		|'Line'^ ID  
-		|'Population'^ ID  
-		|'Time'^ ID  
-		|'String'^ ID
-		; 
-		
-formal_params:
-		 a+=formal_param ( ',' a+=formal_param)*	-> ^(FORMALPARAM $a*)	
-		;
-  
-params:
-    (ID | NUM |('+'|'-'|'*'|'/'|'^')?INTEGER) ( ',' (ID | NUM |('+'|'-'|'*'|'/'|'^')?INTEGER))*     
-  ;
-//Procedures
-procedures:
-		FUNCTIONS^ '('! params ')'! ';'!
-		;
-		
 
-		
-mod_procedures:
-		MOD_FUNCTIONS^ '('! params ')'! ';'!
-		;
-		
-//user-defined stat
-stat:
-		'Stat' ID '(' f=formal_params ')' '{'
-		s=statements
-		'return' r=ID ';'
-		'}' -> ^(STAT ID $f $s ^(RETURN $r))
-		;
+//==STATEMENTS==
 
-//timie
-time :
-      'Time' ID '[' i+=INTEGER (',' i+=INTEGER)? ']' ';' -> ^(TIME ID $i+)
-      ; 		
-		
-derived_type : 'Station' | 'Line' | 'Time' | 'Population' ;		
- 		
-//print          
-print_function:
-			'print'^ (STRING |procedures | ID) ';'                
-			;
+statements:
+        expression_statement ';'! 
+        |foreach
+        |forloop
+        |ifstmt
+        |procedures ';'! 
+        |simulate
 
-//statement
-statement:
-					expression_statement
-					|foreach
-					|forloop
-					|ifstmt
-					|print_function
-					|time
-  				|mod_procedures                           
-					;
-
-blockstmt :
-          '{' s+=statements '}' -> ^(BLOCKSTMT statements) 
-          ;
-       
-statements :
-		statement* -> statement+
-		;
+        //|types
+        //|print_function
+        //|mod_procedures
+        ;
 	
 expression_statement:
-		assignsExpr
-		| primitive_type_declarator ';'
+        assignsExpr
 		;
-		
 
-foreach :
-    'foreach'^ derived_type ID blockstmt 
-    ;
+blockstmt:
+          '{'(s+=statements)* '}' -> ^(BLOCKSTMT statements) 
+          ;
 
-forloop :
-    'for'^ ID '['! INTEGER ','! INTEGER ']'! blockstmt
-    ;
-
-ifstmt :
-        'if' '(' a=arithExpr')' b=blockstmt ('else' c=blockstmt)? -> ^(IF $a $b ^(ELSE $c)?)
- 		;
-
-//assignment expression
-
-
-assignsExpr: 
-        (ID^ | primitive_type_declarator^) '=' arithExpr ';'! 
+derived_type: 'Station' | 'Line' | 'Time' | 'Population' ;      
+       
+foreach:
+        'foreach'^ derived_type ID blockstmt
         ;
 
-//this is a simple arithmetic grammar
+forloop:
+        'for'^ ID '['! INTEGER ','! INTEGER ']'! blockstmt
+        ;
 
-arithExpr : 
-					logicExpr
-					;
-
-logicExpr :	
-					relExpr (('and'^ | 'or'^) relExpr)*
-					;
+ifstmt:
+        'if' '(' a=arithExpr')' b=blockstmt ('else' c=blockstmt)? -> ^(IF $a $b ^(ELSE $c)?)
+        ;
 
 
-relExpr :	
-				addExpr (( '!='^ | '=='^ | '<'^ | '>'^ | '<='^ | '>='^) addExpr)*
-				;
-		
-											
-addExpr : 
-					multExpr (('+'^ | '-'^) multExpr)*
-					;
+//==EXPRESSIONS==
 
-multExpr :	
-					powerExpr (('*'^ | '/'^ | '%'^) powerExpr)*
-					;
-						
-powerExpr :
-					unaryExpr ('^'^ unaryExpr)*
-					;
-																											
+assignsExpr: 
+        (ID^ | primitive_type_declarator^) '=' arithExpr
+        ;
 
-unaryExpr:
-		('+'^ | '-'^)? primaryExpr                    
+arithExpr:
+        logicExpr
 		;
 
+logicExpr:	
+        relExpr (('and'^ | 'or'^) relExpr)*
+		;
+
+relExpr:
+        addExpr (( '!='^ | '=='^ | '<'^ | '>'^ | '<='^ | '>='^) addExpr)*
+		;
+		
+addExpr:
+        multExpr (('+'^ | '-'^) multExpr)*
+        ;
+
+multExpr: 
+        powerExpr (('*'^ | '/'^ | '%'^) powerExpr)*
+        ;
+						
+powerExpr:
+        unaryExpr ('^'^ unaryExpr)*
+        ;
+																											
+unaryExpr:
+        ('+'^ | '-'^)? primaryExpr
+        ;
 
 primaryExpr:
 		ID
 		|NUM
 		|INTEGER
+		|procedures
 		;
 
+//==PROCEDURES
+
+procedures:
+        FUNCTIONS^ '('! (params|formal_params) ')'!
+        |mod_procedures
+        |print_function
+        //|showgui
+
+        ;
+        
+mod_procedures:
+        MOD_FUNCTIONS^ '('! params ')'!
+        ;   
+      
+print_function:
+        'print'^ (STRING |procedures | ID)
+        ;
+               
+showgui:
+        'ShowGUI();' -> ShowGUI
+        ;
+
+load:
+        'load'^ ID '.map'!  ';'!
+        ;
+
+simulate:
+        'Simulate'^ '('! INTEGER ')'! blockstmt
+        ;
+
+//==PARAMETERS
+fragment formal_params:
+        a+=formal_param ( ',' a+=formal_param)* -> ^(FORMALPARAM $a*)
+        ;
+
+fragment formal_param: 
+        PRIMITIVE_TYPE^ ID  
+        |'Station'^ ID 
+        |'Line'^ ID  
+        |'Population'^ ID  
+        |'Time'^ ID  
+        |'String'^ ID
+        ; 
+
+fragment params:
+        (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) ( ',' (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) )*
+        ;
+
+
+
+//==TOKENS==
 STRING : '"'
         {StringBuilder b = new StringBuilder();}
         ( '\\' '"'  {b.appendCodePoint('"'); }
@@ -244,13 +250,13 @@ STRING : '"'
         ;
         
 //STRING : '"' .* '"'; //fix strings!
-FUNCTIONS: 'getRate'|'getFrequeny'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
+FUNCTIONS: 'getRate'|'getFrequency'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
 MOD_FUNCTIONS: 'changeRate'|'changeFrequency'|'changeSpeed'|'skipStation';
-PRIMITIVE_TYPE: 'num';
+PRIMITIVE_TYPE: 'num' | 'int';
 //DERIVED_TYPE: 'Station' | 'Line' | 'Time' | 'Population';
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' |'_'| 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;
-COMMENT : '//' .* ('\n' | '\r') {$channel = HIDDEN;};
-MULTICOMMENT : '/*' .* '*/' {$channel = HIDDEN;};
+COMMENT: '//' .* ('\n' | '\r') {$channel = HIDDEN;};
+MULTICOMMENT: '/*' .* '*/' {$channel = HIDDEN;};
 INTEGER: ('0' .. '9')+;
-NUM : INTEGER ('.'? INTEGER)? ;
+NUM: INTEGER ('.'? INTEGER)? ;

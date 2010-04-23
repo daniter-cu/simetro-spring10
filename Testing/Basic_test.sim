@@ -1,0 +1,6 @@
+String x = "Test";
+
+int a = 5;
+
+y=7+x;
+

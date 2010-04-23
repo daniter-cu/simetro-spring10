@@ -18,6 +18,12 @@ public class Line {
 		this.speed = speed;
 		this.capacity = capacity;
 		this.route = route;
+		System.out.println("Line created: "+name+"  Rate: "+rate+"  Speed:"+speed+" Capacity:"+capacity);
+		System.out.print("              ");
+		for(int i=0;i<route.length-1;i++) {
+			System.out.print(route[i].getName()+"==");
+		}
+		System.out.println(route[route.length-1].getName());
 	}
 	public void setName(String name) {
 		this.name = name;

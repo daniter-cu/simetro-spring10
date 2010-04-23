@@ -15,6 +15,7 @@ public class Station {
 		super();
 		this.name = name;
 		this.coordinate = coordinate;
+		System.out.println("Station Created: "+this.name+"  Coordinates:"+coordinate.getX()+"  "+coordinate.getY());
 	}
 	
 	public void setName(String name) {

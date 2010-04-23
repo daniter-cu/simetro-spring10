@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 
 public class Simulate {
-	public void createRoutingTables(Station[] StationArr,Line[] LineArr) {
+	public void createRoutingTables(ArrayList<Station> stationList,ArrayList<Line> lineList) {
 		//for each station, create its routing table and link it to the station
-		ArrayList<Edge> edgeList=new ArrayList();
-		for(int i=0;i<LineArr.length;i++) {
-			for(int j=0;j<LineArr[i].getRoute().length-1;j++) {
-				Station s1=LineArr[i].getRoute()[j];
-				Station s2=LineArr[i].getRoute()[j+1];
-				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),LineArr[i]);
+		ArrayList<Edge> edgeList=new ArrayList<Edge>();
+		for(int i=0;i<lineList.size();i++) {
+			for(int j=0;j<lineList.get(i).getRoute().length-1;j++) {
+				Station s1=lineList.get(i).getRoute()[j];
+				Station s2=lineList.get(i).getRoute()[j+1];
+				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),lineList.get(i));
 				edgeList.add(edge);
 			}
 		}
+		System.out.println("edgeList.size() "+edgeList.size());
 		
 	}
 	

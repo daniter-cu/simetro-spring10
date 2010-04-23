@@ -1,9 +1,21 @@
+import java.util.ArrayList;
+
 
 
 
 public class Simulate {
-	public void createRoutingTables() {
+	public void createRoutingTables(Station[] StationArr,Line[] LineArr) {
 		//for each station, create its routing table and link it to the station
+		ArrayList<Edge> edgeList=new ArrayList();
+		for(int i=0;i<LineArr.length;i++) {
+			for(int j=0;j<LineArr[i].getRoute().length-1;j++) {
+				Station s1=LineArr[i].getRoute()[j];
+				Station s2=LineArr[i].getRoute()[j+1];
+				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),LineArr[i]);
+				edgeList.add(edge);
+			}
+		}
+		
 	}
 	
 	

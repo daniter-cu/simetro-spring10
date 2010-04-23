@@ -1,14 +1,17 @@
 
 public class Coordinate {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
+	public double getDistance(Coordinate coor) {
+		return Math.sqrt((x-coor.getX())*(x-coor.getX())+(y-coor.getY())*(y-coor.getY()));
+	}
 	
 	public Coordinate() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Coordinate(int x, int y) {
+	public Coordinate(double x, double y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -16,13 +19,13 @@ public class Coordinate {
 	public void setX(int x) {
 		this.x = x;
 	}
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	public void setY(int y) {
 		this.y = y;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	

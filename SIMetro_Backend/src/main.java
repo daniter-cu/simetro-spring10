@@ -1,13 +1,26 @@
 
+
+
 public class main {
+	
+	static int numStations=0;
+	static int numLines=0;
+	
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	
 		Station SA=new Station("110ST", new Coordinate(0,0));
+		numStations++;
 		Station SB=new Station("116ST", new Coordinate(0,6));
+		numStations++;
+		Station StationArr[]=new Station[numStations];
+		StationArr[0]=SA;
+		StationArr[1]=SB;
+		
 		System.out.println("Stations created:");
 		System.out.println(SA.getName());
 		System.out.println(SB.getName());
@@ -17,6 +30,9 @@ public class main {
 		arr[0]=SA;
 		arr[1]=SB;
 		Line LA= new Line("Line1", 0.2, 2.0, 100,arr );
+		numLines++;
+		Line LineArr[]=new Line[numLines];
+		LineArr[0]=LA;
 		System.out.println("Line created:");
 		System.out.println(LA.getName());
 		System.out.println();
@@ -36,7 +52,7 @@ public class main {
 		System.out.println();
 		Simulate sim=new Simulate();
 		
-		sim.createRoutingTables();
+		sim.createRoutingTables(StationArr,LineArr);
 		
 		for(int time=0;time<60;time++){
 			sim.peopleArrive();

@@ -47,23 +47,24 @@ program:
         EOF!
         ;
  */       
+/*
 declarations:
         types
         |load
         ;
-        
+      
 types:
     (line|station|population|stat|time|string|showgui)
     ;
-
+*/
 //==DERIVED TYPES==
 
 line: 
     'Line' ID  '{'
     'Stations' '(' idlist ')' ';' 
-    'Frequency' '(' (f=ID | f=INTEGER) ')' ';'
-    'Capacity' '(' (c=ID | c=INTEGER) ')' ';'
-    'Speed' '(' (s=ID | s=INTEGER) ')' ';' 
+    'Frequency' '('  f=INTEGER ')' ';'
+    'Capacity' '('  c=INTEGER ')' ';'
+    'Speed' '(' s=INTEGER ')' ';' 
     '}' 
     -> ^(LINE ID ^(STATIONS idlist) ^(FREQUENCY $f) ^(CAPACITY $c) ^(SPEED $s) )
     ;
@@ -78,11 +79,11 @@ station:
 
 population:
 	'Population' i=ID '{'
-	('('j+=ID ','k+=primaryExpr')')+
+	('('j+=ID ','k+=INTEGER')')+
 	'}' -> ^(POPULATION $i ^(POPITEM $j $k)*)
 	;
 
-idlist : i=ID (',' il+=ID)* -> ^(IDLIST $i $il*) ;
+idlist : i+=ID (',' i+=ID)* -> ^(IDLIST $i*) ;
 
 //==OBJECT VARIABLES== 
 

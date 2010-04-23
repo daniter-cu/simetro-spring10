@@ -1,14 +1,35 @@
 tree grammar simwalk;
 
 options {
-  output = AST;
   tokenVocab=simgram;
   ASTLabelType = CommonTree;
+  output=AST;
 }
+
 
 @header {
   package plt.simetro;
 }
+
+@members {
+boolean listbool = true;
+String curr = "";
+String cord = "";
+public String newID()
+{
+  curr += "a";
+  return curr;  
+}
+public String newCord()
+{
+  cord+="c";
+  return cord;
+}
+
+
+ArrayList<String> popitems = new ArrayList<String>();
+}
+
 
 /*
 ***************************
@@ -22,9 +43,10 @@ program:
         (declarations |statements)* 
         ;
         */
-program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*                               
+program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*   
+                          
     ;        
-        
+ /*       
 declarations:
         types
         |load
@@ -33,24 +55,58 @@ declarations:
 types:
     (line|station|population|stat|time|string|showgui)
     ;
-
+*/
 //==DERIVED TYPES==
 
 line: 
-    (LINE ID ^(STATIONS idlist) ^(FREQUENCY INTEGER) ^(CAPACITY INTEGER) ^(SPEED INTEGER) )
+    ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=INTEGER) ^(CAPACITY c=INTEGER) ^(SPEED s=INTEGER) )
+    {
+    System.out.println("Line " + $ID + "= new Line("+$i.s+","+$f.text+"," +$c.text +","+ $s.text+");");
+    
+    }
     ;
     
 station:
-    ^(STATION ID ^(COORDINATES INTEGER INTEGER) ^(POPULATION ID))
-    | ^(STATION ID)
+    ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) ^(POPULATION pname=ID))
+   
+    {
+    String cord = newCord();
+    System.out.println("Coordinate " +cord +" = new Coordinate("+$i.text+","+$j.text+");");
+    System.out.println("Station " +$sname.text+" = new Station("+cord+","+$pname.text+");");
+    }
+     | ^(STATION ID) {System.out.println("Station " +$sname.text+";"); }
     ;
 
 population:
-    ^(POPULATION ID (^(POPITEM ID primaryExpr))* )
+    ^(POPULATION i=ID popitem* )
+    {System.out.println("Population "+$i.text+" = new Population();");
+      for(String n : popitems)
+      {
+        System.out.println($i.text + ".addPopItem("+n+");");
+      }
+    }
+    ;
+    
+popitem:
+    ^(POPITEM ID INTEGER) 
+    { String name = newID();
+      System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
+      popitems.add(name);
+    }
     ;
 
-idlist:
-    ^(IDLIST ID ID*) 
+idlist returns [String s]
+@init{$s= "(";}:
+    ^(IDLIST (i=ID {
+    if(listbool == true)
+     { $s+= $i.text;
+        listbool = false;
+     }
+    else
+     {  $s+=", ";
+        $s+=$i.text;}
+    })+) 
+    {$s+=")"; listbool = true;}
     ;
 
 //==OBJECT VARIABLES== 
@@ -61,12 +117,13 @@ stat:
 
 //time
 time:
-        ^(TIME ID i=INTEGER j=INTEGER?) {System.out.print("Time "+ $ID.text +" = new Time(");
+        ^(TIME ID i=INTEGER j=INTEGER?)  {System.out.print("Time "+ $ID.text +" = new Time(");
                                           if(j != null) 
                                               System.out.println($i.text + ", " +$j.text + ");");
                                           else
                                               System.out.println($i.text + ");"); }
         ;
+
 
 //defining strings
 string:

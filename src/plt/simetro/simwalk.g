@@ -17,10 +17,13 @@ THIS DOESN'T WORK YET!!
 ***************************
 */
 
-
+/*
 program: 
-        (declarations |statements)* EOF
+        (declarations |statements)* 
         ;
+        */
+program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*                               
+    ;        
         
 declarations:
         types
@@ -43,7 +46,7 @@ station:
     ;
 
 population:
-    ^(POPULATION ID ^(POPITEM ID primaryExpr) )
+    ^(POPULATION ID (^(POPITEM ID primaryExpr))* )
     ;
 
 idlist:
@@ -58,7 +61,11 @@ stat:
 
 //time
 time:
-        ^(TIME ID INTEGER+)
+        ^(TIME ID i=INTEGER j=INTEGER?) {System.out.print("Time "+ $ID.text +" = new Time(");
+                                          if(j != null) 
+                                              System.out.println($i.text + ", " +$j.text + ");");
+                                          else
+                                              System.out.println($i.text + ");"); }
         ;
 
 //defining strings
@@ -76,15 +83,15 @@ primitive_type_declarator:
 //==STATEMENTS==
 
 statements:
-        expression_statement ';'! 
+        expression_statement 
         |foreach
         |forloop
         |ifstmt
-        |procedures ';'! 
-        |simulate
+        |procedures
+    //    |simulate
 
         //|types
-        //|print_function
+        |print_function
         //|mod_procedures
         ;
     
@@ -103,7 +110,7 @@ foreach:
         ;
 
 forloop:
-        'for'^ ID '['! INTEGER ','! INTEGER ']'! blockstmt
+        'for'^ ID INTEGER INTEGER blockstmt
         ;
 
 ifstmt:
@@ -155,19 +162,19 @@ primaryExpr:
 //==PROCEDURES
 
 procedures:
-        FUNCTIONS^ '('! (params|formal_params) ')'!
+        FUNCTIONS^  (params|formal_params) 
         |mod_procedures
-        |print_function
+       // |print_function
         //|showgui
 
         ;
         
 mod_procedures:
-        MOD_FUNCTIONS^ '('! params ')'!
+        MOD_FUNCTIONS^  params 
         ;   
       
 print_function:
-        'print'^ (STRING |procedures | ID)
+        'print'^ (STRING |procedures | ID) {System.out.println("System.out.println(\" Hello World\")");}
         ;
                
 showgui:
@@ -175,11 +182,11 @@ showgui:
         ;
 
 load:
-        'load'^ ID '.map'!  ';'!
+        'load'^ ID 
         ;
 
 simulate:
-        'Simulate'^ '('! INTEGER ')'! blockstmt
+        'Simulate'^  INTEGER  blockstmt
         ;
 
 //==PARAMETERS

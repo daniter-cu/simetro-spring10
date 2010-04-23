@@ -2,6 +2,7 @@ package plt.simetro;
 
 import java.io.IOException;
 
+
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -37,6 +38,16 @@ public class Backend {
 			System.out.println(t.toStringTree());
 			
 			System.out.println("werd up!");
+			
+
+			CommonTreeNodeStream nodes = new CommonTreeNodeStream(t);
+            nodes.setTokenStream(tokenStream);
+           
+            simwalk walker = new simwalk(nodes);
+            
+            walker.program();
+           
+            System.out.println("werd up!");
 		}
 
 	}

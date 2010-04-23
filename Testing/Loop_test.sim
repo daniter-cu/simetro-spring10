@@ -1,9 +1,7 @@
-load smalltown.map;
-
-print "Hello World";
+//print "Hello World";
 
 Time rushhour[7,9];
-
+/*
 Population  p1
 {
 (B,10)
@@ -33,4 +31,4 @@ print getNumWaiting (5, myStations);
 }
 
 }
-
+*/

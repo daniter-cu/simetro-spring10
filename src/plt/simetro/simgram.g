@@ -38,15 +38,15 @@ RETURN;
 }
 
 
-/*
-program: (line|station|population|stat|simulate|statement|load|showgui|string)*	 EOF!																		
+
+program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*	 EOF!																		
 		;
-*/
+/*
 program: 
         (declarations |statements)*
         EOF!
         ;
-        
+ */       
 declarations:
         types
         |load
@@ -95,7 +95,7 @@ stat:
 
 //time
 time:
-        'Time' ID '[' i+=INTEGER (',' i+=INTEGER)? ']' ';' -> ^(TIME ID $i+)
+        'Time' ID '[' i=INTEGER (',' j=INTEGER)? ']' ';'  -> ^(TIME ID $i $j?)
         ;
 
 //defining strings
@@ -118,7 +118,7 @@ statements:
         |forloop
         |ifstmt
         |procedures ';'! 
-        |simulate
+ //       |simulate
 
         //|types
         //|print_function

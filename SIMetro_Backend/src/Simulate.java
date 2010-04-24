@@ -44,6 +44,7 @@ public class Simulate {
 			
 		}
 		
+		System.out.println("Original Routing Table:");
 		for(int i=0;i<stationList.size();i++) {
 			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
 			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {
@@ -53,14 +54,14 @@ public class Simulate {
 						+"\tNext: "+stationList.get(i).getRoutingTable()[j].getNext().getName());
 			}
 		}
-		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
-		
+//		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
+		System.out.println("Constructing...");
 		for(int i=0;i<stationList.size()-1;i++) {
-			System.out.println("i:"+i);
+//			System.out.println("i:"+i);
 			for(int si=0;si<stationList.size();si++) {
-				System.out.println("si:"+si);
+//				System.out.println("si:"+si);
 				for(int rti=0;rti<stationList.get(si).getRoutingTable().length;rti++) {
-					System.out.println("rti:"+rti);
+//					System.out.println("rti:"+rti);
 					Station source=stationList.get(si);
 					Station dest=stationList.get(si).getRoutingTable()[rti].getDest();
 					for(int tr=0;tr<stationList.size()-1;tr++) {
@@ -83,6 +84,8 @@ public class Simulate {
 			
 			
 		}
+		System.out.println();
+		System.out.println("Routing Table all constructed!");
 		for(int i=0;i<stationList.size();i++) {
 			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
 			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {

@@ -23,7 +23,6 @@ COORDINATES;
 POPULATION;
 IDLIST;
 FORMALPARAM;
-POPULATION;
 TIME;
 STAT;
 RETURN;
@@ -38,16 +37,15 @@ RETURN;
 }
 
 
+//program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*	 EOF!																		
+//		;
 
-program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*	 EOF!																		
-		;
-/*
 program: 
         (declarations |statements)*
         EOF!
         ;
- */       
-/*
+        
+
 declarations:
         types
         |load
@@ -56,14 +54,14 @@ declarations:
 types:
     (line|station|population|stat|time|string|showgui)
     ;
-*/
+
 //==DERIVED TYPES==
 
 line: 
     'Line' ID  '{'
     'Stations' '(' idlist ')' ';' 
-    'Frequency' '('  f=INTEGER ')' ';'
-    'Capacity' '('  c=INTEGER ')' ';'
+    'Frequency' '(' f=INTEGER ')' ';'
+    'Capacity' '(' c=INTEGER ')' ';'
     'Speed' '(' s=INTEGER ')' ';' 
     '}' 
     -> ^(LINE ID ^(STATIONS idlist) ^(FREQUENCY $f) ^(CAPACITY $c) ^(SPEED $s) )
@@ -79,9 +77,11 @@ station:
 
 population:
 	'Population' i=ID '{'
-	('('j+=ID ','k+=INTEGER')')+
+	('('j+=ID ','k+=INTEGER ')')+
 	'}' -> ^(POPULATION $i ^(POPITEM $j $k)*)
 	;
+
+
 
 idlist : i+=ID (',' i+=ID)* -> ^(IDLIST $i*) ;
 
@@ -93,7 +93,7 @@ stat:
         'return' r=ID ';'
         '}' -> ^(STAT ID $f $s ^(RETURN $r))
         ;
-
+        
 //time
 time:
         'Time' ID '[' i=INTEGER (',' j=INTEGER)? ']' ';'  -> ^(TIME ID $i $j?)
@@ -107,7 +107,7 @@ string:
 
 //primitive-type-declarator
 primitive_type_declarator:
-        PRIMITIVE_TYPE^ ID		
+        (PRIMITIVE_TYPE^ ID)	
 		;
 
 
@@ -118,9 +118,9 @@ statements:
         |foreach
         |forloop
         |ifstmt
-        |procedures ';'! 
- //       |simulate
-
+        |procedures ';'!         
+        |simulate
+        
         //|types
         //|print_function
         //|mod_procedures
@@ -151,8 +151,12 @@ ifstmt:
 
 //==EXPRESSIONS==
 
+//error here with "int x" and no assignment
 assignsExpr: 
-        (ID^ | primitive_type_declarator^) '=' arithExpr
+       // (ID^ | primitive_type_declarator^) '=' arithExpr
+        //;
+          (ID^ '=' arithExpr)
+        | (primitive_type_declarator^ '=' arithExpr)
         ;
 
 arithExpr:
@@ -221,11 +225,11 @@ simulate:
         ;
 
 //==PARAMETERS
-fragment formal_params:
+formal_params:
         a+=formal_param ( ',' a+=formal_param)* -> ^(FORMALPARAM $a*)
         ;
 
-fragment formal_param: 
+formal_param: 
         PRIMITIVE_TYPE^ ID  
         |'Station'^ ID 
         |'Line'^ ID  
@@ -234,7 +238,7 @@ fragment formal_param:
         |'String'^ ID
         ; 
 
-fragment params:
+params:
         (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) ( ',' (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) )*
         ;
 

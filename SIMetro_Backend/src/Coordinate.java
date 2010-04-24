@@ -4,7 +4,9 @@ public class Coordinate {
 	private double y;
 	
 	public double getDistance(Coordinate coor) {
-		return Math.sqrt((x-coor.getX())*(x-coor.getX())+(y-coor.getY())*(y-coor.getY()));
+		double t= Math.sqrt((x-coor.getX())*(x-coor.getX())+(y-coor.getY())*(y-coor.getY()));
+		t=(Math.round(t*10.0))/10.0;
+		return t;
 	}
 	
 	public Coordinate() {

@@ -11,11 +11,88 @@ public class Simulate {
 			for(int j=0;j<lineList.get(i).getRoute().length-1;j++) {
 				Station s1=lineList.get(i).getRoute()[j];
 				Station s2=lineList.get(i).getRoute()[j+1];
-				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),lineList.get(i));
+				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),(Math.round((s1.getCoordinate().getDistance(s2.getCoordinate())/lineList.get(i).getSpeed()*10.0)))/10.0,lineList.get(i));				
 				edgeList.add(edge);
 			}
 		}
 		System.out.println("edgeList.size() "+edgeList.size());
+		
+		for(int si=0;si<stationList.size();si++) {
+			RoutingTab RoutingTable[]=new RoutingTab[stationList.size()-1];
+			int sli=0;
+			for(int rti=0;rti<stationList.size()-1;rti++) {
+				if(sli==si)
+					sli++;
+					RoutingTab rt=new RoutingTab();
+					rt.setDest(stationList.get(sli));
+					rt.setDist(9999);
+					RoutingTable[rti]=rt;
+					sli++;
+
+			}
+			stationList.get(si).setRoutingTable(RoutingTable);
+			
+		}
+		for(int ei=0;ei<edgeList.size();ei++) {
+			Edge tempE=edgeList.get(ei);
+			tempE.getS1().getRTabByDest(tempE.getS2()).setDist(tempE.getTimedist());
+			tempE.getS1().getRTabByDest(tempE.getS2()).setLine(tempE.getLine());
+			tempE.getS1().getRTabByDest(tempE.getS2()).setNext(tempE.getS2());
+			tempE.getS2().getRTabByDest(tempE.getS1()).setDist(tempE.getTimedist());
+			tempE.getS2().getRTabByDest(tempE.getS1()).setLine(tempE.getLine());
+			tempE.getS2().getRTabByDest(tempE.getS1()).setNext(tempE.getS1());
+			
+		}
+		
+		for(int i=0;i<stationList.size();i++) {
+			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
+			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {
+				System.out.println("Dest: "+stationList.get(i).getRoutingTable()[j].getDest().getName()
+						+"\tDist: "+stationList.get(i).getRoutingTable()[j].getDist()
+						+"\tLine: "+stationList.get(i).getRoutingTable()[j].getLine().getName()
+						+"\tNext: "+stationList.get(i).getRoutingTable()[j].getNext().getName());
+			}
+		}
+		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
+		
+		for(int i=0;i<stationList.size()-1;i++) {
+			System.out.println("i:"+i);
+			for(int si=0;si<stationList.size();si++) {
+				System.out.println("si:"+si);
+				for(int rti=0;rti<stationList.get(si).getRoutingTable().length;rti++) {
+					System.out.println("rti:"+rti);
+					Station source=stationList.get(si);
+					Station dest=stationList.get(si).getRoutingTable()[rti].getDest();
+					for(int tr=0;tr<stationList.size()-1;tr++) {
+						if((!source.getRoutingTable()[tr].equals(dest))&&(!source.getRoutingTable()[tr].getDest().equals(dest))) {
+//							System.out.println(source.getRoutingTable()[tr].getDist());
+//							System.out.println("+++++"+source.getRoutingTable()[tr].getDest().getName());
+//							System.out.println(dest.getName());
+//							System.out.println(source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist());
+
+							double newdist=source.getRoutingTable()[tr].getDist()+source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist();
+							if (newdist<source.getRoutingTable()[rti].getDist()) {
+								source.getRoutingTable()[rti].setDist(newdist);
+								source.getRoutingTable()[rti].setLine(source.getRoutingTable()[tr].getLine());
+								source.getRoutingTable()[rti].setNext(source.getRoutingTable()[tr].getNext());
+							}
+						}
+					}
+				}
+			}
+			
+			
+		}
+		for(int i=0;i<stationList.size();i++) {
+			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
+			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {
+				System.out.println("Dest: "+stationList.get(i).getRoutingTable()[j].getDest().getName()
+						+"\tDist: "+stationList.get(i).getRoutingTable()[j].getDist()
+						+"\tLine: "+stationList.get(i).getRoutingTable()[j].getLine().getName()
+						+"\tNext: "+stationList.get(i).getRoutingTable()[j].getNext().getName());
+			}
+		}
+		
 		
 	}
 	

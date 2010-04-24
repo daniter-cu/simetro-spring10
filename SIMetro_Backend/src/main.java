@@ -23,6 +23,8 @@ public class main {
 		stationList.add(SC);
 		Station SD=new Station("5AV", new Coordinate(10,6));
 		stationList.add(SD);
+		Station SE=new Station("4AV", new Coordinate(15,6));
+		stationList.add(SE);
 
 		System.out.println();
 		
@@ -34,12 +36,19 @@ public class main {
 		Line LA= new Line("Line1", 0.2, 2.0, 100,arr );
 		lineList.add(LA);
 		
-		Station arr2[]=new Station[2];
+		Station arr2[]=new Station[3];
 		arr2[0]=SB;
 		arr2[1]=SD;
+		arr2[2]=SE;
 		Line LB=new Line("Line2",0.2,2.0,100,arr2);
 		lineList.add(LB);
 		
+		Station arr3[]=new Station[3];
+		arr3[0]=SA;
+		arr3[1]=SE;
+		arr3[2]=SC;
+		Line LC=new Line("Line3",0.2,3.0,200,arr3);
+		lineList.add(LC);
 
 		
 		PopItem PIA=new PopItem (SA,5);

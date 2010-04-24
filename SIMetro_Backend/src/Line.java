@@ -11,6 +11,12 @@ public class Line {
 	public Line() {
 		super();
 	}
+
+	public Line(String name) {
+		super();
+		this.name = name;
+	}
+
 	public Line(String name, double rate, double speed, int capacity, Station[] route) {
 		super();
 		this.name = name;
@@ -18,10 +24,10 @@ public class Line {
 		this.speed = speed;
 		this.capacity = capacity;
 		this.route = route;
-		System.out.println("Line created: "+name+"  Rate: "+rate+"  Speed:"+speed+" Capacity:"+capacity);
+		System.out.println("Line created: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
 		System.out.print("              ");
 		for(int i=0;i<route.length-1;i++) {
-			System.out.print(route[i].getName()+"==");
+			System.out.print(route[i].getName()+"<==>");
 		}
 		System.out.println(route[route.length-1].getName());
 	}

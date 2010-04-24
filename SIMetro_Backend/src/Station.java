@@ -11,11 +11,25 @@ public class Station {
 		super();
 	}
 
+	public Station(String name) {
+		super();
+		this.name = name;
+	}
+
 	public Station(String name, Coordinate coordinate) {
 		super();
 		this.name = name;
 		this.coordinate = coordinate;
-		System.out.println("Station Created: "+this.name+"  Coordinates:"+coordinate.getX()+"  "+coordinate.getY());
+		System.out.println("Station Created: "+this.name+"\tCoordinates:"+coordinate.getX()+"\t"+coordinate.getY());
+	}
+	
+	public RoutingTab getRTabByDest(Station dest) {
+		for(int i=0;i<routingTable.length;i++) {
+			if(routingTable[i].getDest().equals(dest)) {
+				return routingTable[i];
+			}
+		}
+		return null;
 	}
 	
 	public void setName(String name) {

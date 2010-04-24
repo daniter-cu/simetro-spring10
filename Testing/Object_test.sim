@@ -9,7 +9,7 @@ Population  p1
 (B,10)
 (C,20)
 }
-
+/*
 Line L {
 Stations (Canal_St, Union_Square, Grand_Central);
 Frequency(10);
@@ -34,3 +34,4 @@ print getNumWaiting (5, myStations);
 
 }
 
+*/

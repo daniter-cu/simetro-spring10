@@ -1,8 +1,5 @@
-
-Station A {
-Coordinates (1,5); //coordinates
-Population (p1); //associate p1 with this station
-}
+public class smalltown.sim { public static void main (String[] args)  {  
+Station A = new Station(new Coordinate(1, 5), p1)
 
 
 int x = 5 + 5;
@@ -38,10 +35,4 @@ Time day[10, 15];
 
 
 num val = getCapacity(day);
-/*this will print "This is the number of people in the system at time 10
-//to time 15: 20"
-//print "This is the number of people in the system at time " day.start "to time " day.end ": " val; 
-
-
-
-
+ } }

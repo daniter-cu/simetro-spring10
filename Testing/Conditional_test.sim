@@ -1,7 +1,7 @@
 
- 
+ /*
 String a="ds" ;
- 
+
 Stat statA(int b){
 num a=6;
 return a ;
@@ -12,7 +12,7 @@ getRate(ida,5.6,+6,b, abc);
  
 changeRate(ida,5.6,+6,b, abc);
  
-
+*/
  
  
 if(x<5) {

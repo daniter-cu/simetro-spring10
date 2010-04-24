@@ -1,4 +1,6 @@
-//print "Hello World";
+load smalltown.map;
+
+print "Hello World";
 
 Time rushhour[7,9];
 
@@ -8,19 +10,13 @@ Population  p1
 (C,20)
 }
 
-Station A
-{
-Coordinates(1,3);
-Population(p1);
-}
-
-Line l {
-Stations(CanalSt, GrandCentral, NorthSt);
+Line L {
+Stations (Canal_St, Union_Square, Grand_Central);
 Frequency(10);
 Capacity(200);
 Speed(20);
 }
-/*
+
 print "Hello World";
 
 Stat myDefinedFunction (Time someTime, Station thisStation)
@@ -29,6 +25,8 @@ print "Hello";
 num sum = getNumWaiting(t,S1) + getNumWaiting(t,S2);
 return sum;
 }
+
+
 Simulate(24){
 for time_instant [4,10]{print getNumWaiting(timeinstant, mystation);}
 foreach Station myStations
@@ -37,4 +35,4 @@ print getNumWaiting (5, myStations);
 }
 
 }
-*/
+

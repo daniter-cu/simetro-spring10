@@ -1,0 +1,77 @@
+
+Station A{}
+Station B{}
+
+
+Population p1 {
+(B, 10) //destination station, people per unit time
+}
+
+Population p2 {
+(A, 5)
+(B, 6)
+}
+
+
+//Order of coordinates and population does not matter because the keywords
+//are being provided.
+
+Station A {
+Coordinates (1,5); //coordinates
+Population (p1); //associate p1 with this station
+}
+
+Station B {
+Coordinates (5,4);
+Population (p2);
+}
+
+
+
+ShowGUI();
+
+Line t {
+Stations(A, B, A);
+Frequency(4);
+Capacity(12);
+Speed(3);
+}
+//end mymap.map file *****************************
+
+Stat pplTimesTwo(Time t)
+{
+num ppl = getNumPassengers(t) * 2;
+return ppl;
+}
+
+
+Time lateNight[0, 6];
+Time morningRush[6, 10];
+Time day[10, 15];
+
+Simulate (24) {
+
+changeRate(latenight, A, B, 1);
+//Same as above but multiplies default rate by 2.
+//Can also use +x, -x, and /x as needed.
+changeRate(day, A, B, *2);
+//change*(time, line, newvalue);
+changeFrequency(day, t, +4);
+//trains will start at A but not actually stop there, go to B and then go
+//back to A but not actually stop.
+//Thus, it really cannot take any passengers.
+//The program will handle this nicely and not let people onto the train.
+//skipStation(time, line, station);
+skipStation(day, t, A);
+}
+
+
+
+num val = getCapacity(day);
+/*this will print "This is the number of people in the system at time 10
+//to time 15: 20"
+//print "This is the number of people in the system at time " day.start "to
+//time " day.end ": " val; 
+
+
+

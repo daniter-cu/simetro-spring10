@@ -260,8 +260,9 @@ powerExpr:
         ;
                                                                                                             
 unaryExpr:
-        ^('+' primaryExpr primaryExpr)
-        |^('-' primaryExpr primaryExpr)
+        ^('+' primaryExpr)
+        | ^('-' primaryExpr)
+        | primaryExpr
         ;
 
 primaryExpr:
@@ -274,12 +275,17 @@ primaryExpr:
 //==PROCEDURES
 
 procedures:
-        ^(FUNCTIONS  (params|formal_params) )
+        ^(FUNCTIONS  params )
+        | func_call
         |mod_procedures
         |print_function
         //|showgui
 
         ;
+        
+func_call:
+      ^(FUNC_CALL ID params)
+      ;
         
 mod_procedures:
         ^(MOD_FUNCTIONS  params)
@@ -306,7 +312,7 @@ simulate:
 
 //==PARAMETERS
 formal_params:
-        ^(FORMALPARAM formal_param)
+        ^(FORMALPARAM formal_param*)
         ;
 
 formal_param: 
@@ -319,7 +325,7 @@ formal_param:
         ; 
 
 params:
-        (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) ( ',' (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) )*
+        ^(PARAM ((ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER))* )
         ;
 
 

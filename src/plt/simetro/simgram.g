@@ -14,10 +14,12 @@ LINE;
 STATIONS;
 FREQUENCY;
 CAPACITY;
+PARAM;
 POPITEM;
 SPEED;
 IF;
 ELSE;
+FUNC_CALL;
 STATION;
 COORDINATES;
 POPULATION;
@@ -69,8 +71,8 @@ line:
 
 station:
 	'Station' ID '{'
-	(('Coordinates' '(' i1=INTEGER ',' i2=INTEGER ')' ';'))?
-	(('Population' '(' ID ')' ';'))*
+	(('Coordinates' '(' i1=INTEGER ',' i2=INTEGER ')' ';'))
+	(('Population' '(' ID ')' ';'))
 	'}'
 	-> ^(STATION ID ^(COORDINATES $i1 $i2)? ^(POPULATION ID)?)
 	;
@@ -197,12 +199,17 @@ primaryExpr:
 //==PROCEDURES
 
 procedures:
-        FUNCTIONS^ '('! (params|formal_params) ')'!
+        FUNCTIONS^ '('! params ')'!
+        | func_call
         |mod_procedures
         |print_function
         //|showgui
 
         ;
+        
+func_call:
+      ID '(' params ')' ';' -> ^(FUNC_CALL ID params)
+      ;
         
 mod_procedures:
         MOD_FUNCTIONS^ '('! params ')'!
@@ -239,7 +246,8 @@ formal_param:
         ; 
 
 params:
-        (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) ( ',' (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER) )*
+        (a+=ID | a+=NUM |a+=(('+'|'-'|'*'|'/'|'^')? INTEGER)) ( ',' (a+=ID | a+=NUM |a+=(('+'|'-'|'*'|'/'|'^')? INTEGER)) )*
+        -> ^(PARAM $a*)
         ;
 
 

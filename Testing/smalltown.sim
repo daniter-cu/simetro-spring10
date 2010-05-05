@@ -1,3 +1,4 @@
+load mymap.map;
 
 
 Station A {
@@ -32,8 +33,34 @@ int z = -1;
 
 Stat statA(int b){
  int a=6;
+ num b=6;
 
+ num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
 }
 
+String Hello = "Test";		 //problems here - loses quotes
+
 Time rushhour[0,10];
+
+if (x > y) {
+int x = 1;
+} 
+else {
+int z = getFrequency(B);
+}
+
+if (x > y) {
+int x = 1;
+} 
+
+Simulate (5) {
+int x = 5;
+int x = 5+10-1;
+
+}
+
+ShowGUI();	 //keep outside simulate block
+
+
+

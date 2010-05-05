@@ -186,10 +186,6 @@ statements:
         |ifstmt
         |procedures
         |simulate
-        
-        //|types
-        //|print_function
-        //|mod_procedures
         ;
  
 expression_statement:
@@ -227,48 +223,40 @@ ifstmt:
 //==EXPRESSIONS==
 
 assignsExpr:
-        ^('=' primitive_type_declarator arithExpr)
+        ^('=' primitive_type_declarator arithExpr )
         | ^('=' ID arithExpr)
         ;
 
 arithExpr:
-        logicExpr
+        ^('and' arithExpr arithExpr)
+        |^('or' arithExpr arithExpr)
+        |^('!=' arithExpr arithExpr)
+        | ^('=='arithExpr arithExpr)
+        | ^('<' arithExpr arithExpr)
+        | ^('>' arithExpr arithExpr)
+        | ^('<='arithExpr arithExpr)
+        | ^('>='arithExpr arithExpr)
+        | ^('+' arithExpr arithExpr)
+        | ^('-' arithExpr arithExpr)
+        | ^('*' arithExpr arithExpr)
+        | ^('/' arithExpr arithExpr)
+        | ^('%' arithExpr arithExpr)
+        | ^('^' arithExpr arithExpr)
+        | ^('-' (ID|NUM|INTEGER) )  //unary expression -- unsure play with neg of function return
+        | ^('+' (ID|NUM|INTEGER) )
+        | procedures
+        | ID
+        | NUM
+        | INTEGER
+        | String
+
         ;
 
-logicExpr:
-        ^('and' relExpr relExpr)
-        |^('or' relExpr relExpr)
-        |relExpr
-
-        ;
-
-relExpr:
-        ^('!=' addExpr addExpr)
-        | ^('==' addExpr addExpr)
-        | ^('<' addExpr addExpr)
-        | ^('>' addExpr addExpr)
-        | ^('<=' addExpr addExpr)
-        | ^('>=' addExpr addExpr)
-        ;
-        
-addExpr:
-        ^('+' multExpr multExpr)
-        | ^('-' multExpr multExpr)
-        ;
-
-multExpr:
-        ^('*' powerExpr powerExpr)
-        |^('/' powerExpr powerExpr)
-        |^('%' powerExpr powerExpr)
-        ;
-                        
-powerExpr:
-        ^('^' unaryExpr unaryExpr)
-        ;
-                                                                                                            
+//these might be unecessary below now that arithExpr is merged
 unaryExpr:
         ^('+' primaryExpr)
         | ^('-' primaryExpr)
+        | primaryExpr    
         ;
 
 primaryExpr:
@@ -277,7 +265,6 @@ primaryExpr:
         |INTEGER
         |procedures
         ;
-
 //==PROCEDURES
 
 procedures:
@@ -286,7 +273,6 @@ procedures:
         |mod_procedures
         |print_function
         //|showgui
-
         ;
         
 func_call:
@@ -333,5 +319,4 @@ formal_param:
 params:
         ^(PARAM ((ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER))* )
         ;
-
 

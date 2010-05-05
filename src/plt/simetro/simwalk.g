@@ -29,6 +29,9 @@ public String newCord()
 
 
 ArrayList<String> popitems = new ArrayList<String>();
+
+//this is to inline declare population/popitems
+ArrayList<String> popnames= new ArrayList<String>();
 }
 
 
@@ -45,7 +48,7 @@ THIS WORKS SLIGHTLY!
 
 
 //problem with * at end of prog - very weird!
-program: (declarations |statements);
+program: (declarations |statements)*;
 
 //program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*   
 //program: (simulate|line|station|population|stat|statements|load|showgui|string|time|primitive_type_declarator)*   
@@ -74,7 +77,7 @@ line:
     "Line <id> = new Line(<i><separator> <f><separator> <c><separator> <s>);"
     ;
 
-//note: inconsistency with ending ';' at station option 1 vs option2
+//WE HAVE A CIRCULARITY - WHICH WAY ARE WE GOING POP FIRST OR STATIONS
 station:
     ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) ^(POPULATION pname=ID))
    
@@ -89,40 +92,42 @@ station:
     
      | ^(STATION sname=ID) {System.out.println("Station " +$sname.text+";"); }
      //template
-     ->template(separator = {","}, sname = {$sname.text})
-     "Station <sname>;"
+     ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text})
+     "Station <sname> = new Station(new Coordinate(<cord>);"
     ;
     
 
-//NOT WERKING
-//note sure about syntax here - can't seem to get this working
+
 population:
-    ^(POPULATION i=ID popitemz=(popitem)* )
+    ^(POPULATION i=ID popitem* )
     {
+    String poplist = new String();
     System.out.println("Population "+$i.text+" = new Population();");
       for(String n : popitems)
       {
         System.out.println($i.text + ".addPopItem("+n+");");
+        
       }
-
+    poplist = popnames.toString();
+    //this is so it doesn't continually add popitems when not associated with the correct population
+    popitems.clear();
+    popnames.clear();
     }
     //template
-    ->template(i = {$i.text}, popitemz = {$popitemz} )
-    "Population <i> = new Population();
-    <popitemz>
+    ->template(i = {$i.text}, p = {poplist} )
+    "Population <i> = new Population(<p>);
     "
     ;
     
+  
 popitem:
     ^(POPITEM ID INTEGER) 
     { 
       String name = newID();
       System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
       popitems.add(name);
-    }
-    //template
-	//->template()
-	//""
+      popnames.add(new String("("+$ID +","+$INTEGER+")"));
+        }
     ;
     
     
@@ -221,9 +226,9 @@ ifstmt:
 
 //==EXPRESSIONS==
 
-assignsExpr: 
-        ^(ID '=' arithExpr)
-        | ^(primitive_type_declarator '=' arithExpr)
+assignsExpr:
+        ^('=' primitive_type_declarator arithExpr)
+        | ^('=' ID arithExpr)
         ;
 
 arithExpr:
@@ -233,6 +238,8 @@ arithExpr:
 logicExpr:
         ^('and' relExpr relExpr)
         |^('or' relExpr relExpr)
+        |relExpr
+
         ;
 
 relExpr:
@@ -262,7 +269,6 @@ powerExpr:
 unaryExpr:
         ^('+' primaryExpr)
         | ^('-' primaryExpr)
-        | primaryExpr
         ;
 
 primaryExpr:

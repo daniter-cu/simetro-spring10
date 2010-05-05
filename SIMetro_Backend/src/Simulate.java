@@ -100,10 +100,46 @@ public class Simulate {
 	}
 	
 	
-	public void peopleArrive(){
+	public void peopleArrive(ArrayList<Station> stationList, int arriveTime){
 		//look up in the population objects to see if new people should be created to arrive at each station
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
+		
+		//iterate through station list
+		for(int si=0;si<stationList.size();si++) {
+			
+			//get population for station
+			Population aPop = stationList.get(si).getPop();
+			
+			//get pop item array associated with population
+			PopItem[] popItemArray = aPop.getPopItemArr();
+			
+			//iterate through pop item array
+			for (PopItem anItem : popItemArray){
+				
+				//get destination and rate 
+				Station destStation = anItem.getDest();
+				int popRate = (int)anItem.getRate();
+			
+				//create a new person up to the rate value
+				for (int i = 0; i < popRate; i++){
+					//arrivalTime = arriveTime, StationDest = destStation, 
+					//StationSource = stationList.get(si), Station next = get from routing table
+					
+					Station sourceStation = stationList.get(si);
+			
+					RoutingTab[] aTable = sourceStation.getRoutingTable();
+					
+					Station nextStation = aTable.getNext();
+					
+					//create new person
+					Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+					
+					//should we add each person to an array or something?
+				}
+			}
+			
+		}
 	}
 	
 	

@@ -69,7 +69,7 @@ public class main {
 		sim.createRoutingTables(stationList,lineList);
 		
 		for(int time=0;time<60;time++){
-			sim.peopleArrive();
+			sim.peopleArrive(stationList, time);
 			sim.trainArrive();
 			sim.trainMove();
 		}

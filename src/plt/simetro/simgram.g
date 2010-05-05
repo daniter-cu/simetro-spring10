@@ -120,10 +120,6 @@ statements:
         |ifstmt
         |procedures ';'!         
         |simulate
-        
-        //|types
-        //|print_function
-        //|mod_procedures
         ;
 	
 expression_statement:

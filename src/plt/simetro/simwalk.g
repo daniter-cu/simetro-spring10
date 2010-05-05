@@ -48,8 +48,8 @@ THIS WORKS SLIGHTLY!
 
 
 //problem with * at end of prog - very weird!
-program: (declarations |statements)*;
-
+program: (declarations |statements)*
+        ;
 //program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*   
 //program: (simulate|line|station|population|stat|statements|load|showgui|string|time|primitive_type_declarator)*   
 //;
@@ -213,9 +213,7 @@ forloop:
 
 ifstmt:
         ^(IF arithExpr blockstmt ^(ELSE blockstmt))
-        //-> template()
-        //""
-        
+        ^(IF arithExpr blockstmt)
         ;
         
 
@@ -272,7 +270,6 @@ procedures:
         | func_call
         |mod_procedures
         |print_function
-        //|showgui
         ;
         
 func_call:
@@ -299,7 +296,7 @@ load:
         ;
 
 simulate:
-        ^('Simulate'  INTEGER  blockstmt)
+        ^('Simulate' INTEGER  blockstmt)
         ;
 
 //==PARAMETERS

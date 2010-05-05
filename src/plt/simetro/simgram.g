@@ -1,4 +1,3 @@
-
 grammar simgram;
 
 options {
@@ -43,8 +42,7 @@ RETURN;
 //		;
 
 program: 
-        (declarations |statements)*
-        EOF!
+        (declarations |statements)* EOF!
         ;
         
 
@@ -72,7 +70,7 @@ line:
 station:
 	'Station' ID '{'
 	(('Coordinates' '(' i1=INTEGER ',' i2=INTEGER ')' ';'))
-	(('Population' '(' ID ')' ';'))
+	(('Population' '(' ID ')' ';'))*
 	'}'
 	-> ^(STATION ID ^(COORDINATES $i1 $i2)? ^(POPULATION ID)?)
 	;
@@ -157,8 +155,8 @@ ifstmt:
 assignsExpr: 
        // (ID^ | primitive_type_declarator^) '=' arithExpr
         //;
-          (ID^ '=' arithExpr)
-        | (primitive_type_declarator^ '=' arithExpr)
+          (ID '='^ arithExpr)
+        | (primitive_type_declarator '='^ arithExpr)
         ;
 
 arithExpr:

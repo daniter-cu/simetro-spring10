@@ -1,5 +1,5 @@
 
-/*
+
 Station A {
 Coordinates (1,5); //coordinates
 Population (P1); //associate p1 with this station
@@ -19,19 +19,21 @@ Population P2 {
 (A, 10)
 (C, 100)
 }
+num A = 20+7+9;
 
 Line L {	
 	Stations (A, B, A);	
 	Frequency (4);
 	Capacity (12);
 	Speed (3); } 
-*/
+
 int y =1+1;
-/*
+int z = -1;
+
 Stat statA(int b){
  int a=6;
 
  return a ;
 }
-*/
+
 Time rushhour[0,10];

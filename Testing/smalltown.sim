@@ -20,7 +20,7 @@ Population P2 {
 (A, 10)
 (C, 100)
 }
-num A = 20+7+9;
+//num A = 20+7+9;
 
 Line L {	
 	Stations (A, B, A);	
@@ -28,14 +28,14 @@ Line L {
 	Capacity (12);
 	Speed (3); } 
 
-int y =1+1;
-int z = -1;
+//num y =1+1;
+//num z = -1;
 
 Stat statA(int b){
  int a=6;
  num b=6;
 
- num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
+ //num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
 }
 
@@ -44,19 +44,19 @@ String Hello = "Test";		 //problems here - loses quotes
 Time rushhour[0,10];
 
 if (x > y) {
-int x = 1;
+num x = 1;
 } 
 else {
-int z = getFrequency(B);
+num z = getFrequency(B);
 }
 
 if (x > y) {
-int x = 1;
+num x = 1;
 } 
 
 Simulate (5) {
-int x = 5;
-int x = 5+10-1;
+//int x = 5;
+num x = 5+10-1;
 
 }
 

@@ -70,7 +70,7 @@ types:
 line: 
     ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=INTEGER) ^(CAPACITY c=INTEGER) ^(SPEED s=INTEGER) )
     {
-    System.out.println("Line " + $ID + "= new Line("+$i.s+","+$f.text+"," +$c.text +","+ $s.text+");");
+   // System.out.println("Line " + $ID + "= new Line("+$i.s+","+$f.text+"," +$c.text +","+ $s.text+");");
     }
     //template
     ->template(separator = {","}, id = {$ID.text}, i={$i.s}, f = {$f.text}, c={$c.text}, s={$s.text} )
@@ -82,9 +82,9 @@ station:
     ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) ^(POPULATION pname=ID))
    
     {
-    String cord = newCord();
-    System.out.println("Coordinate " +cord +" = new Coordinate("+$i.text+","+$j.text+");");
-    System.out.println("Station " +$sname.text+" = new Station("+cord+","+$pname.text+");");
+    //String cord = newCord();
+    //System.out.println("Coordinate " +cord +" = new Coordinate("+$i.text+","+$j.text+");");
+    //System.out.println("Station " +$sname.text+" = new Station("+cord+","+$pname.text+");");
     }
     //template
     ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text}, pname = {$pname.text}  )
@@ -102,12 +102,12 @@ population:
     ^(POPULATION i=ID popitem* )
     {
     String poplist = new String();
-    System.out.println("Population "+$i.text+" = new Population();");
-      for(String n : popitems)
-      {
-        System.out.println($i.text + ".addPopItem("+n+");");
+    //System.out.println("Population "+$i.text+" = new Population();");
+    //  for(String n : popitems)
+     // {
+      //  System.out.println($i.text + ".addPopItem("+n+");");
         
-      }
+     // }
     poplist = popnames.toString();
     //this is so it doesn't continually add popitems when not associated with the correct population
     popitems.clear();
@@ -123,10 +123,10 @@ population:
 popitem:
     ^(POPITEM ID INTEGER) 
     { 
-      String name = newID();
-      System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
-      popitems.add(name);
-      popnames.add(new String("("+$ID +","+$INTEGER+")"));
+   //   String name = newID();
+   //   System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
+    //  popitems.add(name);
+    //  popnames.add(new String("("+$ID +","+$INTEGER+")"));
         }
     ;
     
@@ -149,17 +149,26 @@ idlist returns [String s]
 //==OBJECT VARIABLES== 
 
 stat:
-    ^(STAT ID formal_params statements ^(RETURN ID))
+    ^(STAT i=ID f=formal_params statements ^(RETURN ID)) //fix this, should be able to return text nums too
+    ->template(id = {$i.text}, fp = {$f.text} )
+    <<
+    public static int <id> ( <fp; separator=", "> )
+    {
+    
+    
+    }
+    >>
         ;
 
 //time
 time:
         ^(TIME ID i=INTEGER j=INTEGER?)  
-        {System.out.print("Time "+ $ID.text +" = new Time(");
+       /* {//System.out.print("Time "+ $ID.text +" = new Time(");
             if(j != null) 
-            System.out.println($i.text + ", " +$j.text + ");");
+           // System.out.println($i.text + ", " +$j.text + ");");
             else
-            System.out.println($i.text + ");"); }
+            //System.out.println($i.text + ");"); }
+            }*/
         ;
 
 
@@ -300,17 +309,17 @@ simulate:
         ;
 
 //==PARAMETERS
-formal_params:
-        ^(FORMALPARAM formal_param*)
+formal_params returns [String str]:
+        ^(FORMALPARAM f+=formal_param*) {}
         ;
 
-formal_param: 
-        ^(PRIMITIVE_TYPE ID)  
-        |^('Station' ID) 
-        |^('Line' ID)  
-        |^('Population' ID)  
-        |^('Time' ID)  
-        |^('String' ID)
+formal_param returns [String str]: 
+        ^(PRIMITIVE_TYPE ID)  {$str = $PRIMITIVE_TYPE.text + $ID.text;}
+        |^('Station' ID)  {$str = "Station" + $ID.text;}
+        |^('Line' ID)  {$str = "Line" + $ID.text;}
+        |^('Population' ID) {$str = "Population" + $ID.text;}  
+        |^('Time' ID)  {$str = "Time" + $ID.text;}
+        |^('String' ID) {$str = "String" + $ID.text;}
         ; 
 
 params:

@@ -58,9 +58,9 @@ public class Backend {
             StringTemplate st = gen.toDOT(t);
             //System.out.println(st);
 
-			ASTFrame af = new ASTFrame("Tree", t);
-			af.setVisible(true);
-			af.setSize(200, 200);
+		//	ASTFrame af = new ASTFrame("Tree", t);
+		//	af.setVisible(true);
+		//	af.setSize(200, 200);
 			
 			//==WALKER==
 			CommonTreeNodeStream nodes = new CommonTreeNodeStream((CommonTree) t);

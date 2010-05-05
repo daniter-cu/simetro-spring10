@@ -1,38 +1,54 @@
-public class smalltown.sim { public static void main (String[] args)  {  
-Station A = new Station(new Coordinate(1, 5), p1)
+public class smalltown.sim { public static void main (String[] args)  {  load mymap.map;
 
 
-int x = 5 + 5;
+Station A = new Station(new Coordinate(1, 5), P1)
 
-Station B{}
-
-
+Station B = new Station(new Coordinate(100, 500), P2)
 
 
-//String test = "test";
-//print "Hello World";
+Population P1 = new Population([]);
+    
+
+Population P2 = new Population([]);
+    
+//num A = 20+7+9;
+
+Line L = new Line((A, B, A), 4, 12, 3); 
+
+//num y =1+1;
+//num z = -1;
 
 
-ShowGUI();
+    public static int statA ( int b )
+    {
+    
+    
+    }
+    
 
-Line t {
-Stations(A, B, A);
-Frequency(4);
-Capacity(12);
-Speed(3);
+String Hello = Test;		 //problems here - loses quotes
+
+Time rushhour[0,10];
+
+if (x > y) {
+num x = 1;
+} 
+else {
+num z = getFrequency(B);
 }
 
-Stat pplTimesTwo(Time t)
-{
-num ppl = getNumPassengers(t) * 2;
-return ppl;
+if (x > y) {
+num x = 1;
+} 
+
+Simulate (5) {
+//int x = 5;
+num x = 5+10-1;
+
 }
-Time lateNight[0, 6];
-Time morningRush[6, 10];
-Time day[10, 15];
+
+ShowGUI();	 //keep outside simulate block
 
 
 
-
-num val = getCapacity(day);
  } }

@@ -114,15 +114,20 @@ public class Simulate {
 			//get pop item array associated with population
 			PopItem[] popItemArray = aPop.getPopItemArr();
 			
+			//int peopleCount = 0;
 			//iterate through pop item array
 			for (PopItem anItem : popItemArray){
 				
 				//get destination and rate 
 				Station destStation = anItem.getDest();
+				String destStationName = destStation.getName();
+				
 				int popRate = (int)anItem.getRate();
-			
+				int peopleCount = 0;
+				
 				//create a new person up to the rate value
-				for (int i = 0; i < popRate; i++){
+				//for (int i = 0; i < popRate; i++){
+				while (peopleCount < popRate){
 					//arrivalTime = arriveTime, StationDest = destStation, 
 					//StationSource = stationList.get(si), Station next = get from routing table
 					
@@ -135,24 +140,49 @@ public class Simulate {
 					
 					for(int j=0; j < aTable.length; j++) {
 						
+						//check to make sure person's destination is on this route
+						Line currLine = aTable[j].getLine();
+						
+						Station[] currRoute = currLine.getRoute();
+						//iterate through stations on this route
+						for (Station aStation : currRoute){
+							String currStationName = aStation.getName();
+							
+							//see if station person wants to go to is on this route
+							if (currStationName.equals(destStationName)){
+								
+								//if it is, get next station on routing table
+								Station nextStation = aTable[j].getNext();
+								
+								if (peopleCount < popRate){
+									//create new person	
+									Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+										
+									//increment peopleCount
+									peopleCount++;
+								}	
+						
+							}	
+						
 						//get next station on routing table
-						Station nextStation = aTable[j].getNext();
+						//Station nextStation = aTable[j].getNext();
 						
 						//****Note: I'm not sure if I'm using routing table correctly -- will go back to this
 						
 						//create new person
-						Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+						//Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
 					
 						//why is it saying aPerson never gets read???
 						//should we add each person to an array or something?
-					}
+						}
 				
+					}
 				}
-			}
 			
+			}
+	
 		}
 	}
-
 	public void trainArrive(ArrayList<Line> lineList, int currTime){
 		//look up in the line objects to see if new trains should be created to arrive at each station 
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)

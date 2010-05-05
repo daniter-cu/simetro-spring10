@@ -130,22 +130,78 @@ public class Simulate {
 			
 					RoutingTab[] aTable = sourceStation.getRoutingTable();
 					
-					Station nextStation = aTable.getNext();
+					//Station nextStation = aTable.getNext();
+				
 					
-					//create new person
-					Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+					for(int j=0; j < aTable.length; j++) {
+						
+						//get next station on routing table
+						Station nextStation = aTable[j].getNext();
+						
+						//****Note: I'm not sure if I'm using routing table correctly -- will go back to this
+						
+						//create new person
+						Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
 					
-					//should we add each person to an array or something?
+						//why is it saying aPerson never gets read???
+						//should we add each person to an array or something?
+					}
+				
 				}
 			}
 			
 		}
 	}
-	
-	
-	public void trainArrive(){
+
+	public void trainArrive(ArrayList<Line> lineList, int currTime){
 		//look up in the line objects to see if new trains should be created to arrive at each station 
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
+		
+		
+		//iterate through list of lines
+		for(int i=0;i<lineList.size();i++) {
+			
+			Line aLine = lineList.get(i);
+			
+			double lineRate = aLine.getRate();
+			double lineSpeed = aLine.getSpeed();
+			Station[] lineRoute = aLine.getRoute();
+			int lineCap = aLine.getCapacity();
+			
+			//why is it saying local vars won't get read??
+	
+			//am I using line rate correctly?  Go back to this.
+			
+			//if current time mod line rate is 0, it's time for new trains to be created at first and last station of line
+			if (currTime % lineRate == 0){
+				//get first station of line
+				Station firstStation = lineRoute[0];
+				
+				//get station coords
+				Coordinate firstCoords = firstStation.getCoordinate();
+				
+				int lineLength = lineRoute.length;
+				
+				//get last station of line
+				//make sure this doesn't give you an off by one error
+				Station lastStation = lineRoute[lineLength-1];
+				
+				//get station coords
+				Coordinate lastCoords = lastStation.getCoordinate();
+				
+				//Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
+				//now create a train at first station
+				Train firstTrain = new Train(aLine, currTime, firstCoords, lineCap, lineSpeed);
+				
+				//now create a train at last station
+				Train endTrain = new Train(aLine, currTime, lastCoords, lineCap, lineSpeed);
+				
+				//Should we add these trains to an array or something?? go back to this
+			}
+					
+		}	
+		
+	
 	}
 	
 	public void trainMove() {

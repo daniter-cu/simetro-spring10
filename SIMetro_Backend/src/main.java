@@ -70,7 +70,7 @@ public class main {
 		
 		for(int time=0;time<60;time++){
 			sim.peopleArrive(stationList, time);
-			sim.trainArrive();
+			sim.trainArrive(lineList, time);
 			sim.trainMove();
 		}
 		

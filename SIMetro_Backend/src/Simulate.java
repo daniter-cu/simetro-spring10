@@ -111,78 +111,75 @@ public class Simulate {
 			//get population for station
 			Population aPop = stationList.get(si).getPop();
 			
-			//get pop item array associated with population
-			ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
+			if (aPop != null){
+				//get pop item array associated with population
+				ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
 			
-			//int peopleCount = 0;
-			//iterate through pop item array
-			for (PopItem anItem : popItemArray){
+				//int peopleCount = 0;
+				//iterate through pop item array
+				for (PopItem anItem : popItemArray){
 				
-				//get destination and rate 
-				Station destStation = anItem.getDest();
-				String destStationName = destStation.getName();
+					//get destination and rate 
+					Station destStation = anItem.getDest();
+					String destStationName = destStation.getName();
 				
-				int popRate = (int)anItem.getRate();
-				int peopleCount = 0;
+					int popRate = (int)anItem.getRate();
+					int peopleCount = 0;
 				
-				//create a new person up to the rate value
-				//for (int i = 0; i < popRate; i++){
-				while (peopleCount < popRate){
-					//arrivalTime = arriveTime, StationDest = destStation, 
-					//StationSource = stationList.get(si), Station next = get from routing table
+					//create a new person up to the rate value
+					//for (int i = 0; i < popRate; i++){
+					while (peopleCount < popRate){
+						//Parameters are as follows: arrivalTime = arriveTime, StationDest = destStation, 
+						//StationSource = stationList.get(si), Station next = get from routing table
 					
-					Station sourceStation = stationList.get(si);
+						Station sourceStation = stationList.get(si);
 			
-					ArrayList<RoutingTab> aTable = sourceStation.getRoutingTable();
+						ArrayList<RoutingTab> aTable = sourceStation.getRoutingTable();
 					
-					//Station nextStation = aTable.getNext();
-				
 					
-					for(int j=0; j < aTable.size(); j++) {
+						for(int j=0; j < aTable.size(); j++) {
 						
-						//check to make sure person's destination is on this route
-						Line currLine = aTable.get(j).getLine();
+							//check to make sure person's destination is on this route
+							Line currLine = aTable.get(j).getLine();
 						
-						ArrayList<Station> currRoute = currLine.getRoute();
-						//iterate through stations on this route
-						for (Station aStation : currRoute){
-							String currStationName = aStation.getName();
+							ArrayList<Station> currRoute = currLine.getRoute();
+							//iterate through stations on this route
+							for (Station aStation : currRoute){
+								String currStationName = aStation.getName();
 							
-							//see if station person wants to go to is on this route
-							if (currStationName.equals(destStationName)){
+								//see if station person wants to go to is on this route
+								if (currStationName.equals(destStationName)){
 								
-								//if it is, get next station on routing table
-								Station nextStation = aTable.get(j).getNext();
+									//if it is, get next station on routing table
+									Station nextStation = aTable.get(j).getNext();
 								
-								if (peopleCount < popRate){
-									//create new person	
-									Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+									while (peopleCount < popRate){
+										//create new person	
+										Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
+										System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
+										//increment peopleCount
+										peopleCount++;
 										
-									//increment peopleCount
-									peopleCount++;
+									}	
+						
 								}	
 						
-							}	
+								//****Note: I'm not sure if I'm using routing table correctly -- will go back to this
 						
-						//get next station on routing table
-						//Station nextStation = aTable[j].getNext();
-						
-						//****Note: I'm not sure if I'm using routing table correctly -- will go back to this
-						
-						//create new person
-						//Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
-					
-						//why is it saying aPerson never gets read???
-						//should we add each person to an array or something?
-						}
+
+								//why is it saying aPerson never gets read???
+								//should we add each person to an array or something?
+							}
 				
+						}
 					}
-				}
 			
-			}
+				}
 	
+			}
 		}
 	}
+	
 	public void trainArrive(ArrayList<Line> lineList, int currTime){
 		//look up in the line objects to see if new trains should be created to arrive at each station 
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)

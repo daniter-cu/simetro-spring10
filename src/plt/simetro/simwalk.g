@@ -36,12 +36,9 @@ ArrayList<String> popnames= new ArrayList<String>();
 
 
 
-
-
-
 /*
 ***************************
-THIS WORKS SLIGHTLY!
+THIS WORKS SLIGHTLY BETTER!
 
 ***************************
 */
@@ -49,12 +46,10 @@ THIS WORKS SLIGHTLY!
 
 //problem with * at end of prog - very weird!
 program: (declarations |statements)*
-        ;
+;
 //program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*   
 //program: (simulate|line|station|population|stat|statements|load|showgui|string|time|primitive_type_declarator)*   
 //;
-
-
 
 declarations:
         types
@@ -75,25 +70,28 @@ line:
     //template
     ->template(separator = {","}, id = {$ID.text}, i={$i.s}, f = {$f.text}, c={$c.text}, s={$s.text} )
     "Line <id> = new Line(<i><separator> <f><separator> <c><separator> <s>);"
+    //"lineList.add(new Line(\"<i>\"<separator> 
     ;
 
 //WE HAVE A CIRCULARITY - WHICH WAY ARE WE GOING POP FIRST OR STATIONS
 station:
-    ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) ^(POPULATION pname=ID))
-   
+    ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) (^(POPULATION pname=ID))* )
     {
     //String cord = newCord();
     //System.out.println("Coordinate " +cord +" = new Coordinate("+$i.text+","+$j.text+");");
     //System.out.println("Station " +$sname.text+" = new Station("+cord+","+$pname.text+");");
     }
-    //template
-    ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text}, pname = {$pname.text}  )
-    "Station <sname> = new Station(new Coordinate(<cord>)<separator> <pname>)"
+    //declared with population
+    ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text}, pname = {$pname}  )
+    //"Station <sname> = new Station(new Coordinate(<cord>)<separator> <pname>)"
+    "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)<separator> <pname>)"
     
-     | ^(STATION sname=ID) {System.out.println("Station " +$sname.text+";"); }
-     //template
+     | ^(STATION sname=ID) 
+     {System.out.println("Station " +$sname.text+";"); }
+     //declared without population
      ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text})
-     "Station <sname> = new Station(new Coordinate(<cord>);"
+     //"Station <sname> = new Station(new Coordinate(<cord>);"
+        "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)<separator> <pname>)"
     ;
     
 
@@ -123,10 +121,12 @@ population:
 popitem:
     ^(POPITEM ID INTEGER) 
     { 
-   //   String name = newID();
-   //   System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
+    //   String name = newID();
+    //   System.out.println("PopItem " + name + " = new PopItem("+ $ID +","+$INTEGER +");");
     //  popitems.add(name);
-    //  popnames.add(new String("("+$ID +","+$INTEGER+")"));
+    
+    //use this to populate bunch of popitems and then output per POPULATION
+      popnames.add(new String("("+$ID +","+$INTEGER+")"));
         }
     ;
     
@@ -171,13 +171,15 @@ time:
             }*/
         ;
 
-
-
-//not working properly - forgets quotes
-//defining strings
+//String
 string:
-        ^('String' ID '=' STRING) 
+        ^('String' myid=ID '=' str=STRING)
+        ->template(myid={$myid.text}, str={$str.text} ) 
+        "String <myid> = \"<str>\";"
+        
         | ^('String' ID) 
+        ->template(myid={$myid.text} ) 
+        "String <myid>;"        
         ;
 
 //primitive-type-declarator
@@ -209,15 +211,36 @@ derived_type:
     'Station' | 'Line' | 'Time' | 'Population' 
     ;      
 
-//not sure how to translate this into java....will we have collections?       
+/*assuming we can only iterate over
+stationList
+populationList
+lineList
+popItems possible, but probably will only be used internally
+so we have to declare these as globals from the onset
+*/   
 foreach:
         ^('foreach' derived_type ID blockstmt)
+        {
+        //need to choose proper global type
+        
+        
+        }
+        -> template(dtype = {$derived_type.text}, myID = {$ID.text}, blk = {$blockstmt.text})
+        "for Object n : <dtype>"
         ;
 
+//if we do x[0,-9] this is setup to count backwards..
+//had to change grammar to for loop to accomodate negatives (hence unaryExpr)
 forloop:
-        ^('for' ID INTEGER INTEGER blockstmt)
-        //-> template()
-        //""
+        ^('for' myid=ID int1=unaryExpr int2=unaryExpr blockstmt)
+        {
+        String inc,rel;
+        if (Integer.parseInt($int2.text) > Integer.parseInt($int1.text)) 
+            {inc = "++"; rel="<"; } else { inc = "--"; rel=">"; }
+        
+        }
+        -> template(myID = {$myid.text}, INT1 = {$int1.text}, INT2 = {$int2.text}, myinc = {inc}, myrel = {rel}, blk = {$blockstmt.text} )
+        "for (int <myID>=<INT1>; <myID> <myrel> <INT2>; <myID><myinc> ) <blk>"
         ;
 
 ifstmt:
@@ -256,7 +279,6 @@ arithExpr:
         | NUM
         | INTEGER
         | String
-
         ;
 
 //these might be unecessary below now that arithExpr is merged
@@ -272,8 +294,8 @@ primaryExpr:
         |INTEGER
         |procedures
         ;
+        
 //==PROCEDURES
-
 procedures:
         ^(FUNCTIONS  params )
         | func_call
@@ -290,16 +312,25 @@ mod_procedures:
         ;   
      
 print_function:
-        ^('print' (STRING |procedures | ID) )
-        {System.out.println("System.out.println(\" Hello World\")");}
-        //-> template( mystring = {$STRING.text}, myproc = {$procedures}, myID = {$ID.text})
+        ^('print' STRING )
+        -> template( mystring = {$STRING.text} )
+        "System.out.println(\"<mystring>\");"
+        
+        | ^('print' procedures )
+        -> template( myproc = {$procedures.text} )
+        "System.out.println(<myproc>);"
+        
+        | ^('print' ID )  
+        -> template( myID = {$ID.text} )
+        "System.out.println(<myID>);"
+        //{System.out.println("System.out.println(\" Hello World\")");}
         ;
 
-               
 showgui:
         ShowGUI
         ;
 
+//THIS IS TRICKY..
 load:
         ^('load' ID) 
         ;

@@ -355,6 +355,12 @@ load:
 
 simulate:
         ^('Simulate' INTEGER  blockstmt)
+        ->template( blk = {$blockstmt.text} )
+        "
+        Simulate sim=new Simulate();
+        sim.createRoutingTables(stationList,lineList);
+        <blk>
+        "
         ;
 
 //==PARAMETERS

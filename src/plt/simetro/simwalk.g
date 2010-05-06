@@ -27,11 +27,12 @@ public String newCord()
   return cord;
 }
 
-
+String iter ="";
 ArrayList<String> popitems = new ArrayList<String>();
 
 //this is to inline declare population/popitems
 ArrayList<String> popnames= new ArrayList<String>();
+HashMap<String, String> popstationMap = new HashMap<String, String>();
 }
 
 
@@ -63,35 +64,46 @@ types:
 //==DERIVED TYPES==
 
 line: 
-    ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=INTEGER) ^(CAPACITY c=INTEGER) ^(SPEED s=INTEGER) )
+    ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=NUM) ^(CAPACITY c=INTEGER) ^(SPEED s=INTEGER) )
     {
    // System.out.println("Line " + $ID + "= new Line("+$i.s+","+$f.text+"," +$c.text +","+ $s.text+");");
+    String[] stationArr= new String($i.text).split(",");
+    iter +="a";
     }
     //template
-    ->template(separator = {","}, id = {$ID.text}, i={$i.s}, f = {$f.text}, c={$c.text}, s={$s.text} )
-    "Line <id> = new Line(<i><separator> <f><separator> <c><separator> <s>);"
-    //"lineList.add(new Line(\"<i>\"<separator> 
+    ->template(n = {iter}, separator = {","}, id = {$ID.text}, i={$i.s}, f = {$f.text}, c={$c.text}, s={$s.text} )
+    //"Line <id> = new Line(<i><separator> <f><separator> <c><separator> <s>);"  
+    "
+    for (Object <n> : new ArrayList\<Object\>( Arrays.asList(new String(\"<i>\").replaceAll(\"\\\s+|\\\(|\\\)\", \"\").split(\",\")))) {
+        tempList_stations.add(stationMap.get((String)<n>));
+    }
+    lineList.add(new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations)));
+    tempList_stations.clear();"
     ;
 
-//WE HAVE A CIRCULARITY - WHICH WAY ARE WE GOING POP FIRST OR STATIONS
+
 station:
     ^(STATION sname=ID ^(COORDINATES i=INTEGER j=INTEGER) (^(POPULATION pname=ID))* )
     {
     //String cord = newCord();
     //System.out.println("Coordinate " +cord +" = new Coordinate("+$i.text+","+$j.text+");");
     //System.out.println("Station " +$sname.text+" = new Station("+cord+","+$pname.text+");");
+    popstationMap.put($pname.text, $sname.text);
+    //System.out.println(stationpopMap.values().toArray().toString() );
     }
     //declared with population
     ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text}, pname = {$pname}  )
     //"Station <sname> = new Station(new Coordinate(<cord>)<separator> <pname>)"
-    "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)<separator> <pname>)"
+    "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)));
+    stationMap.put(\"<sname>\"<separator> stationList.get(stationList.size() - 1));"
     
      | ^(STATION sname=ID) 
      {System.out.println("Station " +$sname.text+";"); }
      //declared without population
      ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text})
      //"Station <sname> = new Station(new Coordinate(<cord>);"
-        "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)<separator> <pname>)"
+     "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)<separator> <pname>));
+     stationMap.put(\"<sname>\"<separator> stationList.get(stationList.size() - 1));"
     ;
     
 
@@ -107,15 +119,21 @@ population:
         
      // }
     poplist = popnames.toString();
+    
     //this is so it doesn't continually add popitems when not associated with the correct population
     popitems.clear();
     popnames.clear();
+    iter += "a";
+    String stn = popstationMap.get($i.text);
     }
     //template
-    ->template(i = {$i.text}, p = {poplist} )
-    "Population <i> = new Population(<p>);
-    "
-    ;
+    ->template(i = {$i.text}, p = {poplist}, mystn = {stn}, n = {iter} )
+    //"Population <i> = new Population(<p>);"
+    "for (Object <n> : new ArrayList\<Object\>( Arrays.asList(new String(\"<p>\").replaceAll(\"\\\s+|\\\(|\\\)|\\\[|\\\]\", \"\").split(\",\")))) {
+        popItemList.add(new PopItem(stationMap.get(new String(<n>.toString().split(\"\\\.\")[0])), Double.parseDouble(new String(<n>.toString().split(\"\\\.\")[1]))));
+    }
+    stationMap.get(\"<mystn>\").setPop(new Population(popItemList));
+    ";
     
   
 popitem:
@@ -126,7 +144,7 @@ popitem:
     //  popitems.add(name);
     
     //use this to populate bunch of popitems and then output per POPULATION
-      popnames.add(new String("("+$ID +","+$INTEGER+")"));
+      popnames.add(new String("("+$ID +"."+$INTEGER+")"));
         }
     ;
     

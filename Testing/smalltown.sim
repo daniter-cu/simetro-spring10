@@ -1,33 +1,55 @@
-load mymap.map;
 
 
-Station A {
-Coordinates (1,5); //coordinates
+Station s_110ST {
+Coordinates (0,6); //coordinates
 Population (P1); //associate p1 with this station
 }
 
-Station B {
-Coordinates (100,500); //coordinates
-Population (P2); //associate p2 with this station
+Station s_116ST{
+Coordinates (0,15); //coordinates
 }
 
+Station s_125ST{
+Coordinates (0,15); //coordinates
+}
+
+Station s_5AV{
+Coordinates (0,15); //coordinates
+}
+
+Station s_4AV{
+Coordinates (0,15); //coordinates
+}
 
 Population P1 {
-(B, 10)
+(s_110ST, 5)
 }
 
-Population P2 {
-(A, 10)
-(C, 100)
+
+
+Line Line1 {	
+	Stations (s_110ST, s_116ST, s_125ST);	
+	Frequency (0.2);
+	Capacity (2);
+	Speed (100); } 
+
+Line Line2 {	
+	Stations (s_116ST, s_5AV, s_4AV);	
+	Frequency (0.2);
+	Capacity (2);
+	Speed (100); }
+	
+Line Line3 {	
+	Stations (s_110ST, s_4AV, s_125ST);	
+	Frequency (0.2);
+	Capacity (3);
+	Speed (100); }
+	
+Simulate (5) {
+print "Done";
 }
-//num A = 20+7+9;
 
-Line L {	
-	Stations (A, B, A);	
-	Frequency (4);
-	Capacity (12);
-	Speed (3); } 
-
+/*
 //num y =1+1;
 //num z = -1;
 
@@ -54,13 +76,9 @@ if (x > y) {
 num x = 1;
 } 
 
-Simulate (5) {
-//int x = 5;
-num x = 5+10-1;
 
-}
 
 ShowGUI();	 //keep outside simulate block
 
-
+*/
 

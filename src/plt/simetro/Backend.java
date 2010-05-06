@@ -74,14 +74,19 @@ public class Backend {
  
             //==FILE I/O
             String[] newfile2 = file.split("/");
-            String classname = (newfile2[newfile2.length-1]);
+            String classname = (newfile2[newfile2.length-1] );
+
             
             String header = "public class "+ classname + " { \r\r";
             String main = "public static void main (String[] args)  {  \r\r\r\r";
+            String globals = "static ArrayList<Station> stationList=new ArrayList<Station>();\r";
+            globals += "static ArrayList<Line> lineList=new ArrayList<Line>();\r";
+            globals += "static ArrayList<Population> populationList=new ArrayList<Population>();\r";
+            globals += "static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();\r\r";
             
             BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
             try {
-            	outputStream.write( header + main + tokenStream.toString() + "\r\r } \r\r\r}" );
+            	outputStream.write( header + globals + main + tokenStream.toString() + "\r\r } \r\r\r}" );
               }
               finally {
             	  outputStream.close();

@@ -137,7 +137,7 @@ foreach:
         ;
 
 forloop:
-        'for'^ ID '['! INTEGER ','! INTEGER ']'! blockstmt
+        'for'^ ID '['! unaryExpr ','! unaryExpr ']'! blockstmt
         ;
 
 ifstmt:

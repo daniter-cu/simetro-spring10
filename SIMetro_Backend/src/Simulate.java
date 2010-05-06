@@ -219,9 +219,12 @@ public class Simulate {
 				//Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 				//now create a train at first station
 				Train firstTrain = new Train(aLine, currTime, firstCoords, lineCap, lineSpeed);
+				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + firstStation.getName());
+				
 				
 				//now create a train at last station
 				Train endTrain = new Train(aLine, currTime, lastCoords, lineCap, lineSpeed);
+				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
 				
 				//Should we add these trains to an array or something?? go back to this
 			}

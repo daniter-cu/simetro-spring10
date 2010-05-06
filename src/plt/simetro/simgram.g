@@ -60,7 +60,7 @@ types:
 line: 
     'Line' ID  '{'
     'Stations' '(' idlist ')' ';' 
-    'Frequency' '(' f=INTEGER ')' ';'
+    'Frequency' '(' f=NUM ')' ';'
     'Capacity' '(' c=INTEGER ')' ';'
     'Speed' '(' s=INTEGER ')' ';' 
     '}' 

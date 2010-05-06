@@ -1,12 +1,12 @@
 
 
 Station s_110ST {
-Coordinates (0,6); //coordinates
+Coordinates (0,0); //coordinates
 Population (P1); //associate p1 with this station
 }
 
 Station s_116ST{
-Coordinates (0,15); //coordinates
+Coordinates (0,6); //coordinates
 }
 
 Station s_125ST{
@@ -14,15 +14,15 @@ Coordinates (0,15); //coordinates
 }
 
 Station s_5AV{
-Coordinates (0,15); //coordinates
+Coordinates (10,6); //coordinates
 }
 
 Station s_4AV{
-Coordinates (0,15); //coordinates
+Coordinates (15,6); //coordinates
 }
 
 Population P1 {
-(s_110ST, 5)
+(s_116ST, 5)
 }
 
 

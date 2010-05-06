@@ -76,17 +76,22 @@ public class Backend {
             String[] newfile2 = file.split("/");
             String classname = (newfile2[newfile2.length-1] );
 
+            String imports = "import java.util.ArrayList;\n" + 
+            		"import java.util.Arrays;\n" + 
+            		"import java.util.HashMap;\r\r\r";
             
-            String header = "public class "+ classname + " { \r\r";
+            String header = "public class "+ classname.replaceAll(".sim", "") + " { \r\r";
             String main = "public static void main (String[] args)  {  \r\r\r\r";
             String globals = "static ArrayList<Station> stationList=new ArrayList<Station>();\r";
             globals += "static ArrayList<Line> lineList=new ArrayList<Line>();\r";
             globals += "static ArrayList<Population> populationList=new ArrayList<Population>();\r";
-            globals += "static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();\r\r";
+            globals += "static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();\r";
+            globals += "static HashMap<String, Station> stationMap=new HashMap<String, Station>();\r";
+            globals += "static ArrayList<Station> tempList_stations=new ArrayList<Station>();\r\r";
             
             BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
             try {
-            	outputStream.write( header + globals + main + tokenStream.toString() + "\r\r } \r\r\r}" );
+            	outputStream.write( imports+header + globals + main + tokenStream.toString() + "\r\r } \r\r\r}" );
               }
               finally {
             	  outputStream.close();
@@ -96,25 +101,10 @@ public class Backend {
             System.out.println("--end Template--");
 		
 		
-            test(new String("hello"));
+
             
 		} //end main
 
-		
-		public static void test(String x) {
-			System.out.println(x);
-			
-
-
-		}
 
 	} // end class
 
-/*
-	"Line t {" +
-	"Stations(A);" +
-	"Frequency(10);" +
-	"Capacity(1);" +
-	"Speed(3);" +
-	"}"
-*/

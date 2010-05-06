@@ -1,23 +1,27 @@
+import java.util.ArrayList;
+
 
 public class Population {
-	private PopItem[] popItemArr;
+	private ArrayList<PopItem> popItemArr;
 
 	
 	public Population() {
 		super();
 	}
 
-	public Population(PopItem[] popItemArr) {
+	public Population(ArrayList<PopItem> popItemArr) {
 		super();
+		this.setPopItemArr(popItemArr);
+	}
+
+	public void setPopItemArr(ArrayList<PopItem> popItemArr) {
 		this.popItemArr = popItemArr;
 	}
 
-	public void setPopItemArr(PopItem[] popItemArr) {
-		this.popItemArr = popItemArr;
-	}
-
-	public PopItem[] getPopItemArr() {
+	public ArrayList<PopItem> getPopItemArr() {
 		return popItemArr;
 	}
+
+
 
 }

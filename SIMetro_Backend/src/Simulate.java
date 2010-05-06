@@ -8,9 +8,9 @@ public class Simulate {
 		//for each station, create its routing table and link it to the station
 		ArrayList<Edge> edgeList=new ArrayList<Edge>();
 		for(int i=0;i<lineList.size();i++) {
-			for(int j=0;j<lineList.get(i).getRoute().length-1;j++) {
-				Station s1=lineList.get(i).getRoute()[j];
-				Station s2=lineList.get(i).getRoute()[j+1];
+			for(int j=0;j<lineList.get(i).getRoute().size()-1;j++) {
+				Station s1=lineList.get(i).getRoute().get(j);
+				Station s2=lineList.get(i).getRoute().get(j+1);
 				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),(Math.round((s1.getCoordinate().getDistance(s2.getCoordinate())/lineList.get(i).getSpeed()*10.0)))/10.0,lineList.get(i));				
 				edgeList.add(edge);
 			}
@@ -18,7 +18,7 @@ public class Simulate {
 		System.out.println("edgeList.size() "+edgeList.size());
 		
 		for(int si=0;si<stationList.size();si++) {
-			RoutingTab RoutingTable[]=new RoutingTab[stationList.size()-1];
+			ArrayList<RoutingTab> RoutingTable=new ArrayList<RoutingTab>();
 			int sli=0;
 			for(int rti=0;rti<stationList.size()-1;rti++) {
 				if(sli==si)
@@ -26,7 +26,7 @@ public class Simulate {
 					RoutingTab rt=new RoutingTab();
 					rt.setDest(stationList.get(sli));
 					rt.setDist(9999);
-					RoutingTable[rti]=rt;
+					RoutingTable.add(rt);
 					sli++;
 
 			}
@@ -47,11 +47,11 @@ public class Simulate {
 		System.out.println("Original Routing Table:");
 		for(int i=0;i<stationList.size();i++) {
 			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
-			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {
-				System.out.println("Dest: "+stationList.get(i).getRoutingTable()[j].getDest().getName()
-						+"\tDist: "+stationList.get(i).getRoutingTable()[j].getDist()
-						+"\tLine: "+stationList.get(i).getRoutingTable()[j].getLine().getName()
-						+"\tNext: "+stationList.get(i).getRoutingTable()[j].getNext().getName());
+			for(int j=0;j<stationList.get(i).getRoutingTable().size();j++) {
+				System.out.println("Dest: "+stationList.get(i).getRoutingTable().get(j).getDest().getName()
+						+"\tDist: "+stationList.get(i).getRoutingTable().get(j).getDist()
+						+"\tLine: "+stationList.get(i).getRoutingTable().get(j).getLine().getName()
+						+"\tNext: "+stationList.get(i).getRoutingTable().get(j).getNext().getName());
 			}
 		}
 //		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
@@ -60,22 +60,22 @@ public class Simulate {
 //			System.out.println("i:"+i);
 			for(int si=0;si<stationList.size();si++) {
 //				System.out.println("si:"+si);
-				for(int rti=0;rti<stationList.get(si).getRoutingTable().length;rti++) {
+				for(int rti=0;rti<stationList.get(si).getRoutingTable().size();rti++) {
 //					System.out.println("rti:"+rti);
 					Station source=stationList.get(si);
-					Station dest=stationList.get(si).getRoutingTable()[rti].getDest();
+					Station dest=stationList.get(si).getRoutingTable().get(rti).getDest();
 					for(int tr=0;tr<stationList.size()-1;tr++) {
-						if((!source.getRoutingTable()[tr].equals(dest))&&(!source.getRoutingTable()[tr].getDest().equals(dest))) {
+						if((!source.getRoutingTable().get(tr).equals(dest))&&(!source.getRoutingTable().get(tr).getDest().equals(dest))) {
 //							System.out.println(source.getRoutingTable()[tr].getDist());
 //							System.out.println("+++++"+source.getRoutingTable()[tr].getDest().getName());
 //							System.out.println(dest.getName());
 //							System.out.println(source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist());
 
-							double newdist=source.getRoutingTable()[tr].getDist()+source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist();
-							if (newdist<source.getRoutingTable()[rti].getDist()) {
-								source.getRoutingTable()[rti].setDist(newdist);
-								source.getRoutingTable()[rti].setLine(source.getRoutingTable()[tr].getLine());
-								source.getRoutingTable()[rti].setNext(source.getRoutingTable()[tr].getNext());
+							double newdist=source.getRoutingTable().get(tr).getDist()+source.getRoutingTable().get(tr).getDest().getRTabByDest(dest).getDist();
+							if (newdist<source.getRoutingTable().get(rti).getDist()) {
+								source.getRoutingTable().get(rti).setDist(newdist);
+								source.getRoutingTable().get(rti).setLine(source.getRoutingTable().get(tr).getLine());
+								source.getRoutingTable().get(rti).setNext(source.getRoutingTable().get(tr).getNext());
 							}
 						}
 					}
@@ -88,11 +88,11 @@ public class Simulate {
 		System.out.println("Routing Table all constructed!");
 		for(int i=0;i<stationList.size();i++) {
 			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
-			for(int j=0;j<stationList.get(i).getRoutingTable().length;j++) {
-				System.out.println("Dest: "+stationList.get(i).getRoutingTable()[j].getDest().getName()
-						+"\tDist: "+stationList.get(i).getRoutingTable()[j].getDist()
-						+"\tLine: "+stationList.get(i).getRoutingTable()[j].getLine().getName()
-						+"\tNext: "+stationList.get(i).getRoutingTable()[j].getNext().getName());
+			for(int j=0;j<stationList.get(i).getRoutingTable().size();j++) {
+				System.out.println("Dest: "+stationList.get(i).getRoutingTable().get(j).getDest().getName()
+						+"\tDist: "+stationList.get(i).getRoutingTable().get(j).getDist()
+						+"\tLine: "+stationList.get(i).getRoutingTable().get(j).getLine().getName()
+						+"\tNext: "+stationList.get(i).getRoutingTable().get(j).getNext().getName());
 			}
 		}
 		
@@ -112,7 +112,7 @@ public class Simulate {
 			Population aPop = stationList.get(si).getPop();
 			
 			//get pop item array associated with population
-			PopItem[] popItemArray = aPop.getPopItemArr();
+			ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
 			
 			//int peopleCount = 0;
 			//iterate through pop item array
@@ -133,17 +133,17 @@ public class Simulate {
 					
 					Station sourceStation = stationList.get(si);
 			
-					RoutingTab[] aTable = sourceStation.getRoutingTable();
+					ArrayList<RoutingTab> aTable = sourceStation.getRoutingTable();
 					
 					//Station nextStation = aTable.getNext();
 				
 					
-					for(int j=0; j < aTable.length; j++) {
+					for(int j=0; j < aTable.size(); j++) {
 						
 						//check to make sure person's destination is on this route
-						Line currLine = aTable[j].getLine();
+						Line currLine = aTable.get(j).getLine();
 						
-						Station[] currRoute = currLine.getRoute();
+						ArrayList<Station> currRoute = currLine.getRoute();
 						//iterate through stations on this route
 						for (Station aStation : currRoute){
 							String currStationName = aStation.getName();
@@ -152,7 +152,7 @@ public class Simulate {
 							if (currStationName.equals(destStationName)){
 								
 								//if it is, get next station on routing table
-								Station nextStation = aTable[j].getNext();
+								Station nextStation = aTable.get(j).getNext();
 								
 								if (peopleCount < popRate){
 									//create new person	
@@ -195,7 +195,7 @@ public class Simulate {
 			
 			double lineRate = aLine.getRate();
 			double lineSpeed = aLine.getSpeed();
-			Station[] lineRoute = aLine.getRoute();
+			ArrayList<Station> lineRoute = aLine.getRoute();
 			int lineCap = aLine.getCapacity();
 			
 			//why is it saying local vars won't get read??
@@ -205,16 +205,16 @@ public class Simulate {
 			//if current time mod line rate is 0, it's time for new trains to be created at first and last station of line
 			if (currTime % lineRate == 0){
 				//get first station of line
-				Station firstStation = lineRoute[0];
+				Station firstStation = lineRoute.get(0);
 				
 				//get station coords
 				Coordinate firstCoords = firstStation.getCoordinate();
 				
-				int lineLength = lineRoute.length;
+				int lineLength = lineRoute.size();
 				
 				//get last station of line
 				//make sure this doesn't give you an off by one error
-				Station lastStation = lineRoute[lineLength-1];
+				Station lastStation = lineRoute.get(lineLength-1);
 				
 				//get station coords
 				Coordinate lastCoords = lastStation.getCoordinate();

@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+
 
 public class Station {
 	private String name;
-	private RoutingTab[] routingTable;
+	private ArrayList<RoutingTab> routingTable;
 	private Coordinate coordinate;
 	private Population pop;
 	
@@ -24,9 +26,9 @@ public class Station {
 	}
 	
 	public RoutingTab getRTabByDest(Station dest) {
-		for(int i=0;i<routingTable.length;i++) {
-			if(routingTable[i].getDest().equals(dest)) {
-				return routingTable[i];
+		for(int i=0;i<getRoutingTable().size();i++) {
+			if(getRoutingTable().get(i).getDest().equals(dest)) {
+				return getRoutingTable().get(i);
 			}
 		}
 		return null;
@@ -38,12 +40,7 @@ public class Station {
 	public String getName() {
 		return name;
 	}
-	public void setRoutingTable(RoutingTab[] routingTable) {
-		this.routingTable = routingTable;
-	}
-	public RoutingTab[] getRoutingTable() {
-		return routingTable;
-	}
+
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
@@ -55,6 +52,14 @@ public class Station {
 	}
 	public Population getPop() {
 		return pop;
+	}
+
+	public void setRoutingTable(ArrayList<RoutingTab> routingTable) {
+		this.routingTable = routingTable;
+	}
+
+	public ArrayList<RoutingTab> getRoutingTable() {
+		return routingTable;
 	}
 
 	

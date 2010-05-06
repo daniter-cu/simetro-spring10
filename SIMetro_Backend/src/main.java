@@ -30,30 +30,33 @@ public class main {
 		
 
 		Station arr[]=new Station[3];
-		arr[0]=SA;
-		arr[1]=SB;
-		arr[2]=SC;
-		Line LA= new Line("Line1", 0.2, 2.0, 100,arr );
+		ArrayList<Station> al=new ArrayList<Station>();
+		al.add(SA);
+		al.add(SB);
+		al.add(SC);
+		Line LA= new Line("Line1", 0.2, 2.0, 100,al );
 		lineList.add(LA);
 		
 		Station arr2[]=new Station[3];
-		arr2[0]=SB;
-		arr2[1]=SD;
-		arr2[2]=SE;
-		Line LB=new Line("Line2",0.2,2.0,100,arr2);
+		ArrayList<Station> al2=new ArrayList<Station>();
+		al2.add(SB);
+		al2.add(SD);
+		al2.add(SE);
+		Line LB=new Line("Line2",0.2,2.0,100,al2);
 		lineList.add(LB);
 		
 		Station arr3[]=new Station[3];
-		arr3[0]=SA;
-		arr3[1]=SE;
-		arr3[2]=SC;
-		Line LC=new Line("Line3",0.2,3.0,200,arr3);
+		ArrayList<Station> al3=new ArrayList<Station>();
+		al3.add(SA);
+		al3.add(SE);
+		al3.add(SC);
+		Line LC=new Line("Line3",0.2,3.0,200,al3);
 		lineList.add(LC);
 
 		
 		PopItem PIA=new PopItem (SA,5);
-		PopItem PIArr[]=new PopItem[1];
-		PIArr[0]=PIA;
+		ArrayList<PopItem> PIArr=new ArrayList<PopItem>();
+		PIArr.add(PIA);
 		Population PA=new Population(PIArr);
 		System.out.println("Population created");
 		System.out.println();
@@ -61,8 +64,8 @@ public class main {
 		SA.setPop(PA);
 		System.out.println("Population linked");
 		System.out.println("For station: "+SA.getName()
-				+" Dest: "+SA.getPop().getPopItemArr()[0].getDest().getName()
-				+" The rate is: "+SA.getPop().getPopItemArr()[0].getRate());
+				+" Dest: "+SA.getPop().getPopItemArr().get(0).getDest().getName()
+				+" The rate is: "+SA.getPop().getPopItemArr().get(0).getRate());
 		System.out.println();
 		Simulate sim=new Simulate();
 		
@@ -73,9 +76,5 @@ public class main {
 			sim.trainArrive(lineList, time);
 			sim.trainMove();
 		}
-		
-
-
 	}
-
 }

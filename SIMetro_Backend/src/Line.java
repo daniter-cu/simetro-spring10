@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 
 public class Line {
 	private String name;
 	private double rate;
 	private double speed;
 	private int capacity;
-	private Station[] route;
+	private ArrayList<Station> route;
 	
 	
 
@@ -17,19 +19,19 @@ public class Line {
 		this.name = name;
 	}
 
-	public Line(String name, double rate, double speed, int capacity, Station[] route) {
+	public Line(String name, double rate, double speed, int capacity, ArrayList<Station> route) {
 		super();
 		this.name = name;
 		this.rate = rate;
 		this.speed = speed;
 		this.capacity = capacity;
-		this.route = route;
+		this.setRoute(route);
 		System.out.println("Line created: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
 		System.out.print("              ");
-		for(int i=0;i<route.length-1;i++) {
-			System.out.print(route[i].getName()+"<==>");
+		for(int i=0;i<route.size()-1;i++) {
+			System.out.print(route.get(i).getName()+"<==>");
 		}
-		System.out.println(route[route.length-1].getName());
+		System.out.println(route.get(route.size()-1).getName());
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -49,17 +51,20 @@ public class Line {
 	public double getSpeed() {
 		return speed;
 	}
-	public void setRoute(Station[] route) {
-		this.route = route;
-	}
-	public Station[] getRoute() {
-		return route;
-	}
+
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 	public int getCapacity() {
 		return capacity;
+	}
+
+	public void setRoute(ArrayList<Station> route) {
+		this.route = route;
+	}
+
+	public ArrayList<Station> getRoute() {
+		return route;
 	}
 
 }

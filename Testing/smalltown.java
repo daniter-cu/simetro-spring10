@@ -50,12 +50,32 @@ Line Line3 {
 Simulate (5) {
 print "Done";
 }
-*/
 
-double lambda = getRate(A, 5, Gabda);
+
+num lambda = getRate(A, 5, Gabda);
 
 num y = 1 * 2;
 num z = 3.23 - 0;
+
+Time rushhour[0,10];
+
+if( z >4){
+	y=5;}
+else
+{
+y=-4;
+}
+*/
+
+        Simulate sim=new Simulate();
+        sim.createRoutingTables(stationList,lineList);
+        {
+        double a = 5;
+        changeSpeed(A, 5);
+        }
+        
+
+double a = 1;
 /*
 Stat statA(int b, num a){
  num z;

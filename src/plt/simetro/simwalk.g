@@ -203,7 +203,7 @@ string:
 
 //primitive-type-declarator
 primitive_type_declarator returns [String str]:
-        ^(PRIMITIVE_TYPE i=ID)  {$str = "double " + $ID.text;} -> template(i={$i}) "double <i>"
+        ^(PRIMITIVE_TYPE i=ID)  {$str = "double " + $ID.text;} -> template(i={$i}) "double <i>;"
         ;
 
 

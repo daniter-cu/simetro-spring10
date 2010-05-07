@@ -58,7 +58,7 @@ z = (3.23 - 0);
 
     public static int statA ( int b, num a )
     {
-        double z
+        double z;
         double a = 6;
         double b = 6;
         a = (a + b);

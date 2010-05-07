@@ -1,4 +1,4 @@
-
+/*
 
 Station s_110ST {
 Coordinates (0,0); //coordinates
@@ -43,24 +43,26 @@ Line Line3 {
 	Stations (s_110ST, s_4AV, s_125ST);	
 	Frequency (0.2);
 	Capacity (3);
-	Speed (100); }
-	
+	Speed (100); }*/
+/*	
 Simulate (5) {
 print "Done";
 }
+*/
 
-/*
-//num y =1+1;
-//num z = -1;
+y = 1 * 2;
+z = 3.23 - 0;
 
-Stat statA(int b){
- int a=6;
+Stat statA(int b, num a){
+ num z;
+ num a=6;
  num b=6;
+ a = a + b;
 
  //num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
 }
-
+/*
 String Hello = "Test";		 //problems here - loses quotes
 
 Time rushhour[0,10];

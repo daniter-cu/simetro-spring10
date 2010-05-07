@@ -89,9 +89,9 @@ idlist : i+=ID (',' i+=ID)* -> ^(IDLIST $i*) ;
 
 stat:
         'Stat' ID '(' f=formal_params ')' '{'
-        (s+=statements)*
+        (s=statements)*
         'return' r=ID ';'
-        '}' -> ^(STAT ID $f $s ^(RETURN $r))
+        '}' -> ^(STAT ID $f statements* ^(RETURN $r))
         ;
         
 //time
@@ -107,7 +107,7 @@ string:
 
 //primitive-type-declarator
 primitive_type_declarator:
-        (PRIMITIVE_TYPE^ ID)	
+        (PRIMITIVE_TYPE^ ID )	
 		;
 
 
@@ -124,6 +124,7 @@ statements:
 	
 expression_statement:
         assignsExpr
+        | primitive_type_declarator
 		;
 
 blockstmt:
@@ -137,7 +138,7 @@ foreach:
         ;
 
 forloop:
-        'for'^ ID '['! unaryExpr ','! unaryExpr ']'! blockstmt
+        'for'^ ID '['! arithExpr ','! arithExpr ']'! blockstmt
         ;
 
 ifstmt:
@@ -155,12 +156,14 @@ assignsExpr:
         | (primitive_type_declarator '='^ arithExpr)
         ;
 
+
 arithExpr:
         logicExpr
 		;
 
 logicExpr:	
         relExpr (('and'^ | 'or'^) relExpr)*
+   
 		;
 
 relExpr:
@@ -190,6 +193,44 @@ primaryExpr:
 		|procedures
 		;
 
+/*
+arithExpr :
+    termExpr arithPrim
+    ;
+    
+arithPrim :
+    '+' termExpr arithPrim
+    | '-' termExpr arithPrim
+    | 
+    ;
+    
+termExpr :
+    finalExpr termPrim;
+    
+termPrim :
+    '*' finalExpr termPrim
+    |  '/' finalExpr termPrim
+    |  '%' finalExpr termPrim
+    |
+    ;
+    
+finalExpr :
+    numExpr finalPrim;
+    
+finalPrim :
+    '^' numExpr finalPrim
+    | 
+    ;
+    
+numExpr:
+    '(' arithExpr ')'
+    | NUM
+    | '-' arithExpr
+    | '+' arithExpr
+    | ID
+    ;
+
+*/
 //==PROCEDURES
 
 procedures:

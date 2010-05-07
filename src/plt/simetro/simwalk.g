@@ -54,7 +54,7 @@ program: (declarations |statements)*
 
 declarations:
         types
-        |load
+      //  |load
         ;
         
 types:
@@ -166,14 +166,15 @@ idlist returns [String s]
 
 //==OBJECT VARIABLES== 
 
-stat:
-    ^(STAT i=ID f=formal_params statements ^(RETURN ID)) //fix this, should be able to return text nums too
-    ->template(id = {$i.text}, fp = {$f.text} )
+stat returns [String str]
+@init {$str = "";}:
+    ^(STAT i=ID f=formal_params ((s=statements) {$str+=$s.text + "\n";})* ^(RETURN j=ID)) //fix this, should be able to return text nums too
+    ->template(id = {$i.text}, fp = {$f.str}, s= {$str} ,j = {$j.text})
     <<
-    public static int <id> ( <fp; separator=", "> )
+    public static int <id> ( <fp> )
     {
-    
-    
+        <s>
+        return <j>;
     }
     >>
         ;
@@ -201,24 +202,25 @@ string:
         ;
 
 //primitive-type-declarator
-primitive_type_declarator:
-        ^(PRIMITIVE_TYPE ID)  
+primitive_type_declarator returns [String str]:
+        ^(PRIMITIVE_TYPE i=ID)  {$str = "double " + $ID.text;} -> template(i={$i}) "double <i>"
         ;
 
 
 //==STATEMENTS==
 
-statements:
+statements  :
         expression_statement 
-        |foreach
-        |forloop
-        |ifstmt
-        |procedures
-        |simulate
+        |foreach 
+        |forloop 
+        |ifstmt 
+        |procedures 
+       // |simulate
         ;
  
-expression_statement:
-        assignsExpr
+expression_statement returns [String str]:
+        assignsExpr {$str = $assignsExpr.str;}
+        | primitive_type_declarator  {$str = $primitive_type_declarator.str + ";";}
         ;
 
 blockstmt:
@@ -250,7 +252,7 @@ foreach:
 //if we do x[0,-9] this is setup to count backwards..
 //had to change grammar to for loop to accomodate negatives (hence unaryExpr)
 forloop:
-        ^('for' myid=ID int1=unaryExpr int2=unaryExpr blockstmt)
+        ^('for' myid=ID int1=arithExpr int2=arithExpr blockstmt)
         {
         String inc,rel;
         if (Integer.parseInt($int2.text) > Integer.parseInt($int1.text)) 
@@ -270,34 +272,86 @@ ifstmt:
 
 //==EXPRESSIONS==
 
-assignsExpr:
-        ^('=' primitive_type_declarator arithExpr )
-        | ^('=' ID arithExpr)
+assignsExpr returns [String str]:
+        ^('=' primitive_type_declarator arithExpr ) {$str = $primitive_type_declarator.str +" = "+ $arithExpr.text+";";}
+        ->template(str={$str}) "<str>"
+        | ^('=' i=ID a=arithExpr)  {$str = $i.text + " = " + $a.text+";";}
+         ->template(str={$str}) "<str>"
         ;
 
 arithExpr:
-        ^('and' arithExpr arithExpr)
-        |^('or' arithExpr arithExpr)
-        |^('!=' arithExpr arithExpr)
-        | ^('=='arithExpr arithExpr)
-        | ^('<' arithExpr arithExpr)
-        | ^('>' arithExpr arithExpr)
-        | ^('<='arithExpr arithExpr)
-        | ^('>='arithExpr arithExpr)
-        | ^('+' arithExpr arithExpr)
-        | ^('-' arithExpr arithExpr)
-        | ^('*' arithExpr arithExpr)
-        | ^('/' arithExpr arithExpr)
-        | ^('%' arithExpr arithExpr)
-        | ^('^' arithExpr arithExpr)
-        | ^('-' (ID|NUM|INTEGER) )  //unary expression -- unsure play with neg of function return
-        | ^('+' (ID|NUM|INTEGER) )
-        | procedures
-        | ID
-        | NUM
+        ^('and' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> and <j>)"
+        |^('or' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> or <j>)"
+        |^('!=' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> != <j>)"
+        | ^('=='i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> == <j>)"
+        | ^('<' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> < <j>)"
+        | ^('>' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> > <j>)"
+        | ^('<='i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> <= <j>)"
+        | ^('>='i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> >= <j>)"
+        | ^('+' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> + <j>)"
+        | ^('-' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> - <j>)"
+        | ^('*' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> * <j>)"
+        | ^('/' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> / <j>)"
+        | ^('%' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> % <j>)"
+        | ^('^' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "Math.pow(<i>, <j>)"
+       // | ^('-' (ID|NUM|INTEGER) )  //unary expression -- unsure play with neg of function return
+      //  | ^('+' (ID|NUM|INTEGER) )
+    //    | procedures
+          | ID
+          | NUM //-> template(n={$n.text})"<n>"
         | INTEGER
-        | String
+     //   | String
         ;
+ /*
+
+arithExpr returns [String str]:
+        logicExpr {$str = $logicExpr.str;}
+    ;
+
+logicExpr returns [String str]
+@init{$str = "";}:  
+        
+        ^('and' j=relExpr (i=relExpr | k=logicExpr)) {$str += $j.text + " myand "; 
+        if($i.text != null) {$str += $i.text;} else {$str += $k.text;}}
+        | ^('or' j=relExpr (i=relExpr | k=logicExpr)) {$str += $j.text + " myor "; 
+        if($i.text!= null) {$str += $i.text;} else {$str += $k.text;}}
+      //  | relExpr
+    ;
+
+relExpr:
+     //   addExpr (( '!='^ | '=='^ | '<'^ | '>'^ | '<='^ | '>='^) addExpr)*
+        ^('!=' addExpr (addExpr | relExpr))
+    |    ^('==' addExpr (addExpr | relExpr))
+     |   ^('<' addExpr (addExpr | relExpr))
+     |   ^('>' addExpr (addExpr | relExpr))
+     |   ^('<=' addExpr (addExpr | relExpr))
+    |   ^('>=' addExpr (addExpr | relExpr))
+   // | addExpr
+    ;
+    
+addExpr:
+        //multExpr (('+'^ | '-'^) multExpr)*
+        ^('+' multExpr (multExpr | addExpr))
+     |   ^('-' multExpr (multExpr | addExpr))
+    // | multExpr
+        ;
+
+multExpr: 
+       // powerExpr (('*'^ | '/'^ | '%'^) powerExpr)*
+       ^('*' powerExpr (powerExpr | multExpr))
+     |  ^('/' powerExpr (powerExpr | multExpr))
+     |  ^('%' powerExpr (powerExpr | multExpr))
+   //  | powerExpr
+        ;
+            
+powerExpr:
+        //unaryExpr ('^'^ unaryExpr)*
+        ^('^' unaryExpr (unaryExpr | powerExpr))
+      //  | unaryExpr
+        ;
+
+
+
 
 //these might be unecessary below now that arithExpr is merged
 unaryExpr:
@@ -309,16 +363,16 @@ unaryExpr:
 primaryExpr:
         ID
         |NUM
-        |INTEGER
-        |procedures
+      //  |INTEGER
+        |func_call
         ;
-        
+ */       
 //==PROCEDURES
 procedures:
-        ^(FUNCTIONS  params )
-        | func_call
+     //   ^(FUNCTIONS  params )
+         func_call
         |mod_procedures
-        |print_function
+      //  |print_function
         ;
         
 func_call:
@@ -364,8 +418,17 @@ simulate:
         ;
 
 //==PARAMETERS
-formal_params returns [String str]:
-        ^(FORMALPARAM f+=formal_param*) {}
+formal_params returns [String str]
+@init {$str = "";}:
+        ^(FORMALPARAM (f=formal_param{
+    if(listbool == true)
+     { $str+= $f.text;
+        listbool = false;
+     }
+    else
+     {  $str+=", ";
+        $str+=$f.text;}
+    })*) 
         ;
 
 formal_param returns [String str]: 

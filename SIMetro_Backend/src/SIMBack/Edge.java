@@ -1,3 +1,4 @@
+package SIMBack;
 
 public class Edge {
 	private Station s1;

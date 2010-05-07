@@ -1,3 +1,4 @@
+package SIMBack;
 import java.util.ArrayList;
 
 
@@ -76,5 +77,10 @@ public class main {
 			sim.trainArrive(lineList, time);
 			sim.trainMove();
 		}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SIMGUI().setVisible(true);
+            }
+        });
 	}
 }

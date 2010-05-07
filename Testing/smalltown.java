@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;public class smalltown { static ArrayList<Station> stationList=new ArrayList<Station>();static ArrayList<Line> lineList=new ArrayList<Line>();static ArrayList<Population> populationList=new ArrayList<Population>();static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();static HashMap<String, Station> stationMap=new HashMap<String, Station>();static ArrayList<Station> tempList_stations=new ArrayList<Station>();public static void main (String[] args)  {  /*
-
+import java.util.HashMap;public class smalltown { static ArrayList<Station> stationList=new ArrayList<Station>();static ArrayList<Line> lineList=new ArrayList<Line>();static ArrayList<Population> populationList=new ArrayList<Population>();static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();static HashMap<String, Station> stationMap=new HashMap<String, Station>();static ArrayList<Station> tempList_stations=new ArrayList<Station>();public static void main (String[] args)  {  
+/*
 Station s_110ST {
 Coordinates (0,0); //coordinates
 Population (P1); //associate p1 with this station
@@ -52,20 +52,20 @@ print "Done";
 }
 */
 
-y = (1 * 2);
-z = (3.23 - 0);
+double lambda = getRate(A, 5, Gabda);
 
+num y = 1 * 2;
+num z = 3.23 - 0;
+/*
+Stat statA(int b, num a){
+ num z;
+ num a=6;
+ num b=6;
+ a = a + b;
 
-    public static int statA ( int b, num a )
-    {
-        double z;
-        double a = 6;
-        double b = 6;
-        a = (a + b);
-
-        return a;
-    }
-    
+ //num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
+ return a ;
+}*/
 /*
 String Hello = "Test";		 //problems here - loses quotes
 

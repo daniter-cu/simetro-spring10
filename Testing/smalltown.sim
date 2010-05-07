@@ -1,5 +1,5 @@
-/*
 
+/*
 Station s_110ST {
 Coordinates (0,0); //coordinates
 Population (P1); //associate p1 with this station
@@ -50,9 +50,11 @@ print "Done";
 }
 */
 
-y = 1 * 2;
-z = 3.23 - 0;
+num lambda = getRate(A, 5, Gabda);
 
+num y = 1 * 2;
+num z = 3.23 - 0;
+/*
 Stat statA(int b, num a){
  num z;
  num a=6;
@@ -61,7 +63,7 @@ Stat statA(int b, num a){
 
  //num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
-}
+}*/
 /*
 String Hello = "Test";		 //problems here - loses quotes
 

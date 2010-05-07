@@ -214,7 +214,8 @@ statements  :
         |foreach 
         |forloop 
         |ifstmt 
-        |procedures 
+        |func_call
+        | print_function 
        // |simulate
         ;
  
@@ -246,7 +247,12 @@ foreach:
         
         }
         -> template(dtype = {$derived_type.text}, myID = {$ID.text}, blk = {$blockstmt.text})
-        "for Object n : <dtype>"
+        <<
+        for (Object n : <dtype>)
+        {
+        <blockstmt>
+        }
+        >>
         ;
 
 //if we do x[0,-9] this is setup to count backwards..
@@ -294,89 +300,26 @@ arithExpr:
         | ^('/' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> / <j>)"
         | ^('%' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "(<i> % <j>)"
         | ^('^' i=arithExpr j=arithExpr) ->template(i={$i.text}, j={$j.text}) "Math.pow(<i>, <j>)"
-       // | ^('-' (ID|NUM|INTEGER) )  //unary expression -- unsure play with neg of function return
-      //  | ^('+' (ID|NUM|INTEGER) )
-    //    | procedures
+        | ^('-' (ID|NUM|INTEGER) )  //unary expression -- unsure play with neg of function return
+        | ^('+' (ID|NUM|INTEGER) )
+        | func_call
           | ID
           | NUM //-> template(n={$n.text})"<n>"
         | INTEGER
      //   | String
         ;
- /*
-
-arithExpr returns [String str]:
-        logicExpr {$str = $logicExpr.str;}
-    ;
-
-logicExpr returns [String str]
-@init{$str = "";}:  
-        
-        ^('and' j=relExpr (i=relExpr | k=logicExpr)) {$str += $j.text + " myand "; 
-        if($i.text != null) {$str += $i.text;} else {$str += $k.text;}}
-        | ^('or' j=relExpr (i=relExpr | k=logicExpr)) {$str += $j.text + " myor "; 
-        if($i.text!= null) {$str += $i.text;} else {$str += $k.text;}}
-      //  | relExpr
-    ;
-
-relExpr:
-     //   addExpr (( '!='^ | '=='^ | '<'^ | '>'^ | '<='^ | '>='^) addExpr)*
-        ^('!=' addExpr (addExpr | relExpr))
-    |    ^('==' addExpr (addExpr | relExpr))
-     |   ^('<' addExpr (addExpr | relExpr))
-     |   ^('>' addExpr (addExpr | relExpr))
-     |   ^('<=' addExpr (addExpr | relExpr))
-    |   ^('>=' addExpr (addExpr | relExpr))
-   // | addExpr
-    ;
     
-addExpr:
-        //multExpr (('+'^ | '-'^) multExpr)*
-        ^('+' multExpr (multExpr | addExpr))
-     |   ^('-' multExpr (multExpr | addExpr))
-    // | multExpr
-        ;
-
-multExpr: 
-       // powerExpr (('*'^ | '/'^ | '%'^) powerExpr)*
-       ^('*' powerExpr (powerExpr | multExpr))
-     |  ^('/' powerExpr (powerExpr | multExpr))
-     |  ^('%' powerExpr (powerExpr | multExpr))
-   //  | powerExpr
-        ;
-            
-powerExpr:
-        //unaryExpr ('^'^ unaryExpr)*
-        ^('^' unaryExpr (unaryExpr | powerExpr))
-      //  | unaryExpr
-        ;
-
-
-
-
-//these might be unecessary below now that arithExpr is merged
-unaryExpr:
-        ^('+' primaryExpr)
-        | ^('-' primaryExpr)
-        | primaryExpr    
-        ;
-
-primaryExpr:
-        ID
-        |NUM
-      //  |INTEGER
-        |func_call
-        ;
- */       
 //==PROCEDURES
-procedures:
+//procedures:
      //   ^(FUNCTIONS  params )
-         func_call
-        |mod_procedures
+  //       func_call
+    //    |mod_procedures
       //  |print_function
-        ;
+      //  ;
         
 func_call:
       ^(FUNC_CALL ID params)
+      -> template(i={$ID.text}, p = {$params.text}) "<i>(<p; separator=\", \">)"
       ;
         
 mod_procedures:
@@ -388,8 +331,8 @@ print_function:
         -> template( mystring = {$STRING.text} )
         "System.out.println(\"<mystring>\");"
         
-        | ^('print' procedures )
-        -> template( myproc = {$procedures.text} )
+        | ^('print' func_call )
+        -> template( myproc = {$func_call.text} )
         "System.out.println(<myproc>);"
         
         | ^('print' ID )  
@@ -403,9 +346,9 @@ showgui:
         ;
 
 //THIS IS TRICKY..
-load:
-        ^('load' ID) 
-        ;
+//load:
+ //       ^('load' ID) 
+ //       ;
 
 simulate:
         ^('Simulate' INTEGER  blockstmt)
@@ -441,6 +384,13 @@ formal_param returns [String str]:
         ; 
 
 params:
-        ^(PARAM ((ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER))* )
+       // ^(PARAM (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER)* )
+       ^(PARAM (ID| NUM )* specialparam?)
         ;
 
+    //    -> ^(PARAM  $a* $b* $a* )
+        
+
+specialparam :
+        ^(SPEC ('+'|'-'|'*'|'/'|'^') INTEGER)
+        ;

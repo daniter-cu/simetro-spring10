@@ -10,6 +10,7 @@ ShowGUI;
 BLOCKSTMT;
 PROGRAM;
 LINE;
+SPEC;
 STATIONS;
 FREQUENCY;
 CAPACITY;
@@ -48,7 +49,7 @@ program:
 
 declarations:
         types
-        |load
+    //    |load
         ;
       
 types:
@@ -118,7 +119,8 @@ statements:
         |foreach
         |forloop
         |ifstmt
-        |procedures ';'!         
+        |func_call ';'!
+        |print_function         
         |simulate
         ;
 	
@@ -190,57 +192,20 @@ primaryExpr:
 		ID
 		|NUM
 		|INTEGER
-		|procedures
+		|func_call
 		;
 
-/*
-arithExpr :
-    termExpr arithPrim
-    ;
-    
-arithPrim :
-    '+' termExpr arithPrim
-    | '-' termExpr arithPrim
-    | 
-    ;
-    
-termExpr :
-    finalExpr termPrim;
-    
-termPrim :
-    '*' finalExpr termPrim
-    |  '/' finalExpr termPrim
-    |  '%' finalExpr termPrim
-    |
-    ;
-    
-finalExpr :
-    numExpr finalPrim;
-    
-finalPrim :
-    '^' numExpr finalPrim
-    | 
-    ;
-    
-numExpr:
-    '(' arithExpr ')'
-    | NUM
-    | '-' arithExpr
-    | '+' arithExpr
-    | ID
-    ;
 
-*/
 //==PROCEDURES
 
-procedures:
-        FUNCTIONS^ '('! params ')'!
-        | func_call
-        |mod_procedures
-        |print_function
+//procedures:
+  //      FUNCTIONS^ '('! params ')'!
+   //     | func_call
+    //    |mod_procedures
+     //   |print_function
         //|showgui
 
-        ;
+  //      ;
         
 func_call:
       ID '(' params ')' ';' -> ^(FUNC_CALL ID params)
@@ -251,16 +216,16 @@ mod_procedures:
         ;   
       
 print_function:
-        'print'^ (STRING |procedures | ID)
+        'print'^ (STRING |func_call | ID)
         ;
                
 showgui:
         'ShowGUI();' -> ShowGUI
         ;
 
-load:
-        'load'^ ID '.map'!  ';'!
-        ;
+//load:
+ //       'load'^ ID '.map'!  ';'!
+  //      ;
 
 simulate:
         'Simulate'^ '('! INTEGER ')'! blockstmt
@@ -281,10 +246,13 @@ formal_param:
         ; 
 
 params:
-        (a+=ID | a+=NUM |a+=(('+'|'-'|'*'|'/'|'^')? INTEGER)) ( ',' (a+=ID | a+=NUM |a+=(('+'|'-'|'*'|'/'|'^')? INTEGER)) )*
-        -> ^(PARAM $a*)
+        (a+=ID | a+=NUM| a+=INTEGER |b+=specialparam) ( ',' (a+=ID | a+=NUM | a+=INTEGER|b+=specialparam) )*
+        -> ^(PARAM  $a* $b?)
         ;
 
+specialparam :
+        a=('+'|'-'|'*'|'/'|'^') i=INTEGER -> ^(SPEC $a $i)
+        ;
 
 
 //==TOKENS==
@@ -298,7 +266,7 @@ STRING : '"'
         ;
         
 //STRING : '"' .* '"'; //fix strings!
-FUNCTIONS: 'getRate'|'getFrequency'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
+//FUNCTIONS: 'getRate'|'getFrequency'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
 MOD_FUNCTIONS: 'changeRate'|'changeFrequency'|'changeSpeed'|'skipStation';
 PRIMITIVE_TYPE: 'num' | 'int';
 //DERIVED_TYPE: 'Station' | 'Line' | 'Time' | 'Population';

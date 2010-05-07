@@ -79,5 +79,10 @@ public class main {
                         System.out.println("-------------At time "+time+"------------");
 			sim.trainMove(time);
 		}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SIMGUI().setVisible(true);
+            }
+        });
 	}
 }

@@ -1,5 +1,4 @@
 package SIMBack;
-
 public class Edge {
 	private Station s1;
 	private Station s2;

@@ -69,18 +69,15 @@ public class main {
 				+" The rate is: "+SA.getPop().getPopItemArr().get(0).getRate());
 		System.out.println();
 		Simulate sim=new Simulate();
-		
+
 		sim.createRoutingTables(stationList,lineList);
-		
+                //sim.createTimeLine(60);
 		for(int time=0;time<60;time++){
+
 			sim.peopleArrive(stationList, time);
 			sim.trainArrive(lineList, time);
-			sim.trainMove();
+                        System.out.println("-------------At time "+time+"------------");
+			sim.trainMove(time);
 		}
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SIMGUI().setVisible(true);
-            }
-        });
 	}
 }

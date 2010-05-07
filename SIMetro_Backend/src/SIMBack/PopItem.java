@@ -1,5 +1,4 @@
 package SIMBack;
-
 public class PopItem {
 	private Station dest;
 	private double rate;

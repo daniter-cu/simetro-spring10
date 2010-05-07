@@ -1,17 +1,16 @@
 package SIMBack;
-
 public class TimePair {
 	private int arrivalTime;
-	private int departTime;
+	private int boardingTime;
 	
 	public TimePair() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public TimePair(int arrivalTime, int departTime) {
+	public TimePair(int arrivalTime, int boardingTime) {
 		super();
 		this.arrivalTime = arrivalTime;
-		this.departTime = departTime;
+		this.boardingTime = boardingTime;
 	}
 	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;
@@ -19,11 +18,11 @@ public class TimePair {
 	public int getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setDepartTime(int departTime) {
-		this.departTime = departTime;
+	public void setBoardingTime(int boardingTime) {
+		this.boardingTime = boardingTime;
 	}
-	public int getDepartTime() {
-		return departTime;
+	public int getBoardingTime() {
+		return boardingTime;
 	}
 	
 

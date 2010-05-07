@@ -7,7 +7,7 @@ public class Station {
 	private ArrayList<RoutingTab> routingTable;
 	private Coordinate coordinate;
 	private Population pop;
-	
+	private ArrayList<Person> crowd=new ArrayList<Person>();
 	
 	
 	public Station() {
@@ -17,6 +17,7 @@ public class Station {
 	public Station(String name) {
 		super();
 		this.name = name;
+                
 	}
 
 	public Station(String name, Coordinate coordinate) {
@@ -63,8 +64,17 @@ public class Station {
 		return routingTable;
 	}
 
-	
+	public ArrayList<Person> getCrowd(){
+                return crowd;
+        }
 
+        public void addPerson(Person person){
+                crowd.add(person);
+        }
+
+        public void removePerson(Person person){
+                crowd.remove(person);
+        }
 	
 	
 }

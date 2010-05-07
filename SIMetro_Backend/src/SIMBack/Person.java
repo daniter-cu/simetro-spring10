@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class Person {
 	private int arrivalTime;
-	private int bordingTime;
+	private int boardingTime;
 	private int departTime;
-	private ArrayList<TimePair> transferTime;
+	private ArrayList<TimePair> transferTime=new ArrayList<TimePair>();
 	private Station dest;
 	private Station source;
 	private Station next;
-	
+        private Station current;
+	//private Line line;
 	
 	public Person() {
 		super();
@@ -22,6 +23,7 @@ public class Person {
 		this.dest = dest;
 		this.source = source;
 		this.next = next;
+                this.current=source;
 	}
 	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;
@@ -29,11 +31,11 @@ public class Person {
 	public int getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setBordingTime(int bordingTime) {
-		this.bordingTime = bordingTime;
+	public void setBoardingTime(int boardingTime) {
+		this.boardingTime = boardingTime;
 	}
-	public int getBordingTime() {
-		return bordingTime;
+	public int getBoardingTime() {
+		return boardingTime;
 	}
 	public void setDepartTime(int departTime) {
 		this.departTime = departTime;
@@ -62,8 +64,22 @@ public class Person {
 	public void setTransferTime(ArrayList<TimePair> transferTime) {
 		this.transferTime = transferTime;
 	}
+        public void addTimePair() {
+	        this.transferTime.add(new TimePair(this.arrivalTime,this.boardingTime));
+	}
 	public ArrayList<TimePair> getTransferTime() {
 		return transferTime;
 	}
+        /*
+        public Line getLine(){
+                ArrayList<RoutingTab> table=current.getRoutingTable();
+                for(RoutingTab tab : table){
+                    if(tab.getDest().getName().equals(dest.getName())&&tab.getNext().getName().equals(next.getName()))
+                        line=tab.getLine();
+                }
+                return line;
+        }
+         *
+         */
 
 }

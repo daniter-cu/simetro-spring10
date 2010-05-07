@@ -8,6 +8,7 @@ public class Line {
 	private double speed;
 	private int capacity;
 	private ArrayList<Station> route;
+        private ArrayList<Edge> edges;
 	
 	
 
@@ -27,6 +28,7 @@ public class Line {
 		this.speed = speed;
 		this.capacity = capacity;
 		this.setRoute(route);
+                this.edges=new ArrayList<Edge>();
 		System.out.println("Line created: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
 		System.out.print("              ");
 		for(int i=0;i<route.size()-1;i++) {
@@ -68,4 +70,23 @@ public class Line {
 		return route;
 	}
 
+        public void setEdges(ArrayList<Edge> edges){
+                this.edges=edges;
+        }
+        
+        public void addEdge(Edge edge){
+                this.edges.add(edge);
+        }
+
+        public Edge getEdge(int edgeIndex){
+                return this.edges.get(edgeIndex);
+        }
+
+        public int edgeNumber(){
+                return this.edges.size();
+        }
+
+        public ArrayList<Edge> getEdges(){
+                return edges;
+        }
 }

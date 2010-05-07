@@ -55,7 +55,7 @@ public class main {
 		lineList.add(LC);
 
 		
-		PopItem PIA=new PopItem (SA,5);
+		PopItem PIA=new PopItem (SB,5);
 		ArrayList<PopItem> PIArr=new ArrayList<PopItem>();
 		PIArr.add(PIA);
 		Population PA=new Population(PIArr);

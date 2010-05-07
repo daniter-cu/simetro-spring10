@@ -197,6 +197,9 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//look up in the line objects to see if new trains should be created to arrive at each station 
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 		
+		System.out.println("Current time is " + currTime);
+		
+		int timeCreate = 0;
 		
 		//iterate through list of lines
 		for(int i=0;i<lineList.size();i++) {
@@ -207,13 +210,32 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			double lineSpeed = aLine.getSpeed();
 			ArrayList<Station> lineRoute = aLine.getRoute();
 			int lineCap = aLine.getCapacity();
+		
+			//totalRate = totalRate + lineRate;
 			
+			//System.out.println("current time is " + currTime);
+			//System.out.println("line rate is " + lineRate);
+			
+			//if train is created at fractional rate, divide it by 1
+			if (lineRate <= 1){
+				timeCreate = (int)(1 / lineRate);
+			}
+			
+			//else just make rate an int
+			else
+				timeCreate = (int)lineRate;
+			
+			System.out.println("Train should be created every " + timeCreate + " minutes");
 			//why is it saying local vars won't get read??
 	
 			//am I using line rate correctly?  Go back to this.
 			
-			//if current time mod line rate is 0, it's time for new trains to be created at first and last station of line
-			if (currTime % lineRate == 0){
+			//if current time is 0 or time mod line rate is 0, it's time for new trains to be created at first and last station of line
+			//if (currTime % lineRate == 0){
+			//if (totalRate == 1.0){
+			if (currTime == 0 || currTime % timeCreate == 0){
+				System.out.println("Time to create new train");
+				
 				//get first station of line
 				Station firstStation = lineRoute.get(0);
 				

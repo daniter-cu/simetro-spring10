@@ -16,6 +16,8 @@ public class main {
 		// TODO Auto-generated method stub
 		
 
+		System.out.println("start");
+		
 		Station SA=new Station("110ST", new Coordinate(0,0));
 		stationList.add(SA);
 		Station SB=new Station("116ST", new Coordinate(0,6));
@@ -55,7 +57,7 @@ public class main {
 		lineList.add(LC);
 
 		
-		PopItem PIA=new PopItem (SB,5);
+		PopItem PIA=new PopItem (SD,5);
 		ArrayList<PopItem> PIArr=new ArrayList<PopItem>();
 		PIArr.add(PIA);
 		Population PA=new Population(PIArr);

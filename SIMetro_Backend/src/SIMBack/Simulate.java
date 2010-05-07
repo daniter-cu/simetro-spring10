@@ -7,12 +7,15 @@ public class Simulate {
 ArrayList<Person> persons=new ArrayList<Person>();
 ArrayList<Train> trains=new ArrayList<Train>();
 
-        public void createTimeLine(int timeRange){
+//create timeline object
+TimeLine tl = new TimeLine();
+
+        //public void createTimeLine(int timeRange){
         //this is for setting timeline
         // a timeRange is mandatory when creating new simulation
-           TimeLine tl=new TimeLine(timeRange);
-        }
-
+        // TimeLine tl=new TimeLine(timeRange);
+        //}
+	
 	public void createRoutingTables(ArrayList<Station> stationList,ArrayList<Line> lineList) {
 		//for each station, create its routing table and link it to the station
 		ArrayList<Edge> edgeList=new ArrayList<Edge>();
@@ -117,6 +120,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
 		
+		System.out.println("current time from peopleArrive is " + arriveTime);
 		//iterate through station list
 		for(int si=0;si<stationList.size();si++) {
 			
@@ -124,7 +128,8 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			Population aPop = stationList.get(si).getPop();
 			
 			if (aPop != null){
-				//get pop item array associated with population
+				
+				//get pop item array associated with popullation
 				ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
 			
 				//int peopleCount = 0;
@@ -138,9 +143,12 @@ ArrayList<Train> trains=new ArrayList<Train>();
 					int popRate = (int)anItem.getRate();
 					int peopleCount = 0;
 				
+					
+					
 					//create a new person up to the rate value
 					//for (int i = 0; i < popRate; i++){
 					while (peopleCount < popRate){
+						
 						//Parameters are as follows: arrivalTime = arriveTime, StationDest = destStation, 
 						//StationSource = stationList.get(si), Station next = get from routing table
 					
@@ -150,18 +158,21 @@ ArrayList<Train> trains=new ArrayList<Train>();
 					
 					
 						for(int j=0; j < aTable.size(); j++) {
-						
+
+							
 							//check to make sure person's destination is on this route
 							Line currLine = aTable.get(j).getLine();
 						
 							ArrayList<Station> currRoute = currLine.getRoute();
 							//iterate through stations on this route
-							for (Station aStation : currRoute){
-								String currStationName = aStation.getName();
+							//for (Station aStation : currRoute){
+								//String currStationName = aStation.getName();
 							
+					
 								//see if station person wants to go to is on this route
-								if (currStationName.equals(destStationName)){
+								//if (currStationName.equals(destStationName)){
 								
+									//System.out.println("station name matched");
 									//if it is, get next station on routing table
 									Station nextStation = aTable.get(j).getNext();
 								
@@ -173,24 +184,24 @@ ArrayList<Train> trains=new ArrayList<Train>();
 										//increment peopleCount
 										peopleCount++;
 										
+										//add new person to persons array list
+										persons.add(aPerson);
+										
 									}	
 						
 								}	
 						
-								//****Note: I'm not sure if I'm using routing table correctly -- will go back to this
-						
-
-								//why is it saying aPerson never gets read???
-								//should we add each person to an array or something?
 							}
 				
-						}
-					}
-			
-				}
-	
+						//}
+					//}
+					
+				}	
 			}
 		}
+		//set persons in timeline
+		tl.setTime(arriveTime);
+		tl.setPersons(persons);
 	}
 	
 	public void trainArrive(ArrayList<Line> lineList, int currTime){
@@ -211,7 +222,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			ArrayList<Station> lineRoute = aLine.getRoute();
 			int lineCap = aLine.getCapacity();
 		
-			//totalRate = totalRate + lineRate;
 			
 			//System.out.println("current time is " + currTime);
 			//System.out.println("line rate is " + lineRate);
@@ -231,8 +241,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			//am I using line rate correctly?  Go back to this.
 			
 			//if current time is 0 or time mod line rate is 0, it's time for new trains to be created at first and last station of line
-			//if (currTime % lineRate == 0){
-			//if (totalRate == 1.0){
 			if (currTime == 0 || currTime % timeCreate == 0){
 				System.out.println("Time to create new train");
 				
@@ -267,8 +275,8 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			}
 					
 		}	
-		
-	
+		tl.setTime(currTime);
+		tl.setTrains(trains);
 	}
 	
 	public void trainMove(int currTime) {

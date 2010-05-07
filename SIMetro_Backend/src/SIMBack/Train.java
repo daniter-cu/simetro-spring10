@@ -24,7 +24,7 @@ public class Train {
                     for(int i=line.getRoute().size()-1;i>=0;i--)
                     {
                         rvsRoute.add(line.getRoute().get(i));
-                        System.out.print(line.getRoute().get(i).getName());
+                        //System.out.print(line.getRoute().get(i).getName());
                     }
                     System.out.println("\nReverse Direction of "+line.getName()+" is Created:");
                     Line rvsLine=new Line(line.getName(), line.getRate(), line.getSpeed(), line.getCapacity(),rvsRoute);

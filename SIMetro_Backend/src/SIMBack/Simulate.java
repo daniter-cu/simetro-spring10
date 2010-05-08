@@ -133,7 +133,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 				//get pop item array associated with popullation
 				ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
 
-				//int peopleCount = 0;
 				//iterate through pop item array
 				for (PopItem anItem : popItemArray){
 
@@ -144,10 +143,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
 					int popRate = (int)anItem.getRate();
 					int peopleCount = 0;
 
-
-
 					//create a new person up to the rate value
-					//for (int i = 0; i < popRate; i++){
 					while (peopleCount < popRate){
 
 						//Parameters are as follows: arrivalTime = arriveTime, StationDest = destStation,
@@ -160,40 +156,33 @@ ArrayList<Train> trains=new ArrayList<Train>();
 
 						for(int j=0; j < aTable.size(); j++) {
 
-
-							//check to make sure person's destination is on this route
-							Line currLine = aTable.get(j).getLine();
-
-							ArrayList<Station> currRoute = currLine.getRoute();
-							//iterate through stations on this route
-							//for (Station aStation : currRoute){
-								//String currStationName = aStation.getName();
-
-
-								//see if station person wants to go to is on this route
-								//if (currStationName.equals(destStationName)){
-
-									//System.out.println("station name matched");
-									//if it is, get next station on routing table
+						
+							//determine nextStation according to destination for each person
+							if(aTable.get(j).getDest().equals(destStation)){
+									//get next station on routing table
 									Station nextStation = aTable.get(j).getNext();
 
 									while (peopleCount < popRate){
 										//create new person
 										Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
-                                                                                sourceStation.addPerson(aPerson);
+                                        
+										//add new person to list linked with station
+										sourceStation.addPerson(aPerson);
 										System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
 										//increment peopleCount
 										peopleCount++;
 
 										//add new person to persons array list
 						
-									}
-
-								}
+									}//end of while
+									
+									//break the loop so that it does not keep looking up the routing table	
+									break;
+								}//end of if
 
 							}
 
-						//}
+						}
 					//}
 
 				}
@@ -209,8 +198,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//look up in the line objects to see if new trains should be created to arrive at each station
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 
-		//System.out.println("Current time is " + currTime);
-
 		int timeCreate = 0;
                 System.out.println("\n----------------TRAIN CREATING INFOMATION:-----------------");
 
@@ -224,9 +211,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			ArrayList<Station> lineRoute = aLine.getRoute();
 			int lineCap = aLine.getCapacity();
 
-
-			//System.out.println("current time is " + currTime);
-			//System.out.println("line rate is " + lineRate);
 
 			//if train is created at fractional rate, divide it by 1
 			if (lineRate <= 1){
@@ -274,7 +258,6 @@ ArrayList<Train> trains=new ArrayList<Train>();
 				trains.add(endTrain);
                                 System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
                                
-				//Should we add these trains to an array or something?? go back to this
 			}
                          
 		}

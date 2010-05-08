@@ -89,10 +89,7 @@ public class main {
                         System.out.println("--------------------------------------------END----------------------------------------");
 
 		}
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new SIMGUI().setVisible(true);
-            }
-        });
+		ShowGui sg=new ShowGui();
+		sg.Show(stationList, lineList);
 	}
 }

@@ -78,14 +78,27 @@ public class GuiPanel extends Panel {
         	int X1[]= {x1+5,x1-5,x2-5,x2+5};
         	int Y1[]= {y1+5,y1-5,y2-5,y2+5};
         	g.fillPolygon(X1,Y1,4);
+        	
+        	int X2[]= {x1,x1,x2,x2};
+        	int Y2[]= {y1+7,y1-7,y2-7,y2+7};
+        	g.fillPolygon(X2,Y2,4);
+        	
+        	int X3[]= {x1-7,x1+7,x2+7,x2-7};
+        	int Y3[]= {y1,y1,y2,y2};
+        	g.fillPolygon(X3,Y3,4);
         	g.setColor(Color.yellow);
         	g.drawLine(x1,y1,x2,y2);
+        	g.setColor(Color.blue);
+        	g.drawString(t.getLine().getName(),(x1+x2)/2-5,(y1+y2)/2-2);
 //        	g.drawLine(x1+10,y1+10,x2+10,y2+10);
 //        	g.drawLine(x1+10,y1-10,x2+10,y2-10);
         }
+        g.setColor(Color.red);
         for(int i=0;i<stationImg.size();i++) {
         	g.drawImage(stationImg.get(i), (int) (50+stationList.get(i).getCoordinate().getX()*40), (int)(650-stationList.get(i).getCoordinate().getY()*40), null);
+        	g.drawString("Station: "+stationList.get(i).getName(), (int) (70+stationList.get(i).getCoordinate().getX()*40), (int)(720-stationList.get(i).getCoordinate().getY()*40));
         }
+        
         g.drawImage(imageTrain, xCor, yCor, null);
         yCor+=5;
 

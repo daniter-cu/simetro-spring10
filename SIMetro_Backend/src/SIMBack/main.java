@@ -16,8 +16,6 @@ public class main {
 		// TODO Auto-generated method stub
 		
 
-		System.out.println("start");
-		
 		Station SA=new Station("110ST", new Coordinate(0,0));
 		stationList.add(SA);
 		Station SB=new Station("116ST", new Coordinate(0,6));
@@ -38,6 +36,7 @@ public class main {
 		al.add(SB);
 		al.add(SC);
 		Line LA= new Line("Line1", 0.2, 2.0, 100,al );
+                LA.setRvsLine();
 		lineList.add(LA);
 		
 		Station arr2[]=new Station[3];
@@ -46,6 +45,7 @@ public class main {
 		al2.add(SD);
 		al2.add(SE);
 		Line LB=new Line("Line2",0.2,2.0,100,al2);
+                LB.setRvsLine();
 		lineList.add(LB);
 		
 		Station arr3[]=new Station[3];
@@ -54,6 +54,7 @@ public class main {
 		al3.add(SE);
 		al3.add(SC);
 		Line LC=new Line("Line3",0.2,3.0,200,al3);
+                LC.setRvsLine();
 		lineList.add(LC);
 
 		
@@ -74,32 +75,24 @@ public class main {
 
 		sim.createRoutingTables(stationList,lineList);
                 //sim.createTimeLine(60);
-		for(int time=0;time<60;time++){
-
+		for(int time=0;time<12;time++){
+                        System.out.println("\n*********************************At time "+time+"***********************************");
 			sim.peopleArrive(stationList, time);
 			sim.trainArrive(lineList, time);
-                        System.out.println("-------------At time "+time+"------------");
-			sim.trainMove(time);
-		}
-		
-		//for test purposes: get information about people and trains in the system at time 30
-        sim.getPersonArray(30);
-        
-        sim.getTrainArray(30);
-        
-		ShowGui sg=new ShowGui();
-		sg.Show(stationList,lineList);
-		
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new SIMGUI().setVisible(true);
-//            }
-//        });
-        
-        //for test purposes: get information about people and trains in the system at time 30
-        //sim.getPersonArray(30);
-        
-        //sim.getTrainArray(30);
+                        sim.trainMove(time);
 
+                        System.out.println("------------------------------------STATION INFOMATION---------------------------------");
+                        for(Station aStation : stationList)
+                        {
+                               System.out.println("Number of persons in "+aStation.getName()+": "+aStation.getCrowd().size());
+                        }
+                        System.out.println("--------------------------------------------END----------------------------------------");
+
+		}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //new SIMGUI().setVisible(true);
+            }
+        });
 	}
 }

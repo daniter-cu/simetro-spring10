@@ -5,6 +5,7 @@ public class Edge {
 	private double dist;
 	private Line line;
 	private double timedist;
+        private Edge rvsEdge;
 	
 	
 	
@@ -50,6 +51,15 @@ public class Edge {
 	public double getTimedist() {
 		return timedist;
 	}
-	
+
+        public void setRvsEdge(){
+               System.out.println("Reverse Edge is Created:");
+               Edge temp=new Edge(s2, s1, dist,timedist, line);
+               rvsEdge=temp;
+        }
+
+        public Edge getRvsEdge(){
+                return rvsEdge;
+        }
 
 }

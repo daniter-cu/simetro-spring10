@@ -9,6 +9,7 @@ public class Line {
 	private int capacity;
 	private ArrayList<Station> route;
         private ArrayList<Edge> edges;
+        private Line rvsLine;
 	
 	
 
@@ -27,7 +28,7 @@ public class Line {
 		this.rate = rate;
 		this.speed = speed;
 		this.capacity = capacity;
-		this.setRoute(route);
+                this.route=route;
                 this.edges=new ArrayList<Edge>();
 		System.out.println("Line created: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
 		System.out.print("              ");
@@ -75,11 +76,24 @@ public class Line {
         }
         
         public void addEdge(Edge edge){
-                this.edges.add(edge);
+                edges.add(edge);
+                //rvsLine.addEdge(edge.getRvsEdge());
+                
+
+        }
+
+        public void setRvsEdges(){
+            System.out.println("Reverse edges of "+name+" set");
+            for(int i=edges.size()-1;i>=0;i--)
+            {
+                edges.get(i).setRvsEdge();
+                rvsLine.addEdge(edges.get(i).getRvsEdge());
+            }
         }
 
         public Edge getEdge(int edgeIndex){
-                return this.edges.get(edgeIndex);
+                
+                return edges.get(edgeIndex);
         }
 
         public int edgeNumber(){
@@ -88,5 +102,22 @@ public class Line {
 
         public ArrayList<Edge> getEdges(){
                 return edges;
+        }
+
+        public void setRvsLine(){
+                ArrayList<Station> rvsRoute=new ArrayList<Station>();
+                //System.out.println(route.size());
+                    for(int i=route.size()-1;i>=0;i--)
+                    {
+                        rvsRoute.add(route.get(i));
+                        //System.out.print(line.getRoute().get(i).getName());
+                    }
+                    System.out.println("\nReverse Direction of "+name+" is Created:");
+                    Line rLine=new Line(name, rate, speed, capacity,rvsRoute);
+                    rvsLine=rLine;
+        }
+
+        public Line getRvsLine(){
+                    return rvsLine;
         }
 }

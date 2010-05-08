@@ -9,6 +9,7 @@ package SIMBack;
  */
 public class Stats {
 private String statsName;
+private 
 
 String getStatName(){
 return this.statsName;

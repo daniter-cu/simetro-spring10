@@ -10,7 +10,7 @@ public class Person {
 	private Station dest;
 	private Station source;
 	private Station next;
-        private Station current;
+        //private Station current;
 	//private Line line;
 	
 	public Person() {
@@ -23,7 +23,7 @@ public class Person {
 		this.dest = dest;
 		this.source = source;
 		this.next = next;
-                this.current=source;
+                //this.current=source;
 	}
 	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;

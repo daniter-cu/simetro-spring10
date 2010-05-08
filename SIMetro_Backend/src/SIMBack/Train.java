@@ -20,35 +20,16 @@ public class Train {
                 
                if(reverse)
                 {
-                    ArrayList<Station> rvsRoute=new ArrayList<Station>();
-                    for(int i=line.getRoute().size()-1;i>=0;i--)
-                    {
-                        rvsRoute.add(line.getRoute().get(i));
-                        //System.out.print(line.getRoute().get(i).getName());
-                    }
-                    System.out.println("\nReverse Direction of "+line.getName()+" is Created:");
-                    Line rvsLine=new Line(line.getName(), line.getRate(), line.getSpeed(), line.getCapacity(),rvsRoute);
-                    rvsLine.setEdges(line.getEdges());
-                    ArrayList<Edge> rvsEdges=new ArrayList<Edge>();
-                   
-
-                    for(int i=rvsLine.edgeNumber()-1;i>=0;i--)
-                    {
-                        Edge temp=new Edge(line.getEdge(i).getS2(), line.getEdge(i).getS1(), line.getEdge(i).getDist(),line.getEdge(i).getTimedist(), line.getEdge(i).getLine());
-                        rvsEdges.add(temp);
-                    }
-                    System.out.println();
-                    rvsLine.setEdges(rvsEdges);
-                    this.line=rvsLine;
+                    this.line=line.getRvsLine();
+                    System.out.println("this train is on reverse direction of "+line.getName());
                 }
                 else this.line=line;
-
-		this.arrivalTime = arrivalTime;
+                this.arrivalTime = arrivalTime;
 		this.coordinate = coordinate;
 		this.capacity = capacity;
 		this.speed = speed;
                 this.onEdge=0;
-                this.timeDistLeft=this.line.getEdge(0).getTimedist();
+                this.timeDistLeft=line.getEdge(0).getTimedist();
                 board=new ArrayList<Person>();
 	}
 
@@ -94,7 +75,7 @@ public class Train {
                 if(temp>0)
                 {
                     timeDistLeft=temp;
-                    System.out.println("*****A train on "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+"time distance left: "+temp);
+                    System.out.println("*****A train on "+onEdge+"th edge of "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+"time distance left: "+temp);
                     return false;
                 }
                 else 
@@ -130,6 +111,29 @@ public class Train {
         }
 
         public Station getCurrent(){
-                return this.line.getEdge(onEdge).getS1();
+                //System.out.println("Line is "+line.getName()+" Edge is "+onEdge);
+                return line.getEdge(onEdge).getS1();
         }
+
+        public void updateCoordinate(){
+                Coordinate source=this.getCurrent().getCoordinate();
+                Coordinate dest=this.getNext().getCoordinate();
+                Coordinate tr=coordinate;
+                if(tr.inBetween(source, dest))
+                {
+                        double fraction=speed/source.getDistance(dest);
+                        //System.out.println("fraction is "+fraction);
+                        double x=tr.getX()+(dest.getX()-source.getX())*fraction;
+                        double y=tr.getY()+(dest.getY()-source.getY())*fraction;
+                        this.setCoordinate(new Coordinate(x,y));
+                }
+                else
+                {
+                        double x=dest.getX();
+                        double y=dest.getY();
+                        this.setCoordinate(new Coordinate(x,y));
+                }
+                //System.out.println("The new coordinate of this train on "+line.getName()+" is: ( "+coordinate.getX()+" , "+coordinate.getY()+" )");
+        }
+
 }

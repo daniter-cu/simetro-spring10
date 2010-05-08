@@ -89,7 +89,7 @@ public class main {
         
         
 		ShowGui sg=new ShowGui();
-		sg.Show();
+		sg.Show(stationList);
 		
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {

@@ -89,5 +89,10 @@ public class main {
 //                new SIMGUI().setVisible(true);
 //            }
 //        });
+        
+        //for test purposes: get information about people and trains in the system at time 30
+        sim.getPersonArray(30);
+        
+        sim.getTrainArray(30);
 	}
 }

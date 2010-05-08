@@ -236,9 +236,6 @@ TimeLine tl = new TimeLine();
 				timeCreate = (int)lineRate;
 			
 			System.out.println("Train should be created every " + timeCreate + " minutes");
-			//why is it saying local vars won't get read??
-	
-			//am I using line rate correctly?  Go back to this.
 			
 			//if current time is 0 or time mod line rate is 0, it's time for new trains to be created at first and last station of line
 			if (currTime == 0 || currTime % timeCreate == 0){
@@ -351,5 +348,62 @@ TimeLine tl = new TimeLine();
                 }
 
         }
+        
+        //get information from person array lists
+        public void getPersonArray(int time){
+        	ArrayList<ArrayList> personLists = tl.getPersons(time);
+        	
+        	//get information from person arraylist for specified time.
+        	ArrayList<Person> aPersonList = personLists.get(time);
+        		
+        	System.out.println("Accessing person array list at time " + time);
+        		
+        	//number of passengers at given time is size of array list
+        	int numPassengers = aPersonList.size();
+        	System.out.println("Num of passengers is " + numPassengers);
+        		
+        	//iterate through person array list
+       		for (Person aPerson : aPersonList){
+        			
+       			//get relevant information about person
+       			int arrivalTime = aPerson.getArrivalTime();
+       			int boardingTime = aPerson.getBoardingTime();
+       			int departTime = aPerson.getDepartTime();
+        			
+        		System.out.println("Person arrival time: " + arrivalTime);
+        		System.out.println("Person boarding time: " + boardingTime);
+        		System.out.println("Person departure time: " + departTime);
+       		}
+       	}
+        
+        public void getTrainArray(int time){
+        	ArrayList<ArrayList> trainLists = tl.getTrains(time);
+        	
+        	//get information from train arraylist for specified time
+        	ArrayList<Train> aTrainList = trainLists.get(time);
+        	
+        	System.out.println("Accessing train array list at time " + time);
+        	
+        	//get number of trains
+        	int numTrains = aTrainList.size();
+        	System.out.println("Num of trains is " + numTrains);
+        	
+        	//iterate through train array list
+        	for (Train aTrain : aTrainList){
+        		
+        		int trainArrival = aTrain.getArriveTime();
+        		int trainCap = aTrain.getCapacity();
+        		Station currStation = aTrain.getCurrent();
+        		
+        		System.out.println("Train arrival time: " + trainArrival);
+        		System.out.println("Train capacity: " + trainCap);
+        		System.out.println("Train is at station " + currStation.getName());
+        	}
+        	
+        	
+        }
+        	
+        	
+       
 }
 

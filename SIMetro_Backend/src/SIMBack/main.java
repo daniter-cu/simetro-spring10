@@ -81,6 +81,13 @@ public class main {
                         System.out.println("-------------At time "+time+"------------");
 			sim.trainMove(time);
 		}
+		
+		//for test purposes: get information about people and trains in the system at time 30
+        sim.getPersonArray(30);
+        
+        sim.getTrainArray(30);
+        
+        
 		ShowGui sg=new ShowGui();
 		sg.Show();
 		
@@ -91,8 +98,8 @@ public class main {
 //        });
         
         //for test purposes: get information about people and trains in the system at time 30
-        sim.getPersonArray(30);
+        //sim.getPersonArray(30);
         
-        sim.getTrainArray(30);
+        //sim.getTrainArray(30);
 	}
 }

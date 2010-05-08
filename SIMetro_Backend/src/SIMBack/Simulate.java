@@ -120,7 +120,8 @@ TimeLine tl = new TimeLine();
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
 		
-		System.out.println("current time from peopleArrive is " + arriveTime);
+		//System.out.println("current time from peopleArrive is " + arriveTime);
+		
 		//iterate through station list
 		for(int si=0;si<stationList.size();si++) {
 			
@@ -129,10 +130,9 @@ TimeLine tl = new TimeLine();
 			
 			if (aPop != null){
 				
-				//get pop item array associated with popullation
+				//get pop item array associated with population
 				ArrayList<PopItem> popItemArray = aPop.getPopItemArr();
 			
-				//int peopleCount = 0;
 				//iterate through pop item array
 				for (PopItem anItem : popItemArray){
 				
@@ -216,9 +216,6 @@ TimeLine tl = new TimeLine();
 			int lineCap = aLine.getCapacity();
 		
 			
-			//System.out.println("current time is " + currTime);
-			//System.out.println("line rate is " + lineRate);
-			
 			//if train is created at fractional rate, divide it by 1
 			if (lineRate <= 1){
 				timeCreate = (int)(1 / lineRate);
@@ -243,7 +240,6 @@ TimeLine tl = new TimeLine();
 				int lineLength = lineRoute.size();
 				
 				//get last station of line
-				//make sure this doesn't give you an off by one error
 				Station lastStation = lineRoute.get(lineLength-1);
 				
 				//get station coords
@@ -261,7 +257,6 @@ TimeLine tl = new TimeLine();
 				trains.add(endTrain);
                                 System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
 				
-				//Should we add these trains to an array or something?? go back to this
 			}
 					
 		}	
@@ -342,7 +337,7 @@ TimeLine tl = new TimeLine();
 
         }
         
-        //get information from person array lists
+        //get information about passengers from person array lists
         public void getPersonArray(int time){
         	ArrayList<ArrayList> personLists = tl.getPersons(time);
         	
@@ -369,6 +364,7 @@ TimeLine tl = new TimeLine();
        		}
        	}
         
+        //get information about trains from train arraylist, stored in timeline.
         public void getTrainArray(int time){
         	ArrayList<ArrayList> trainLists = tl.getTrains(time);
         	

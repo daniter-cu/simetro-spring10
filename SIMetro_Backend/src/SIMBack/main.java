@@ -87,9 +87,8 @@ public class main {
         
         sim.getTrainArray(30);
         
-        
 		ShowGui sg=new ShowGui();
-		sg.Show(stationList);
+		sg.Show(stationList,lineList);
 		
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -101,5 +100,6 @@ public class main {
         //sim.getPersonArray(30);
         
         //sim.getTrainArray(30);
+
 	}
 }

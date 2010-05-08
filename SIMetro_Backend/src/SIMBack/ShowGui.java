@@ -10,10 +10,10 @@ import javax.swing.JScrollPane;
 
 public class ShowGui {
 
-	public void Show(ArrayList<Station> stationl) {
+	public void Show(ArrayList<Station> stationl,ArrayList<Line> linel) {
 		try {
 			JFrame frame = new JFrame("Display image");
-			GuiPanel panel = new GuiPanel(stationl);
+			GuiPanel panel = new GuiPanel(stationl,linel);
 			panel.setBackground(Color.white);
 			frame.getContentPane().add(panel);
 			frame.setSize(1000, 800);

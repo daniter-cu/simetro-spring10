@@ -156,23 +156,14 @@ TimeLine tl = new TimeLine();
 			
 						ArrayList<RoutingTab> aTable = sourceStation.getRoutingTable();
 					
-					
+						//iterate through table
 						for(int j=0; j < aTable.size(); j++) {
 
-							
-							//check to make sure person's destination is on this route
-							Line currLine = aTable.get(j).getLine();
-						
-							ArrayList<Station> currRoute = currLine.getRoute();
-							//iterate through stations on this route
-							//for (Station aStation : currRoute){
-								//String currStationName = aStation.getName();
-							
 					
-								//see if station person wants to go to is on this route
-								//if (currStationName.equals(destStationName)){
-								
-									//System.out.println("station name matched");
+							//determine the nextStation according to destination for each person
+							if (aTable.get(j).getDest().equals(destStation)){
+							
+								System.out.println("table getDest is " + aTable.get(j).getDest().getName());
 									//if it is, get next station on routing table
 									Station nextStation = aTable.get(j).getNext();
 								
@@ -187,19 +178,21 @@ TimeLine tl = new TimeLine();
 										//add new person to persons array list
 										persons.add(aPerson);
 										
-									}	
-						
-								}	
+									}	//end of while loop
+									
+									//break the loop so it doesn't keep looking up the routing table
+									break;
+								}	//end of if
 						
 							}
 				
 						//}
-					//}
+					}
 					
 				}	
 			}
 		}
-		//set persons in timeline
+		//set persons arraylist in timeline
 		tl.setTime(arriveTime);
 		tl.setPersons(persons);
 	}

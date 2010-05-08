@@ -383,6 +383,7 @@ TimeLine tl = new TimeLine();
         		int trainArrival = aTrain.getArriveTime();
         		int trainCap = aTrain.getCapacity();
         		Station currStation = aTrain.getCurrent();
+        		ArrayList<Person> passengers = aTrain.getBoard();
         		
         		System.out.println("Train arrival time: " + trainArrival);
         		System.out.println("Train capacity: " + trainCap);

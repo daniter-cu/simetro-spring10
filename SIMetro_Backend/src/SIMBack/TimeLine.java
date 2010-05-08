@@ -39,8 +39,14 @@ public class TimeLine {
     
     public void setPersons(ArrayList<Person> persons){
     	
+    	int before = personList.size();
+    	System.out.println("personList size before add is " + before);
+    	
     	personList.add(persons);
     	System.out.println("Person array list has been added");
+    	
+    	int after = personList.size();
+    	System.out.println("personList size after add is " + after);
     	
     	//System.out.println("Size of list is " + personList.size());
     }
@@ -52,6 +58,7 @@ public class TimeLine {
 		System.out.println("Train array list has been added");
 		
 	}
+	
 	
 	public ArrayList<ArrayList> getPersons(int time){
 		

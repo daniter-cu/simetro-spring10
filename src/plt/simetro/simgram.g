@@ -122,6 +122,7 @@ statements:
         |func_call ';'!
         |print_function         
         |simulate
+        |mod_procedures
         ;
 	
 expression_statement:
@@ -208,11 +209,11 @@ primaryExpr:
   //      ;
         
 func_call:
-      ID '(' params ')' ';' -> ^(FUNC_CALL ID params)
+      ID '(' params ')'  -> ^(FUNC_CALL ID params)
       ;
         
 mod_procedures:
-        MOD_FUNCTIONS^ '('! params ')'!
+        MOD_FUNCTIONS^ '('! params ')'! ';'!
         ;   
       
 print_function:

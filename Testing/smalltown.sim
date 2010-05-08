@@ -1,5 +1,5 @@
 
-/*
+
 Station s_110ST {
 Coordinates (0,0); //coordinates
 Population (P1); //associate p1 with this station
@@ -43,28 +43,41 @@ Line Line3 {
 	Stations (s_110ST, s_4AV, s_125ST);	
 	Frequency (0.2);
 	Capacity (3);
-	Speed (100); }*/
-/*	
+	Speed (100); }
+
 Simulate (5) {
 print "Done";
 }
-*/
+
 
 num lambda = getRate(A, 5, Gabda);
 
 num y = 1 * 2;
 num z = 3.23 - 0;
-/*
+
+Time rushhour[0,10];
+
+if( z >4){
+	y=5;}
+else
+{
+y=-4;
+}
+
+
+
+num a=1;
+
 Stat statA(int b, num a){
  num z;
  num a=6;
  num b=6;
  a = a + b;
 
- //num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
+ num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
-}*/
-/*
+}
+
 String Hello = "Test";		 //problems here - loses quotes
 
 Time rushhour[0,10];
@@ -82,7 +95,7 @@ num x = 1;
 
 
 
-ShowGUI();	 //keep outside simulate block
+//ShowGUI();	 //keep outside simulate block
 
-*/
+
 

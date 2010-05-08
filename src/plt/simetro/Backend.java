@@ -68,7 +68,10 @@ public class Backend {
            
             simwalk walker = new simwalk(nodes);
             
+            
             walker.program();
+            
+            String print = walker.printThis();
         	//System.out.println(tokenStream.toString());
             
  
@@ -91,7 +94,7 @@ public class Backend {
             
             BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
             try {
-            	outputStream.write( imports+header + globals + main + tokenStream.toString() + "\r\r } \r\r\r}" );
+            	outputStream.write( imports+header + globals + main + tokenStream.toString() + print + " \r\r\r}" );
               }
               finally {
             	  outputStream.close();

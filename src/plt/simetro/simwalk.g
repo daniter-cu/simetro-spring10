@@ -33,6 +33,18 @@ ArrayList<String> popitems = new ArrayList<String>();
 //this is to inline declare population/popitems
 ArrayList<String> popnames= new ArrayList<String>();
 HashMap<String, String> popstationMap = new HashMap<String, String>();
+
+String last = "\n}\n";
+
+public void modLast(String s)
+{
+  last += s;
+}
+
+public String printThis()
+{
+  return last;
+}
 }
 
 
@@ -46,19 +58,23 @@ THIS WORKS SLIGHTLY BETTER!
 
 
 //problem with * at end of prog - very weird!
-program: (declarations |statements)*
+program: 
+(declarations |statements)* 
+
 ;
 //program: (line|station|population|stat|simulate|statements|load|showgui|string|time)*   
 //program: (simulate|line|station|population|stat|statements|load|showgui|string|time|primitive_type_declarator)*   
 //;
 
-declarations:
-        types
+declarations returns [String print]:
+        types {$print = $types.print;}
       //  |load
         ;
         
-types:
-    (line|station|population|stat|time|string|showgui)
+types returns [String print]
+@init {$print = "}";}:
+    (line|station|population|i=stat { $print = $i.print + "\n}\n";} |time|string|showgui) 
+    
     ;
 
 //==DERIVED TYPES==
@@ -166,22 +182,33 @@ idlist returns [String s]
 
 //==OBJECT VARIABLES== 
 
-stat returns [String str]
-@init {$str = "";}:
+stat returns [String str, String print]
+@init {$str = ""; $print ="";}:
     ^(STAT i=ID f=formal_params ((s=statements) {$str+=$s.text + "\n";})* ^(RETURN j=ID)) //fix this, should be able to return text nums too
-    ->template(id = {$i.text}, fp = {$f.str}, s= {$str} ,j = {$j.text})
-    <<
-    public static int <id> ( <fp> )
-    {
-        <s>
-        return <j>;
+    {$print += "public static int " + $i.text + "( " + $f.str + " )\n";
+      $print += "{\n";
+      $print += $str + "\n";
+      $print += "return " + $j.text +";\n";
+      $print += "}\n";
+ 
+      //System.out.println($print);
+      modLast($print);
     }
-    >>
+    ->template() ""
+   // ->template(id = {$i.text}, fp = {$f.str}, s= {$str} ,j = {$j.text})
+   // <<
+   // public static int <id> ( <fp> )
+   // {
+    //    <s>
+    //    return <j>;
+   // }
+   // >>
         ;
 
 //time
 time:
-        ^(TIME ID i=INTEGER j=INTEGER?)  
+        ^(TIME id=ID i=INTEGER j=INTEGER?)  ->template(id={$ID.text}, i={$i.text}, j={$j.text})
+        "int <id>[2] = {<i>,<j>};"
        /* {//System.out.print("Time "+ $ID.text +" = new Time(");
             if(j != null) 
            // System.out.println($i.text + ", " +$j.text + ");");
@@ -216,7 +243,7 @@ statements  :
         |ifstmt 
         |func_call
         | print_function 
-       // |simulate
+        |simulate
         ;
  
 expression_statement returns [String str]:
@@ -270,8 +297,8 @@ forloop:
         ;
 
 ifstmt:
-        ^(IF arithExpr blockstmt ^(ELSE blockstmt))
-        ^(IF arithExpr blockstmt)
+        ^(IF arithExpr b1=blockstmt i=(^(ELSE b2=blockstmt))?)
+       // ^(IF arithExpr blockstmt)
         ;
         
 
@@ -324,6 +351,7 @@ func_call:
         
 mod_procedures:
         ^(MOD_FUNCTIONS  params)
+        -> template(i={$MOD_FUNCTIONS.text}, p = {$params.text}) "<i>(<p; separator=\", \">)"
         ;   
      
 print_function:
@@ -353,11 +381,11 @@ showgui:
 simulate:
         ^('Simulate' INTEGER  blockstmt)
         ->template( blk = {$blockstmt.text} )
-        "
+        <<
         Simulate sim=new Simulate();
         sim.createRoutingTables(stationList,lineList);
         <blk>
-        "
+        >>
         ;
 
 //==PARAMETERS
@@ -385,7 +413,7 @@ formal_param returns [String str]:
 
 params:
        // ^(PARAM (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER)* )
-       ^(PARAM (ID| NUM )* specialparam?)
+       ^(PARAM (ID| NUM | INTEGER)* specialparam?)
         ;
 
     //    -> ^(PARAM  $a* $b* $a* )

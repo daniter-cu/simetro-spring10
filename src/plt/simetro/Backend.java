@@ -33,8 +33,9 @@ public class Backend {
 			//String file = new String("./Testing/Loop_test.sim");
 			//String file = new String("./Testing/Object_test.sim");
 			//String file = new String("./Testing/smalltown_file.sim");
-			String file = new String("./Testing/smalltown.sim");
+			//String file = new String("./Testing/smalltown.sim");
 			
+			String file = "./Testing/" + args[0]+ ".sim";
 			//==PARSER/LEXER
 			CharStream charStream = new ANTLRFileStream(file);
 			simgramLexer lexer = new simgramLexer(charStream );

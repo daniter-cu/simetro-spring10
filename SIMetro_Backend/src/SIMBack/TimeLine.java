@@ -41,7 +41,7 @@ public class TimeLine {
     }
     
     public void addPerson(Person person){
-    	persons.add(person.clone());
+    	persons.add(person);
     	
     }
     
@@ -51,8 +51,8 @@ public class TimeLine {
     }
     
     public void addAllPersons(){
-    	allPersons.add(persons);
-    	persons = new ArrayList<Person>();
+    	allPersons.add((ArrayList<Person>)persons.clone());
+ 
     }
     
     public ArrayList<ArrayList<Person>> getAllPersons(){

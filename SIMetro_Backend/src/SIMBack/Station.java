@@ -31,7 +31,7 @@ public class Station implements Cloneable{
 		if(pop!=null) {
 			if(pop.getPopItemArr()!=null) {
 				for(int i=0;i<pop.getPopItemArr().size();i++) {
-					if(pop.getPopItemArr().get(i).getClass().equals(s2)) {
+					if(pop.getPopItemArr().get(i).getDest().equals(s2)) {
 						pop.getPopItemArr().get(i).setRate(rate);
 					}
 				}

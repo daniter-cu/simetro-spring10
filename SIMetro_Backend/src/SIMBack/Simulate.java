@@ -4,18 +4,33 @@ import java.util.ArrayList;
 
 
 public class Simulate {
-ArrayList<Person> persons=new ArrayList<Person>();
-ArrayList<Train> trains=new ArrayList<Train>();
+	ArrayList<Person> persons=new ArrayList<Person>();
+	ArrayList<Train> trains=new ArrayList<Train>();
 
-//create timeline object
-//TimeLine tl = new TimeLine();
+	//create timeline object
+	//TimeLine tl = new TimeLine();
 
-        //public void createTimeLine(int timeRange){
-        //this is for setting timeline
-        // a timeRange is mandatory when creating new simulation
-        // TimeLine tl=new TimeLine(timeRange);
-        //}
+	//public void createTimeLine(int timeRange){
+	//this is for setting timeline
+	// a timeRange is mandatory when creating new simulation
+	// TimeLine tl=new TimeLine(timeRange);
+	//}
 
+	public void changeRate(Station sa,Station sb,double rate) {
+		sa.changeRate(sb, rate);
+	}
+	
+	public void changeCapacity(Line l,int cap) {
+		l.changeCapacity(cap);
+	}
+	
+	public void changeFrequency(Line l,double frq) {
+		l.changeFrequency(frq);
+	}
+	
+	public void changeSpeed(Line l, double spd) {
+		l.changeSpeed(spd);
+	}
 	public void createRoutingTables(ArrayList<Station> stationList,ArrayList<Line> lineList) {
 		//for each station, create its routing table and link it to the station
 		ArrayList<Edge> edgeList=new ArrayList<Edge>();
@@ -25,10 +40,10 @@ ArrayList<Train> trains=new ArrayList<Train>();
 				Station s2=lineList.get(i).getRoute().get(j+1);
 				Edge edge=new Edge(s1,s2,s1.getCoordinate().getDistance(s2.getCoordinate()),(Math.round((s1.getCoordinate().getDistance(s2.getCoordinate())/lineList.get(i).getSpeed()*10.0)))/10.0,lineList.get(i));
 				lineList.get(i).addEdge(edge);
-                                edgeList.add(edge);
-                                //System.out.println("A new edge is added: "+edge.getS1().getName()+" <=> "+edge.getS2().getName());
+				edgeList.add(edge);
+				//System.out.println("A new edge is added: "+edge.getS1().getName()+" <=> "+edge.getS2().getName());
 			}
-                        lineList.get(i).setRvsEdges();
+			lineList.get(i).setRvsEdges();
 		}
 
 		System.out.println("edgeList.size() "+edgeList.size());
@@ -39,11 +54,11 @@ ArrayList<Train> trains=new ArrayList<Train>();
 			for(int rti=0;rti<stationList.size()-1;rti++) {
 				if(sli==si)
 					sli++;
-					RoutingTab rt=new RoutingTab();
-					rt.setDest(stationList.get(sli));
-					rt.setDist(9999);
-					RoutingTable.add(rt);
-					sli++;
+				RoutingTab rt=new RoutingTab();
+				rt.setDest(stationList.get(sli));
+				rt.setDist(9999);
+				RoutingTable.add(rt);
+				sli++;
 
 			}
 			stationList.get(si).setRoutingTable(RoutingTable);
@@ -70,22 +85,22 @@ ArrayList<Train> trains=new ArrayList<Train>();
 						+"\tNext: "+stationList.get(i).getRoutingTable().get(j).getNext().getName());
 			}
 		}
-//		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
+		//		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
 		System.out.println("Constructing...");
 		for(int i=0;i<stationList.size()-1;i++) {
-//			System.out.println("i:"+i);
+			//			System.out.println("i:"+i);
 			for(int si=0;si<stationList.size();si++) {
-//				System.out.println("si:"+si);
+				//				System.out.println("si:"+si);
 				for(int rti=0;rti<stationList.get(si).getRoutingTable().size();rti++) {
-//					System.out.println("rti:"+rti);
+					//					System.out.println("rti:"+rti);
 					Station source=stationList.get(si);
 					Station dest=stationList.get(si).getRoutingTable().get(rti).getDest();
 					for(int tr=0;tr<stationList.size()-1;tr++) {
 						if((!source.getRoutingTable().get(tr).equals(dest))&&(!source.getRoutingTable().get(tr).getDest().equals(dest))) {
-//							System.out.println(source.getRoutingTable()[tr].getDist());
-//							System.out.println("+++++"+source.getRoutingTable()[tr].getDest().getName());
-//							System.out.println(dest.getName());
-//							System.out.println(source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist());
+							//							System.out.println(source.getRoutingTable()[tr].getDist());
+							//							System.out.println("+++++"+source.getRoutingTable()[tr].getDest().getName());
+							//							System.out.println(dest.getName());
+							//							System.out.println(source.getRoutingTable()[tr].getDest().getRTabByDest(dest).getDist());
 
 							double newdist=source.getRoutingTable().get(tr).getDist()+source.getRoutingTable().get(tr).getDest().getRTabByDest(dest).getDist();
 							if (newdist<source.getRoutingTable().get(rti).getDist()) {
@@ -120,7 +135,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//look up in the population objects to see if new people should be created to arrive at each station
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
-                System.out.println("----------------PASSENGER ARRIVING INFOMATION:-----------------");
+		System.out.println("----------------PASSENGER ARRIVING INFOMATION:-----------------");
 		System.out.println("current time from peopleArrive is " + arriveTime);
 		//iterate through station list
 		for(int si=0;si<stationList.size();si++) {
@@ -156,34 +171,34 @@ ArrayList<Train> trains=new ArrayList<Train>();
 
 						for(int j=0; j < aTable.size(); j++) {
 
-						
+
 							//determine nextStation according to destination for each person
 							if(aTable.get(j).getDest().equals(destStation)){
-									//get next station on routing table
-									Station nextStation = aTable.get(j).getNext();
+								//get next station on routing table
+								Station nextStation = aTable.get(j).getNext();
 
-									while (peopleCount < popRate){
-										//create new person
-										Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
-                                        
-										//add new person to list linked with station
-										sourceStation.addPerson(aPerson);
-										persons.add(aPerson);
-										System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
-										//increment peopleCount
-										peopleCount++;
+								while (peopleCount < popRate){
+									//create new person
+									Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
 
-										//add new person to persons array list
-						
-									}//end of while
-									
-									//break the loop so that it does not keep looking up the routing table	
-									break;
-								}//end of if
+									//add new person to list linked with station
+									sourceStation.addPerson(aPerson);
+									persons.add(aPerson);
+									System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
+									//increment peopleCount
+									peopleCount++;
 
-							}
+									//add new person to persons array list
+
+								}//end of while
+
+								//break the loop so that it does not keep looking up the routing table	
+								break;
+							}//end of if
 
 						}
+
+					}
 					//}
 
 				}
@@ -192,7 +207,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//set persons in timeline
 		//tl.setTime(arriveTime);
 		//tl.setPersons(persons);
-                System.out.println("-----------------------------END---------------------------");
+		System.out.println("-----------------------------END---------------------------");
 	}
 
 	public void trainArrive(ArrayList<Line> lineList, int currTime){
@@ -200,7 +215,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 
 		int timeCreate = 0;
-                System.out.println("\n----------------TRAIN CREATING INFOMATION:-----------------");
+		System.out.println("\n----------------TRAIN CREATING INFOMATION:-----------------");
 
 		//iterate through list of lines
 		for(int i=0;i<lineList.size();i++) {
@@ -248,23 +263,23 @@ ArrayList<Train> trains=new ArrayList<Train>();
 				//Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 				//now create a train at first station
 				Train firstTrain = new Train(aLine, currTime, firstCoords, lineCap, lineSpeed, false);
-                                //System.out.println("The coordinate of the train on "+firstTrain.getLine().getName()+" is ( "+firstTrain.getCoordinate().getX()+" , "+firstTrain.getCoordinate().getY()+" )");
-                                //System.out.print(firstTrain.getCurrent().getName()+" Station Coordinate:");
-                                //firstTrain.getCoordinate().printCoor(firstCoords);
-                                //System.out.println();
-                                trains.add(firstTrain);
+				//System.out.println("The coordinate of the train on "+firstTrain.getLine().getName()+" is ( "+firstTrain.getCoordinate().getX()+" , "+firstTrain.getCoordinate().getY()+" )");
+				//System.out.print(firstTrain.getCurrent().getName()+" Station Coordinate:");
+				//firstTrain.getCoordinate().printCoor(firstCoords);
+				//System.out.println();
+				trains.add(firstTrain);
 				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + firstStation.getName());
-                                //now create a train at last station
+				//now create a train at last station
 				Train endTrain = new Train(aLine, currTime, lastCoords, lineCap, lineSpeed, true);
 				trains.add(endTrain);
-                                System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
-                               
+				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
+
 			}
-                         
+
 		}
 		//tl.setTime(currTime);
 		//tl.setTrains(trains);
-                System.out.println("---------------------------END------------------------------");
+		System.out.println("---------------------------END------------------------------");
 	}
 
 	public void trainMove(int currTime, TimeLine tl) {
@@ -273,97 +288,97 @@ ArrayList<Train> trains=new ArrayList<Train>();
 		//                                                                                             or do they need to transfer to another line (add new arrival time using public void setTransferTime(ArrayList<TimePair> transferTime))
 		//                                   load the people that are waiting to get on this train
 
-                ArrayList<Train> trainInDest=new ArrayList<Train>();
-                System.out.println("\n-------------------------TRANSFER INFOMATION:-------------------------");
-                for (Train aTrain : trains)
-                {
-                    //System.out.println("The coordinate of the train on "+aTrain.getLine().getName()+" is ( "+aTrain.getCoordinate().getX()+" , "+aTrain.getCoordinate().getY()+" )");
-                    //System.out.print(aTrain.getCurrent().getName()+" Station Coordinate:");
-                      //          aTrain.getCoordinate().printCoor(aTrain.getCurrent().getCoordinate());
-                      //          System.out.println();
-                    tl.addTrain(aTrain);
-                    aTrain.updateCoordinate();
-                }
-                    tl.addAllTrains();
+		ArrayList<Train> trainInDest=new ArrayList<Train>();
+		System.out.println("\n-------------------------TRANSFER INFOMATION:-------------------------");
+		for (Train aTrain : trains)
+		{
+			//System.out.println("The coordinate of the train on "+aTrain.getLine().getName()+" is ( "+aTrain.getCoordinate().getX()+" , "+aTrain.getCoordinate().getY()+" )");
+			//System.out.print(aTrain.getCurrent().getName()+" Station Coordinate:");
+			//          aTrain.getCoordinate().printCoor(aTrain.getCurrent().getCoordinate());
+			//          System.out.println();
+			tl.addTrain(aTrain);
+			aTrain.updateCoordinate();
+		}
+		tl.addAllTrains();
 
-                for (Train aTrain : trains)
-                {
-                    
-                    if (currTime==aTrain.getArriveTime())
-                    {
-                        System.out.println("A new train on "+aTrain.getLine().getName()+" is going to get people in Station "+aTrain.getCurrent().getName());
-                        transfer(aTrain, currTime);
-                        continue;
-                    }
-                    if(aTrain.arriveNextStop())
-                    {
-                        //System.out.println("*****A Train on "+aTrain.getLine().getName()+" arrives "+aTrain.getNext().getName());
-                        //aTrain.setArriveTime(currTime);
-                        
-                        if(aTrain.arriveDest())
-                            trainInDest.add(aTrain);
-                        else aTrain.nextEdge();
-                        transfer(aTrain,currTime);
-                    }
-                    else continue;
+		for (Train aTrain : trains)
+		{
 
-                }
-                for (int i=0;i<trainInDest.size();i++)
-                {
-                    trains.remove(trainInDest.get(i));
-                }
-                
-                 System.out.println("The Number of Train on Operation: "+trains.size());
-                 System.out.println("----------------------------------END-----------------------------------");
-                 
-          }
+			if (currTime==aTrain.getArriveTime())
+			{
+				System.out.println("A new train on "+aTrain.getLine().getName()+" is going to get people in Station "+aTrain.getCurrent().getName());
+				transfer(aTrain, currTime);
+				continue;
+			}
+			if(aTrain.arriveNextStop())
+			{
+				//System.out.println("*****A Train on "+aTrain.getLine().getName()+" arrives "+aTrain.getNext().getName());
+				//aTrain.setArriveTime(currTime);
 
-        void transfer(Train train, int currTime){
-            ArrayList<Person> personTransferred=new ArrayList<Person>();
-            Station station=train.getCurrent();
-            ArrayList<Person> crowd=station.getCrowd();
-            int personCount=0;
-            for(Person aPerson : crowd)
-                if(aPerson.getNext().getName().equals(train.getNext().getName()))
-                    {  
-                       train.addPerson(aPerson);
-                       aPerson.setBoardingTime(currTime);
-                       aPerson.addTimePair();
-                       personTransferred.add(aPerson);
-                       personCount++;
-                       //System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
-                    }
-            System.out.println(personCount+" person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]" );
-            for (int i=0;i<personTransferred.size();i++)
-                {
-                   station.removePerson(personTransferred.get(i));
-                }
+				if(aTrain.arriveDest())
+					trainInDest.add(aTrain);
+				else aTrain.nextEdge();
+				transfer(aTrain,currTime);
+			}
+			else continue;
 
-            ArrayList<Person> board=train.getBoard();
-            personTransferred=new ArrayList<Person>();
-            for(Person aPerson : board)
-                if(aPerson.getNext().getName().equals(station.getName()))
-                    {
-                       station.addPerson(aPerson);
-                       aPerson.setArrivalTime(currTime);
-                       System.out.println("*****A person get off ["+train.getLine().getName()+"] At ["+station.getName()+"]");
-                       if(aPerson.getDest().getName().equals(station.getName()))
-                       {
-                           aPerson.setDepartTime(currTime);
-                           System.out.println("*****A person arrives his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
-                       }
-                       else {
-                    	   aPerson.setNext(station.findNext(aPerson.getDest()));
-                    	   
-                       }
-                       personTransferred.add(aPerson);
-                         
-                    }
-            for (int i=0;i<personTransferred.size();i++)
-                {
-                   train.removePerson(personTransferred.get(i));
-                }
+		}
+		for (int i=0;i<trainInDest.size();i++)
+		{
+			trains.remove(trainInDest.get(i));
+		}
 
-        }
+		System.out.println("The Number of Train on Operation: "+trains.size());
+		System.out.println("----------------------------------END-----------------------------------");
+
+	}
+
+	void transfer(Train train, int currTime){
+		ArrayList<Person> personTransferred=new ArrayList<Person>();
+		Station station=train.getCurrent();
+		ArrayList<Person> crowd=station.getCrowd();
+		int personCount=0;
+		for(Person aPerson : crowd)
+			if(aPerson.getNext().getName().equals(train.getNext().getName()))
+			{  
+				train.addPerson(aPerson);
+				aPerson.setBoardingTime(currTime);
+				aPerson.addTimePair();
+				personTransferred.add(aPerson);
+				personCount++;
+				//System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
+			}
+		System.out.println(personCount+" person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]" );
+		for (int i=0;i<personTransferred.size();i++)
+		{
+			station.removePerson(personTransferred.get(i));
+		}
+
+		ArrayList<Person> board=train.getBoard();
+		personTransferred=new ArrayList<Person>();
+		for(Person aPerson : board)
+			if(aPerson.getNext().getName().equals(station.getName()))
+			{
+				station.addPerson(aPerson);
+				aPerson.setArrivalTime(currTime);
+				System.out.println("*****A person get off ["+train.getLine().getName()+"] At ["+station.getName()+"]");
+				if(aPerson.getDest().getName().equals(station.getName()))
+				{
+					aPerson.setDepartTime(currTime);
+					System.out.println("*****A person arrives his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
+				}
+				else {
+					aPerson.setNext(station.findNext(aPerson.getDest()));
+
+				}
+				personTransferred.add(aPerson);
+
+			}
+		for (int i=0;i<personTransferred.size();i++)
+		{
+			train.removePerson(personTransferred.get(i));
+		}
+
+	}
 }
 

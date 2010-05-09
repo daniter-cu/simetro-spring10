@@ -30,30 +30,30 @@ public class main {
 		System.out.println();
 		
 
-		Station arr[]=new Station[3];
+//		Station arr[]=new Station[3];
 		ArrayList<Station> al=new ArrayList<Station>();
 		al.add(SA);
 		al.add(SB);
 		al.add(SC);
-		Line LA= new Line("Line1", 0.01, 0.05, 100,al );
+		Line LA= new Line("Line1", 0.005, 0.05, 100,al );
                 LA.setRvsLine();
 		lineList.add(LA);
 		
-		Station arr2[]=new Station[3];
+//		Station arr2[]=new Station[3];
 		ArrayList<Station> al2=new ArrayList<Station>();
 		al2.add(SB);
 		al2.add(SD);
 		al2.add(SE);
-		Line LB=new Line("Line2",0.01,0.05,100,al2);
+		Line LB=new Line("Line2",0.005,0.05,100,al2);
                 LB.setRvsLine();
 		lineList.add(LB);
 		
-		Station arr3[]=new Station[3];
+//		Station arr3[]=new Station[3];
 		ArrayList<Station> al3=new ArrayList<Station>();
 		al3.add(SA);
 		al3.add(SE);
 		al3.add(SC);
-		Line LC=new Line("Line3",0.01,0.05,200,al3);
+		Line LC=new Line("Line3",0.01,0.15,200,al3);
                 LC.setRvsLine();
 		lineList.add(LC);
 
@@ -113,10 +113,14 @@ public class main {
 		
 		SA.print();
 		LA.print();
-		SA.changeRate(SB,0.2);
-		LA.changeCapacity(200);
-		LA.changeFrequency(0.02);
-		LA.changeSpeed(2);
+//		SA.changeRate(SB,0.2);
+//		LA.changeCapacity(200);
+//		LA.changeFrequency(0.02);
+//		LA.changeSpeed(2);
+		sim.changeRate(SA, SB, 0.2);
+		sim.changeCapacity(LA, 200);
+		sim.changeFrequency(LA, 0.02);
+		sim.changeSpeed(LA, 2);
 	
 		
 		

@@ -12,15 +12,18 @@ public class GuiPanel extends Panel {
 	private ArrayList<Station> stationList;
     BufferedImage imageTrain;
     ArrayList<BufferedImage> stationImg=new ArrayList<BufferedImage>();
+    ArrayList<BufferedImage> trainImg=new ArrayList<BufferedImage>();
     ArrayList<Edge> edgeList=new ArrayList<Edge>();
-    BufferedImage imageStation1;
-    BufferedImage imageStation2;
-    BufferedImage imageStation3;
-    BufferedImage imageStation4;
+    ArrayList<ArrayList<Train>> allTrains=new ArrayList<ArrayList<Train>>();
+//    BufferedImage imageStation1;
+//    BufferedImage imageStation2;
+//    BufferedImage imageStation3;
+//    BufferedImage imageStation4;
     int xCor = 50;
     int yCor = 0;
-
-    public GuiPanel(ArrayList<Station> stationList,ArrayList<Line> lineList) {
+    int Time=0;
+    
+    public GuiPanel(ArrayList<Station> stationList,ArrayList<Line> lineList,ArrayList<ArrayList<Train>> allTrains) {
         try {
     		for(int i=0;i<lineList.size();i++) {
     			for(int j=0;j<lineList.get(i).getRoute().size()-1;j++) {
@@ -32,6 +35,7 @@ public class GuiPanel extends Panel {
                            
     		}
         	this.stationList=stationList;
+        	this.allTrains=allTrains;
 
             String imageName = "src/SIMBack/resources/Train.jpg";
             String imageName2 = "src/SIMBack/resources/Station.jpg";
@@ -47,6 +51,10 @@ public class GuiPanel extends Panel {
         		BufferedImage bi=ImageIO.read(input2);
         		stationImg.add(bi);
         	}
+        	for(int i=0;i<allTrains.get(Time).size();i++) {
+        		BufferedImage bi=ImageIO.read(input);
+        		trainImg.add(bi);
+        	}
         } catch (IOException ie) {
             System.out.println("Error:" + ie.getMessage());
         }
@@ -59,6 +67,7 @@ public class GuiPanel extends Panel {
 //        g.drawImage(imageStation3, 50, 400, null);
 //        g.drawImage(imageStation4, 450, 200, null);
         
+    	
 
         for(int i=0;i<edgeList.size();i++) {
         	Edge t=edgeList.get(i);
@@ -98,9 +107,19 @@ public class GuiPanel extends Panel {
         	g.drawImage(stationImg.get(i), (int) (50+stationList.get(i).getCoordinate().getX()*40), (int)(650-stationList.get(i).getCoordinate().getY()*40), null);
         	g.drawString("Station: "+stationList.get(i).getName(), (int) (70+stationList.get(i).getCoordinate().getX()*40), (int)(720-stationList.get(i).getCoordinate().getY()*40));
         }
+        if(Time<allTrains.size())
+        for(int i=0;i<allTrains.get(Time).size();i++) {
+        	int x=(int)allTrains.get(Time).get(i).getCoordinate().getX();
+        	int y=(int)allTrains.get(Time).get(i).getCoordinate().getY();
+        	g.drawImage(imageTrain, 50+40*x, 650-40*y, null);
+
+        }
         
-        g.drawImage(imageTrain, xCor, yCor, null);
-        yCor+=5;
+//        g.drawImage(imageTrain, xCor, yCor, null);
+//        yCor+=5;
+        Time++;
+        g.setColor(Color.black);
+        g.drawString("Time="+Time, 20, 20);
 
     }
 

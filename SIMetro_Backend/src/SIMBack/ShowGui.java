@@ -10,10 +10,10 @@ import javax.swing.JScrollPane;
 
 public class ShowGui {
 
-	public void Show(ArrayList<Station> stationl,ArrayList<Line> linel) {
+	public void Show(ArrayList<Station> stationl,ArrayList<Line> linel,ArrayList<ArrayList<Train>> allTrains) {
 		try {
 			JFrame frame = new JFrame("Display image");
-			GuiPanel panel = new GuiPanel(stationl,linel);
+			GuiPanel panel = new GuiPanel(stationl,linel,allTrains);
 			panel.setBackground(Color.white);
 			frame.getContentPane().add(panel);
 			frame.setSize(1000, 800);
@@ -25,7 +25,7 @@ public class ShowGui {
 			while (true) {
 				panel.repaint();
 				try {
-					Thread.sleep(50);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

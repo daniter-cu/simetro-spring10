@@ -28,6 +28,7 @@ public class TimeLine {
     	return allTrains.get(index);
     }
     
+    
     public void addAllTrains(){
     	
     	allTrains.add(trains);
@@ -57,12 +58,19 @@ public class TimeLine {
     public ArrayList<ArrayList<Person>> getAllPersons(){
     	return allPersons;
     }
+    
     public void addStaions(ArrayList<Station> stations){
-    	this.allStations.add(stations);
+    	this.allStations.add((ArrayList<Station>)stations.clone());
     }
+    
     public void addLines(ArrayList<Line> lines){
-    	this.allLines.add(lines);
-    }   
+    	this.allLines.add((ArrayList<Line>)lines.clone());
+    }
+    
+    public void getAverageTime(){
+    	    	
+    }
+
 
    
 }

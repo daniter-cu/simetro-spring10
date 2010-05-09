@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class Simulate {
-//ArrayList<Person> persons=new ArrayList<Person>();
+ArrayList<Person> persons=new ArrayList<Person>();
 ArrayList<Train> trains=new ArrayList<Train>();
 
 //create timeline object
@@ -168,6 +168,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
                                         
 										//add new person to list linked with station
 										sourceStation.addPerson(aPerson);
+										persons.add(aPerson);
 										System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
 										//increment peopleCount
 										peopleCount++;
@@ -276,7 +277,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
                 System.out.println("\n-------------------------TRANSFER INFOMATION:-------------------------");
                 for (Train aTrain : trains)
                 {
-                    System.out.println("The coordinate of the train on "+aTrain.getLine().getName()+" is ( "+aTrain.getCoordinate().getX()+" , "+aTrain.getCoordinate().getY()+" )");
+                    //System.out.println("The coordinate of the train on "+aTrain.getLine().getName()+" is ( "+aTrain.getCoordinate().getX()+" , "+aTrain.getCoordinate().getY()+" )");
                     //System.out.print(aTrain.getCurrent().getName()+" Station Coordinate:");
                       //          aTrain.getCoordinate().printCoor(aTrain.getCurrent().getCoordinate());
                       //          System.out.println();
@@ -321,6 +322,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
             ArrayList<Person> personTransferred=new ArrayList<Person>();
             Station station=train.getCurrent();
             ArrayList<Person> crowd=station.getCrowd();
+            int personCount=0;
             for(Person aPerson : crowd)
                 if(aPerson.getNext().getName().equals(train.getNext().getName()))
                     {  
@@ -328,8 +330,10 @@ ArrayList<Train> trains=new ArrayList<Train>();
                        aPerson.setBoardingTime(currTime);
                        aPerson.addTimePair();
                        personTransferred.add(aPerson);
-                       System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
+                       personCount++;
+                       //System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
                     }
+            System.out.println(personCount+" person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]" );
             for (int i=0;i<personTransferred.size();i++)
                 {
                    station.removePerson(personTransferred.get(i));

@@ -131,7 +131,7 @@ public class Simulate {
 	}
 
 
-	public void peopleArrive(ArrayList<Station> stationList, int arriveTime){
+	public void peopleArrive(ArrayList<Station> stationList, int arriveTime,TimeLine tl){
 		//look up in the population objects to see if new people should be created to arrive at each station
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
@@ -180,7 +180,7 @@ public class Simulate {
 								while (peopleCount < popRate){
 									//create new person
 									Person aPerson = new Person(arriveTime, destStation, sourceStation, nextStation);
-
+									tl.addPerson(aPerson);
 									//add new person to list linked with station
 									sourceStation.addPerson(aPerson);
 									persons.add(aPerson);
@@ -327,7 +327,7 @@ public class Simulate {
 		{
 			trains.remove(trainInDest.get(i));
 		}
-
+		tl.addAllPersons();
 		System.out.println("The Number of Train on Operation: "+trains.size());
 		System.out.println("----------------------------------END-----------------------------------");
 

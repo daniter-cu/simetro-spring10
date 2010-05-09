@@ -133,8 +133,7 @@ public class Line implements Cloneable {
                 //System.out.println(route.size());
                     for(int i=route.size()-1;i>=0;i--)
                     {
-                        rvsRoute.add(route.get(i));
-                        //System.out.print(line.getRoute().get(i).getName());
+                        rvsRoute.add(route.get(i));                       
                     }
                     System.out.println("\nReverse Direction of "+name+" is Created:");
                     Line rLine=new Line(name, rate, speed, capacity,rvsRoute);

@@ -37,8 +37,8 @@ public class GuiPanel extends Panel {
 			this.stationList=stationList;
 			this.allTrains=allTrains;
 
-			String imageName = "src/SIMBack/resources/Train.jpg";
-			String imageName2 = "src/SIMBack/resources/Station.jpg";
+			String imageName = "SIMetro_Backend/src/SIMBack/resources/Train.jpg";
+			String imageName2 = "SIMetro_Backend/src/SIMBack/resources/Station.jpg";
 			File input = new File(imageName);
 			imageTrain = ImageIO.read(input);
 			File input2 = new File(imageName2);

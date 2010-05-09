@@ -49,6 +49,7 @@ Simulate (5) {
 print "Done";
 }
 
+ShowGUI();
 
 num lambda = getRate(A, 5, Gabda);
 

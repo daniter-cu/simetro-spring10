@@ -217,7 +217,7 @@ mod_procedures:
         ;   
       
 print_function:
-        'print'^ (STRING |func_call | ID)
+        'print'^ (STRING |func_call | ID) ';'!
         ;
                
 showgui:

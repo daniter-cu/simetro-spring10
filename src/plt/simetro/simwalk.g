@@ -386,7 +386,11 @@ print_function:
         ;
 
 showgui:
-        ShowGUI
+        ShowGUI -> template()
+        <<
+        ShowGui sg=new ShowGui();
+        sg.Show(stationList, lineList,tl.getAllTrains());
+        >>
         ;
 
 //THIS IS TRICKY..
@@ -430,8 +434,8 @@ simulate:
             count++;
         }
     
-        ShowGui sg=new ShowGui();
-        sg.Show(stationList, lineList,tl.getAllTrains());
+       // ShowGui sg=new ShowGui();
+        //sg.Show(stationList, lineList,tl.getAllTrains());
         
         
         

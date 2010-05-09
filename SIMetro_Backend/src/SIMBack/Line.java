@@ -28,6 +28,18 @@ public class Line implements Cloneable {
     	
     }
     
+    public void changeFrequency(double frequency) {
+    	rate=frequency;
+    }
+    
+    public void changeSpeed(double speed) {
+    	this.speed=speed;
+    }
+    
+    public void changeCapacity(int cap) {
+    	capacity =cap;
+    }
+    
     public void print() {
     	System.out.println("Line: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
     	System.out.print("Route:   ");

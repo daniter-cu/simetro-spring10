@@ -106,6 +106,10 @@ public class main {
 		
 		SA.print();
 		LA.print();
+		SA.changeRate(SB,0.2);
+		LA.changeCapacity(200);
+		LA.changeFrequency(0.02);
+		LA.changeSpeed(2);
 	
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());

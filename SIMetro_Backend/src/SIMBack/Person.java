@@ -10,6 +10,7 @@ public class Person implements Cloneable{
 	private Station dest;
 	private Station source;
 	private Station next;
+	private int totalWaitTime;
         //private Station current;
 	//private Line line;
 	
@@ -23,6 +24,7 @@ public class Person implements Cloneable{
 		this.dest = dest;
 		this.source = source;
 		this.next = next;
+		totalWaitTime=0;
                 //this.current=source;
 	}
 	public void setArrivalTime(int arrivalTime) {
@@ -64,24 +66,17 @@ public class Person implements Cloneable{
 	public void setTransferTime(ArrayList<TimePair> transferTime) {
 		this.transferTime = transferTime;
 	}
-        public void addTimePair() {
+    public void addTimePair() {
 	        this.transferTime.add(new TimePair(this.arrivalTime,this.boardingTime));
+	        totalWaitTime+=boardingTime-arrivalTime;
 	}
+    public int getTotalWaitTime(){
+    		return totalWaitTime;
+    }
 	public ArrayList<TimePair> getTransferTime() {
 		return transferTime;
 	}
-        /*
-        public Line getLine(){
-                ArrayList<RoutingTab> table=current.getRoutingTable();
-                for(RoutingTab tab : table){
-                    if(tab.getDest().getName().equals(dest.getName())&&tab.getNext().getName().equals(next.getName()))
-                        line=tab.getLine();
-                }
-                return line;
-        }
-         *
-         */
-	
+       
 	public Person clone(){
         try{
           Person cloned = (Person)super.clone();

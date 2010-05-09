@@ -2,9 +2,20 @@ package SIMBack;
 import java.util.ArrayList;
 
 
-public class Population {
+public class Population implements Cloneable{
 	private ArrayList<PopItem> popItemArr;
 
+	public Population clone(){
+		try{
+		Population cloned=(Population)super.clone();
+		cloned.popItemArr=(ArrayList<PopItem>)popItemArr.clone();
+		return cloned;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;			
+		}
+		
+	}
 	
 	public Population() {
 		super();

@@ -2,16 +2,31 @@ package SIMBack;
 import java.util.ArrayList;
 
 
-public class Line {
+public class Line implements Cloneable {
 	private String name;
 	private double rate;
 	private double speed;
 	private int capacity;
 	private ArrayList<Station> route;
-        private ArrayList<Edge> edges;
-        private Line rvsLine;
+    private ArrayList<Edge> edges;
+    private Line rvsLine;
 	
-	
+    public Line clone(){
+    	try{
+    	Line cloned= (Line)super.clone();
+    	cloned.name=this.name;
+    	cloned.speed=this.speed;
+    	cloned.capacity=this.capacity;
+    	cloned.route=(ArrayList<Station>)route.clone();
+    	cloned.edges=(ArrayList<Edge>)edges.clone();
+    	cloned.rvsLine=(Line)rvsLine.clone();
+    	return cloned;
+    	}catch(Exception e){
+    		e.printStackTrace();   	
+    		return null;
+    	}
+    	
+    }
 
 	public Line() {
 		super();

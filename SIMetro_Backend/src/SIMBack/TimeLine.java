@@ -14,7 +14,8 @@ public class TimeLine {
     private ArrayList<Train> trains=new ArrayList<Train>();
     private ArrayList<ArrayList<Train>> allTrains=new ArrayList<ArrayList<Train>>();
     
-
+    private ArrayList<Person> persons = new ArrayList<Person>();
+    private ArrayList<ArrayList<Person>> allPersons = new ArrayList<ArrayList<Person>>();
     
     public void addTrain(Train train){
     	trains.add(train.clone());   	
@@ -33,6 +34,25 @@ public class TimeLine {
     public ArrayList<ArrayList<Train>> getAllTrains(){
     	return allTrains;
     	
+    }
+    
+    public void addPerson(Person person){
+    	persons.add(person.clone());
+    	
+    }
+    
+    public ArrayList<Person> getPersons(int index){
+    	return allPersons.get(index);
+    	
+    }
+    
+    public void addAllPersons(){
+    	allPersons.add(persons);
+    	persons = new ArrayList<Person>();
+    }
+    
+    public ArrayList<ArrayList<Person>> getAllPersons(){
+    	return allPersons;
     }
    
 }

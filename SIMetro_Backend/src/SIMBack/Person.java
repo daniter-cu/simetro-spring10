@@ -2,7 +2,7 @@ package SIMBack;
 import java.util.ArrayList;
 
 
-public class Person {
+public class Person implements Cloneable{
 	private int arrivalTime;
 	private int boardingTime;
 	private int departTime;
@@ -81,5 +81,28 @@ public class Person {
         }
          *
          */
+	
+	public Person clone(){
+        try{
+          Person cloned = (Person)super.clone();
+          cloned.arrivalTime = arrivalTime;
+        // cloned.line=(Line)line.clone();
+      	//cloned.arrivalTime=arrivalTime;
+          cloned.boardingTime = boardingTime;
+          cloned.departTime = departTime;
+          cloned.transferTime = (ArrayList<TimePair>) transferTime.clone();
+          
+          //clone station class
+          cloned.dest = dest.clone();
+          cloned.source = source.clone();
+          cloned.next = next.clone();
+      	
+          return cloned;
+        }
+        catch(CloneNotSupportedException e){
+          System.out.println(e);
+          return null;
+        }
+      }
 
 }

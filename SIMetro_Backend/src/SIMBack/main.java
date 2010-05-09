@@ -126,6 +126,7 @@ public class main {
 		System.out.println("The average watiting time is: "+tl.getAvgWaitTime(300));
 		System.out.println("The number of people waiting in Station "+SA.getName()+"at time "+599+" is: "+tl.getNumWaiting(300, SA));
 		System.out.println("The rate of population from SA to SD is: "+tl.getRate(5, SA, SD));
+		System.out.println("The number of people at time 300 is: "+tl.getNumPassengers(300));
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());
 	}

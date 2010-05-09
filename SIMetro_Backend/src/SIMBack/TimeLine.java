@@ -206,5 +206,20 @@ public class TimeLine {
 		}
 		else return -1;
 }
+    public int getNumPassengers(int time){
+    	int num = 0;
+    	if (time <= allPersons.size()){
+    		
+    		ArrayList<Person> ps = allPersons.get(time);
+    		num=ps.size();  	
+    		return num;
+    	}
+    	else
+    	{
+    		//System.out.println("Invalid time entered for getFrequency");
+    	}
+    	return -1;
+    	
+    }
 
 }

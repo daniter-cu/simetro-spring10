@@ -1,7 +1,8 @@
 package SIMBack;
-public class Coordinate {
+public class Coordinate{
 	private double x;
 	private double y;
+	
 	
 	public double getDistance(Coordinate coor) {
 		double t= Math.sqrt((x-coor.getX())*(x-coor.getX())+(y-coor.getY())*(y-coor.getY()));
@@ -38,8 +39,8 @@ public class Coordinate {
 	public double getY() {
 		return y;
 	}
-	public void printCoor(Coordinate co){
-        System.out.print("( "+co.getX()+" , "+co.getY()+" )");
+	public void printCoor(){
+        System.out.print("( "+this.getX()+" , "+this.getY()+" )");
 
         }
 

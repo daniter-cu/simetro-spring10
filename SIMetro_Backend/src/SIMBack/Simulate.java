@@ -266,7 +266,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
                 System.out.println("---------------------------END------------------------------");
 	}
 
-	public void trainMove(int currTime) {
+	public void trainMove(int currTime, TimeLine tl) {
 		//update the coordinates of each train running on lines
 		//if the train arrives at a station, unload the people that wants to get off this train, check if these people has already reached their destination (add the departure time),
 		//                                                                                             or do they need to transfer to another line (add new arrival time using public void setTransferTime(ArrayList<TimePair> transferTime))
@@ -280,8 +280,10 @@ ArrayList<Train> trains=new ArrayList<Train>();
                     //System.out.print(aTrain.getCurrent().getName()+" Station Coordinate:");
                       //          aTrain.getCoordinate().printCoor(aTrain.getCurrent().getCoordinate());
                       //          System.out.println();
+                    tl.addTrain(aTrain);
                     aTrain.updateCoordinate();
                 }
+                    tl.addAllTrains();
 
                 for (Train aTrain : trains)
                 {
@@ -296,11 +298,11 @@ ArrayList<Train> trains=new ArrayList<Train>();
                     {
                         //System.out.println("*****A Train on "+aTrain.getLine().getName()+" arrives "+aTrain.getNext().getName());
                         //aTrain.setArriveTime(currTime);
-                        transfer(aTrain,currTime);
+                        
                         if(aTrain.arriveDest())
                             trainInDest.add(aTrain);
                         else aTrain.nextEdge();
-                        
+                        transfer(aTrain,currTime);
                     }
                     else continue;
 
@@ -312,7 +314,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
                 
                  System.out.println("The Number of Train on Operation: "+trains.size());
                  System.out.println("----------------------------------END-----------------------------------");
-
+                 
           }
 
         void transfer(Train train, int currTime){
@@ -321,7 +323,7 @@ ArrayList<Train> trains=new ArrayList<Train>();
             ArrayList<Person> crowd=station.getCrowd();
             for(Person aPerson : crowd)
                 if(aPerson.getNext().getName().equals(train.getNext().getName()))
-                    {
+                    {  
                        train.addPerson(aPerson);
                        aPerson.setBoardingTime(currTime);
                        aPerson.addTimePair();
@@ -346,7 +348,12 @@ ArrayList<Train> trains=new ArrayList<Train>();
                            aPerson.setDepartTime(currTime);
                            System.out.println("*****A person arrives his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
                        }
+                       else {
+                    	   aPerson.setNext(station.findNext(aPerson.getDest()));
+                    	   
+                       }
                        personTransferred.add(aPerson);
+                         
                     }
             for (int i=0;i<personTransferred.size();i++)
                 {

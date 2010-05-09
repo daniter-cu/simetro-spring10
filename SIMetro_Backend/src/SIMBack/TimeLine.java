@@ -11,12 +11,26 @@ package SIMBack;
 import java.util.ArrayList;
 
 public class TimeLine {
-    static private int timeRange;
-    static ArrayList[] table;
-    public TimeLine(int timeRange){
-        table=new ArrayList[timeRange];
+    private ArrayList<Train> trains=new ArrayList<Train>();
+    private ArrayList<ArrayList<Train>> allTrains=new ArrayList<ArrayList<Train>>();
+    
+
+    
+    public void addTrain(Train train){
+    	trains.add(train.clone());   	
     }
-    public static int getTimeRange(){
-            return timeRange;
-        }
+    
+    public ArrayList<Train> getTrains(int index){    	
+    	return allTrains.get(index);
+    }
+    
+    public void addAllTrains(){
+    	allTrains.add(trains);  	
+    }
+    
+    public ArrayList<ArrayList<Train>> getAllTrains(){
+    	return allTrains;
+    	
+    }
+   
 }

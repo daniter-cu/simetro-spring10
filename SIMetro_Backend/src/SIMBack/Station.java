@@ -75,6 +75,15 @@ public class Station {
         public void removePerson(Person person){
                 crowd.remove(person);
         }
+        
+        public Station findNext(Station dest){
+        	  for(RoutingTab rt : routingTable)
+        	  {
+        		  if(rt.getDest().getName().equals(dest.getName()))
+        			  return rt.getNext();
+        	  }
+        	  return this;
+        }
 	
 	
 }

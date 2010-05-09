@@ -1,7 +1,7 @@
 package SIMBack;
 import java.util.ArrayList;
 
-public class Train {
+public class Train implements Cloneable{
 	private Line line;
 	private int arrivalTime;
 	private Coordinate coordinate;
@@ -135,5 +135,25 @@ public class Train {
                 }
                 //System.out.println("The new coordinate of this train on "+line.getName()+" is: ( "+coordinate.getX()+" , "+coordinate.getY()+" )");
         }
+        
+        public Train clone(){
+            try{
+              Train cloned = (Train)super.clone();
+              cloned.arrivalTime = arrivalTime;
+            // cloned.line=(Line)line.clone();
+          	cloned.arrivalTime=arrivalTime;
+          	cloned.coordinate=new Coordinate(coordinate.getX(),coordinate.getY());
+          	cloned.capacity=capacity;
+          	cloned.speed=speed;
+            cloned.onEdge=onEdge;
+            cloned.timeDistLeft=timeDistLeft;
+          	cloned.board=(ArrayList<Person>)board.clone();
+              return cloned;
+            }
+            catch(CloneNotSupportedException e){
+              System.out.println(e);
+              return null;
+            }
+          }
 
 }

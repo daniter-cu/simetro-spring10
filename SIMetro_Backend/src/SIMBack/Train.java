@@ -29,7 +29,7 @@ public class Train implements Cloneable{
 		this.capacity = capacity;
 		this.speed = speed;
                 this.onEdge=0;
-                this.timeDistLeft=line.getEdge(0).getTimedist();
+                this.timeDistLeft=this.line.getEdge(0).getTimedist();
                 board=new ArrayList<Person>();
 	}
 

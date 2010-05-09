@@ -79,6 +79,8 @@ public class Backend {
             String[] newfile2 = file.split("/");
             String classname = (newfile2[newfile2.length-1] );
 
+            String mypackage = "package SIMBack;\r\r";
+            
             String imports = "import java.util.ArrayList;\n" + 
             		"import java.util.Arrays;\n" + 
             		"import java.util.HashMap;\r\r\r";
@@ -94,7 +96,7 @@ public class Backend {
             
             BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
             try {
-            	outputStream.write( imports+header + globals + main + tokenStream.toString() + print + " \r\r\r}" );
+            	outputStream.write( mypackage+imports+header + globals + main + tokenStream.toString() + print + " \r\r\r}" );
               }
               finally {
             	  outputStream.close();

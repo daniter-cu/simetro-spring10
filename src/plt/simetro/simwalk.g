@@ -94,6 +94,7 @@ line:
         tempList_stations.add(stationMap.get((String)<n>));
     }
     lineList.add(new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations)));
+    lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear();"
     ;
 
@@ -270,17 +271,32 @@ foreach:
         ^('foreach' derived_type ID blockstmt)
         {
         //need to choose proper global type
+        String type_list="";
+        String type="";
         
-        
+        if (new String($derived_type.text).equals("Station")) {
+	        type = "Station"; 
+	        type_list = "stationList";
+	        }
+	    else if (new String($derived_type.text).equals("Line")) {
+            type = "Line";
+            type_list = "lineList";
+            }
+	        //case "Time": type_list break;
+	    else if (new String($derived_type.text).equals("Population")) {
+            type="Population";
+            type_list = "populationList";
+            }
         }
-        -> template(dtype = {$derived_type.text}, myID = {$ID.text}, blk = {$blockstmt.text})
-        <<
-        for (Object n : <dtype>)
-        {
-        <blockstmt>
-        }
-        >>
+        -> template(dtype = {type}, dlist = {type_list}, myID = {$ID.text}, blk = {$blockstmt.text})
+        "
+        for (<dtype> <myID> : <dlist>)
+        <blk>
+        "
         ;
+//"for (Object <n> : new ArrayList\<Object\>( Arrays.asList(new String(\"<p>\").replaceAll(\"\\\s+|\\\(|\\\)|\\\[|\\\]\", \"\").split(\",\")))) {
+//popItemList.add(new PopItem(stationMap.get(new String(<n>.toString().split(\"\\\.\")[0])), Double.parseDouble(new String(<n>.toString().split(\"\\\.\")[1]))));
+//}
 
 //if we do x[0,-9] this is setup to count backwards..
 //had to change grammar to for loop to accomodate negatives (hence unaryExpr)
@@ -380,10 +396,45 @@ showgui:
 
 simulate:
         ^('Simulate' INTEGER  blockstmt)
-        ->template( blk = {$blockstmt.text} )
+        ->template( blk = {$blockstmt.text}, time = {$INTEGER} )
         <<
         Simulate sim=new Simulate();
+        TimeLine tl=new TimeLine();
+        
         sim.createRoutingTables(stationList,lineList);
+        
+        
+        for(int time_iter=0; time_iter \< <time> ;time_iter++){
+                        System.out.println("\n*********************************At time "+time_iter+"***********************************");
+                        sim.peopleArrive(stationList, time_iter);
+                        sim.trainArrive(lineList, time_iter);
+                        sim.trainMove(time_iter,tl);
+                        
+                        System.out.println("------------------------------------STATION INFOMATION---------------------------------");
+                        for(Station aStation : stationList)
+                        {
+                               System.out.println("Number of persons in "+aStation.getName()+": "+aStation.getCrowd().size());
+                        }
+                        System.out.println("--------------------------------------------END----------------------------------------");
+
+        }
+        
+        int count=1;
+        for (ArrayList\<Train\> alt : tl.getAllTrains()) {
+            for (Train train : alt)
+            {
+                System.out.print("The Coordinate for the Train on "+train.getLine().getName()+" in time"+count+": ");
+                train.getCoordinate().printCoor();
+                System.out.println();
+            }
+            count++;
+        }
+    
+        ShowGui sg=new ShowGui();
+        sg.Show(stationList, lineList,tl.getAllTrains());
+        
+        
+        
         <blk>
         >>
         ;

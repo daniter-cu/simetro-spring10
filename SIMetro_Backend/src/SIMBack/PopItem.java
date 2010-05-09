@@ -17,8 +17,8 @@ public class PopItem {
 	public Station getDest() {
 		return dest;
 	}
-	public void setRate(int rate) {
-		this.rate = rate;
+	public void setRate(double rate2) {
+		this.rate = rate2;
 	}
 	public double getRate() {
 		return rate;

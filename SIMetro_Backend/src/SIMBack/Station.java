@@ -26,6 +26,18 @@ public class Station implements Cloneable{
 		this.coordinate = coordinate;
 		System.out.println("Station Created: "+this.name+"\tCoordinates:"+coordinate.getX()+"\t"+coordinate.getY());
 	}
+	
+	public void changeRate(Station s2,double rate) {
+		if(pop!=null) {
+			if(pop.getPopItemArr()!=null) {
+				for(int i=0;i<pop.getPopItemArr().size();i++) {
+					if(pop.getPopItemArr().get(i).getClass().equals(s2)) {
+						pop.getPopItemArr().get(i).setRate(rate);
+					}
+				}
+			}
+		}
+	}
 
 	public RoutingTab getRTabByDest(Station dest) {
 		for(int i=0;i<getRoutingTable().size();i++) {

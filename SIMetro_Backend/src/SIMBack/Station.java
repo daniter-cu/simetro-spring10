@@ -8,8 +8,8 @@ public class Station implements Cloneable{
 	private Coordinate coordinate;
 	private Population pop;
 	private ArrayList<Person> crowd=new ArrayList<Person>();
-	
-	
+
+
 	public Station() {
 		super();
 	}
@@ -17,7 +17,7 @@ public class Station implements Cloneable{
 	public Station(String name) {
 		super();
 		this.name = name;
-                
+
 	}
 
 	public Station(String name, Coordinate coordinate) {
@@ -26,7 +26,7 @@ public class Station implements Cloneable{
 		this.coordinate = coordinate;
 		System.out.println("Station Created: "+this.name+"\tCoordinates:"+coordinate.getX()+"\t"+coordinate.getY());
 	}
-	
+
 	public RoutingTab getRTabByDest(Station dest) {
 		for(int i=0;i<getRoutingTable().size();i++) {
 			if(getRoutingTable().get(i).getDest().equals(dest)) {
@@ -35,7 +35,19 @@ public class Station implements Cloneable{
 		}
 		return null;
 	}
-	
+
+	public void print() {
+		System.out.println(name);
+		System.out.println("Coordinates ("+coordinate.getX()+","+coordinate.getY()+");");
+		if(pop!=null) {
+			System.out.println("Population:");
+			for(int i=0;i<pop.getPopItemArr().size();i++) {
+				PopItem a=pop.getPopItemArr().get(i);			
+				System.out.println("("+a.getDest().getName()+", "+a.getRate()+")");
+			}
+		}
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -65,50 +77,50 @@ public class Station implements Cloneable{
 	}
 
 	public ArrayList<Person> getCrowd(){
-                return crowd;
-        }
+		return crowd;
+	}
 
-        public void addPerson(Person person){
-                crowd.add(person);
-        }
+	public void addPerson(Person person){
+		crowd.add(person);
+	}
 
-        public void removePerson(Person person){
-                crowd.remove(person);
-        }
-        
-        public Station findNext(Station dest){
-        	  for(RoutingTab rt : routingTable)
-        	  {
-        		  if(rt.getDest().getName().equals(dest.getName()))
-        			  return rt.getNext();
-        	  }
-        	  return this;
-        }
-	
-    	public Station clone(){
-            try{
-              Station cloned = (Station)super.clone();
+	public void removePerson(Person person){
+		crowd.remove(person);
+	}
 
-              cloned.name = name;
-              
-              //clone routing table
-              cloned.routingTable = (ArrayList<RoutingTab>) routingTable.clone();
-            
-              cloned.coordinate = new Coordinate(coordinate.getX(),coordinate.getY());
-            
-              //clone population
-              cloned.pop = pop.clone();
-              
-              cloned.crowd = (ArrayList<Person>) crowd.clone();
-      	
-              return cloned;
-            }
-            catch(CloneNotSupportedException e){
-              System.out.println(e);
-              return null;
-            }
-          }
+	public Station findNext(Station dest){
+		for(RoutingTab rt : routingTable)
+		{
+			if(rt.getDest().getName().equals(dest.getName()))
+				return rt.getNext();
+		}
+		return this;
+	}
+
+	public Station clone(){
+		try{
+			Station cloned = (Station)super.clone();
+
+			cloned.name = name;
+
+			//clone routing table
+			cloned.routingTable = (ArrayList<RoutingTab>) routingTable.clone();
+
+			cloned.coordinate = new Coordinate(coordinate.getX(),coordinate.getY());
+
+			//clone population
+			cloned.pop = pop.clone();
+
+			cloned.crowd = (ArrayList<Person>) crowd.clone();
+
+			return cloned;
+		}
+		catch(CloneNotSupportedException e){
+			System.out.println(e);
+			return null;
+		}
+	}
 
 }
-	
+
 //}

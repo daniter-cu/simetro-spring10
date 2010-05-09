@@ -27,6 +27,15 @@ public class Line implements Cloneable {
     	}
     	
     }
+    
+    public void print() {
+    	System.out.println("Line: "+name+"\tRate: "+rate+"\tSpeed:"+speed+"\tCapacity:"+capacity);
+    	System.out.print("Route:   ");
+		for(int i=0;i<route.size()-1;i++) {
+			System.out.print(route.get(i).getName()+"<==>");
+		}
+		System.out.println(route.get(route.size()-1).getName());
+    }
 
 	public Line() {
 		super();

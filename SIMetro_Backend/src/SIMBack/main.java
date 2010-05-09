@@ -95,12 +95,17 @@ public class main {
 		for (ArrayList<Train> alt : tl.getAllTrains()) {
 			for (Train train : alt)
 			{
+				if((count>90)&&(count<110)) {
 				System.out.print("The Coordinate for the Train on "+train.getLine().getName()+" in time"+count+": ");
 				train.getCoordinate().printCoor();
 				System.out.println();
+				}
 			}
 			count++;
 		}
+		
+		SA.print();
+		LA.print();
 	
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());

@@ -81,7 +81,8 @@ public class main {
                         sim.peopleArrive(stationList, time);
                         sim.trainArrive(lineList, time);
                         sim.trainMove(time,tl);
-                        
+                        tl.addStations(stationList);
+                        tl.addLines(lineList);
                         System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)
                         {
@@ -90,6 +91,8 @@ public class main {
                         System.out.println("--------------------------------------------END----------------------------------------");
 
 		}
+		
+
 		
 		int count=1;
 		for (ArrayList<Train> alt : tl.getAllTrains()) {
@@ -104,6 +107,10 @@ public class main {
 			count++;
 		}
 		
+		tl.getFrequency(10, LA);
+		//tl.getCapacity(10, LC);
+		System.out.println("" + tl.getCapacity(10, LC));
+		
 		SA.print();
 		LA.print();
 		SA.changeRate(SB,0.2);
@@ -111,7 +118,11 @@ public class main {
 		LA.changeFrequency(0.02);
 		LA.changeSpeed(2);
 	
+		
+		
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());
 	}
+	
+	
 }

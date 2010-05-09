@@ -59,7 +59,7 @@ public class TimeLine {
     	return allPersons;
     }
     
-    public void addStaions(ArrayList<Station> stations){
+    public void addStations(ArrayList<Station> stations){
     	this.allStations.add((ArrayList<Station>)stations.clone());
     }
     
@@ -71,6 +71,35 @@ public class TimeLine {
     	    	
     }
 
-
+    //get frequency between trains on line l, at time t
+    public void getFrequency(int t, Line l){
+    	
+    	if (t <= allLines.size()){
+    		
+    		ArrayList<Line> listLines = allLines.get(t);
+    	
+    		double lineFreq = 0;
+    		//iterate through lines
+    	
+    		for (Line aLine: listLines){
+    			//see if this is line you're looking for
+    			if (aLine.getName().equals(l.getName())){
+    				lineFreq = aLine.getRate();
+    				System.out.println("Line " + l.getName() + " frequency at time " + t + ": " + lineFreq);
+    				break;
+    				
+    			}
+    		
+    			
+    		}
+    	
+    	}
+    	else
+    	{
+    		System.out.println("Invalid time entered for getFrequency");
+    	}
+    }
+    
+    //public void getCapacity(int t, Line l)
    
 }

@@ -2,7 +2,7 @@ package SIMBack;
 import java.util.ArrayList;
 
 
-public class Station {
+public class Station implements Cloneable{
 	private String name;
 	private ArrayList<RoutingTab> routingTable;
 	private Coordinate coordinate;
@@ -85,5 +85,30 @@ public class Station {
         	  return this;
         }
 	
-	
+    	public Station clone(){
+            try{
+              Station cloned = (Station)super.clone();
+
+              cloned.name = name;
+              
+              //clone routing table
+              cloned.routingTable = (ArrayList<RoutingTab>) routingTable.clone();
+            
+              cloned.coordinate = new Coordinate(coordinate.getX(),coordinate.getY());
+            
+              //clone population
+              cloned.pop = pop.clone();
+              
+              cloned.crowd = (ArrayList<Person>) crowd.clone();
+      	
+              return cloned;
+            }
+            catch(CloneNotSupportedException e){
+              System.out.println(e);
+              return null;
+            }
+          }
+
 }
+	
+//}

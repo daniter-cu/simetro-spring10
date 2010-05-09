@@ -118,6 +118,8 @@ public class GuiPanel extends Panel {
 //        g.drawImage(imageTrain, xCor, yCor, null);
 //        yCor+=5;
         Time++;
+        if (Time==allTrains.size())
+        	Time=0;
         g.setColor(Color.black);
         g.drawString("Time="+Time, 20, 20);
 

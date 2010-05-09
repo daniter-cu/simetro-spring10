@@ -78,7 +78,7 @@ public class main {
          
 		for(int time=0;time<600;time++){
                         System.out.println("\n*********************************At time "+time+"***********************************");
-                        sim.peopleArrive(stationList, time);
+                        sim.peopleArrive(stationList, time, tl);
                         sim.trainArrive(lineList, time);
                         sim.trainMove(time,tl);
                         tl.addStations(stationList);
@@ -122,7 +122,7 @@ public class main {
 		sim.changeFrequency(LA, 0.02);
 		sim.changeSpeed(LA, 2);
 	
-		
+		System.out.println("The average watiting time is: "+tl.getAverageWaitTime(300));
 		
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());

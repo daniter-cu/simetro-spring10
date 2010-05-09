@@ -186,7 +186,7 @@ idlist returns [String s]
 stat returns [String str, String print]
 @init {$str = ""; $print ="";}:
     ^(STAT i=ID f=formal_params ((s=statements) {$str+=$s.text + "\n";})* ^(RETURN j=ID)) //fix this, should be able to return text nums too
-    {$print += "public static int " + $i.text + "( " + $f.str + " )\n";
+    {$print += "public static double " + $i.text + "( " + $f.str + " )\n";
       $print += "{\n";
       $print += $str + "\n";
       $print += "return " + $j.text +";\n";
@@ -209,7 +209,7 @@ stat returns [String str, String print]
 //time
 time:
         ^(TIME id=ID i=INTEGER j=INTEGER?)  ->template(id={$ID.text}, i={$i.text}, j={$j.text})
-        "int <id>[2] = {<i>,<j>};"
+        "int <id>[] = {<i>,<j>};"
        /* {//System.out.print("Time "+ $ID.text +" = new Time(");
             if(j != null) 
            // System.out.println($i.text + ", " +$j.text + ");");
@@ -414,15 +414,18 @@ simulate:
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
                         
-                        System.out.println("------------------------------------STATION INFOMATION---------------------------------");
+                     /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)
                         {
                                System.out.println("Number of persons in "+aStation.getName()+": "+aStation.getCrowd().size());
                         }
                         System.out.println("--------------------------------------------END----------------------------------------");
+*/
 
+
+           <blk>
         }
-        
+        /*
         int count=1;
         for (ArrayList\<Train\> alt : tl.getAllTrains()) {
             for (Train train : alt)
@@ -433,13 +436,13 @@ simulate:
             }
             count++;
         }
-    
+    */
        // ShowGui sg=new ShowGui();
         //sg.Show(stationList, lineList,tl.getAllTrains());
         
         
         
-        <blk>
+       
         >>
         ;
 
@@ -448,22 +451,22 @@ formal_params returns [String str]
 @init {$str = "";}:
         ^(FORMALPARAM (f=formal_param{
     if(listbool == true)
-     { $str+= $f.text;
+     { $str+= $f.str;
         listbool = false;
      }
     else
      {  $str+=", ";
-        $str+=$f.text;}
+        $str+=$f.str;}
     })*) 
         ;
 
 formal_param returns [String str]: 
-        ^(PRIMITIVE_TYPE ID)  {$str = $PRIMITIVE_TYPE.text + $ID.text;}
-        |^('Station' ID)  {$str = "Station" + $ID.text;}
-        |^('Line' ID)  {$str = "Line" + $ID.text;}
-        |^('Population' ID) {$str = "Population" + $ID.text;}  
-        |^('Time' ID)  {$str = "Time" + $ID.text;}
-        |^('String' ID) {$str = "String" + $ID.text;}
+        ^(PRIMITIVE_TYPE ID)  {$str = "int " + $ID.text;}
+        |^('Station' ID)  {$str = "Station " + $ID.text;}
+        |^('Line' ID)  {$str = "Line " + $ID.text;}
+        |^('Population' ID) {$str = "Population " + $ID.text;}  
+        |^('Time' ID)  {$str = "double " + $ID.text;}
+        |^('String' ID) {$str = "String " + $ID.text;}
         ; 
 
 params:

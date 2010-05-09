@@ -62,15 +62,20 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_116ST.5)]")
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
                         
-                        System.out.println("------------------------------------STATION INFOMATION---------------------------------");
+                     /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)
                         {
                                System.out.println("Number of persons in "+aStation.getName()+": "+aStation.getCrowd().size());
                         }
                         System.out.println("--------------------------------------------END----------------------------------------");
+*/
 
+
+           {
+           System.out.println("Done");
+           }
         }
-        
+        /*
         int count=1;
         for (ArrayList<Train> alt : tl.getAllTrains()) {
             for (Train train : alt)
@@ -81,15 +86,13 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_116ST.5)]")
             }
             count++;
         }
-    
+    */
        // ShowGui sg=new ShowGui();
         //sg.Show(stationList, lineList,tl.getAllTrains());
         
         
         
-        {
-        System.out.println("Done");
-        }
+       
         
 
 
@@ -97,12 +100,14 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_116ST.5)]")
         sg.Show(stationList, lineList,tl.getAllTrains());
         
 
-double lambda = getRate(A, 5, Gabda);
+//num lambda = getRate(A, 5, Gabda);
 
 double y = (1 * 2);
 double z = (3.23 - 0);
 
-int rushhour[2] = {0,10};
+int rushhour[] = {0,10};
+
+
 
 if( (z > 4)){
 	y = 5;}
@@ -113,23 +118,21 @@ y = -4;
 
 
 
-double a = 1;
-
 
 
 String Hello = "Test";		 //problems here - loses quotes
 
-int rushhour[2] = {0,10};
+double x = 5;
 
 if ((x > y)) {
-double x = 1;
+x = 1;
 } 
 else {
-double z = getFrequency(B);
+z = 1;
 }
 
 if ((x > y)) {
-double x = 1;
+x = 1;
 } 
 
 
@@ -140,13 +143,13 @@ double x = 1;
 
 
 }
-public static int statA( int b, num a )
+public static double statA( int b, int a )
 {
 double z;
-double a = 6;
-double b = 6;
+a = 6;
+b = 6;
 a = (a + b);
-double c = getRate(A);
+double c = getRate(s_116ST);
 
 return a;
 }

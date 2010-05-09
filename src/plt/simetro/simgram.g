@@ -269,7 +269,7 @@ STRING : '"'
 //STRING : '"' .* '"'; //fix strings!
 //FUNCTIONS: 'getRate'|'getFrequency'|'getCapacity'|'getSpeed'|'getNumLines'|'getNumStation'|'getNumPassengers'|'getNumInStation'|'getNumOnLine'|'getNumTrains'|'getNumFromTo'|'getNumWaiting'|'getNumMissed'|'checkBottleneck'|'getAvgWaitTime';
 MOD_FUNCTIONS: 'changeRate'|'changeFrequency'|'changeSpeed'|'skipStation';
-PRIMITIVE_TYPE: 'num' | 'int';
+PRIMITIVE_TYPE: 'num' ;
 //DERIVED_TYPE: 'Station' | 'Line' | 'Time' | 'Population';
 ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' |'_'| 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;

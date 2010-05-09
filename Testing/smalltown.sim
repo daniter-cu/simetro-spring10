@@ -51,12 +51,14 @@ print "Done";
 
 ShowGUI();
 
-num lambda = getRate(A, 5, Gabda);
+//num lambda = getRate(A, 5, Gabda);
 
 num y = 1 * 2;
 num z = 3.23 - 0;
 
 Time rushhour[0,10];
+
+
 
 if( z >4){
 	y=5;}
@@ -67,31 +69,29 @@ y=-4;
 
 
 
-num a=1;
-
-Stat statA(int b, num a){
+Stat statA(num b, num a){
  num z;
- num a=6;
- num b=6;
+	a=6;
+ b=6;
  a = a + b;
 
- num c = getRate(A);	//definitely need to restrict args somehow - right now anythign goes
+ num c = getRate(s_116ST);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
 }
 
 String Hello = "Test";		 //problems here - loses quotes
 
-Time rushhour[0,10];
+num x = 5;
 
 if (x > y) {
-num x = 1;
+x = 1;
 } 
 else {
-num z = getFrequency(B);
+z = 1;
 }
 
 if (x > y) {
-num x = 1;
+x = 1;
 } 
 
 

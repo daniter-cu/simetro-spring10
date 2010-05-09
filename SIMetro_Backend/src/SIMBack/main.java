@@ -111,8 +111,9 @@ public class main {
 		//tl.getCapacity(10, LC);
 		System.out.println("" + tl.getCapacity(10, LC));
 		
-		SA.print();
-		LA.print();
+		System.out.println(SA);
+		
+		System.out.println(LA);
 //		SA.changeRate(SB,0.2);
 //		LA.changeCapacity(200);
 //		LA.changeFrequency(0.02);

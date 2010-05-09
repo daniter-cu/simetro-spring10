@@ -48,16 +48,22 @@ public class Station implements Cloneable{
 		return null;
 	}
 
-	public void print() {
-		System.out.println(name);
-		System.out.println("Coordinates ("+coordinate.getX()+","+coordinate.getY()+");");
+	public String toString() {
+		String s="";
+//		s=s+name+"\n"+"Coordinates ("+coordinate.getX()+","+coordinate.getY()+");\n";
+//		System.out.println(name);
+//		System.out.println("Coordinates ("+coordinate.getX()+","+coordinate.getY()+");");
 		if(pop!=null) {
-			System.out.println("Population:");
+//			System.out.println("Population:");
+			s=s+"Population:\n";
 			for(int i=0;i<pop.getPopItemArr().size();i++) {
 				PopItem a=pop.getPopItemArr().get(i);			
-				System.out.println("("+a.getDest().getName()+", "+a.getRate()+")");
+//				System.out.println("("+a.getDest().getName()+", "+a.getRate()+")");
+				s=s+"("+a.getDest().getName()+", "+a.getRate()+")\n";
 			}
 		}
+		s=s.trim();
+		return s;
 	}
 
 	public void setName(String name) {

@@ -100,6 +100,61 @@ public class TimeLine {
     	}
     }
     
-    //public void getCapacity(int t, Line l)
-   
+    //get capacity for line at time t
+    public void getCapacity(int t, Line l){
+    	
+    	if (t <= allLines.size()){
+    		
+    		ArrayList<Line> listLines = allLines.get(t);
+    	
+    		double lineCap = 0;
+    		//iterate through lines
+    	
+    		for (Line aLine: listLines){
+    			//see if this is line you're looking for
+    			if (aLine.getName().equals(l.getName())){
+    				lineCap = aLine.getCapacity();
+    				System.out.println("Line " + l.getName() + " capacity at time " + t + ": " + lineCap);
+    				break;
+    				
+    			}
+    		
+    			
+    		}
+    	
+    	}
+    	else
+    	{
+    		System.out.println("Invalid time entered for getCapacity");
+    	}
+    }
+    
+    //get capacity for line at time t
+    public void getSpeed(int t, Line l){
+    	
+    	if (t <= allLines.size()){
+    		
+    		ArrayList<Line> listLines = allLines.get(t);
+    	
+    		double lineSpeed = 0;
+    		//iterate through lines
+    	
+    		for (Line aLine: listLines){
+    			//see if this is line you're looking for
+    			if (aLine.getName().equals(l.getName())){
+    				lineSpeed = aLine.getSpeed();
+    				System.out.println("Line " + l.getName() + " speed at time " + t + ": " + lineSpeed);
+    				break;
+    				
+    			}
+    		
+    			
+    		}
+    	
+    	}
+    	else
+    	{
+    		System.out.println("Invalid time entered for getCapacity");
+    	}
+    }
 }

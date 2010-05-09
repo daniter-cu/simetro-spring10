@@ -67,17 +67,19 @@ else
 y=-4;
 }
 
-
+print getCapacity(1, Line1);
 
 Stat statA(num b, num a){
- num z;
-	a=6;
+
+a=6;
  b=6;
  a = a + b;
 
- num c = getRate(s_116ST);	//definitely need to restrict args somehow - right now anythign goes
  return a ;
 }
+
+print statA(2 , 4);
+print getCapacity(1, Line3);
 
 String Hello = "Test";		 //problems here - loses quotes
 

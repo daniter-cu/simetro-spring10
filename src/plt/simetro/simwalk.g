@@ -45,6 +45,11 @@ public String printThis()
 {
   return last;
 }
+
+
+ArrayList<String> funcs = new ArrayList<String>();
+
+
 }
 
 
@@ -93,7 +98,9 @@ line:
     for (Object <n> : new ArrayList\<Object\>( Arrays.asList(new String(\"<i>\").replaceAll(\"\\\s+|\\\(|\\\)\", \"\").split(\",\")))) {
         tempList_stations.add(stationMap.get((String)<n>));
     }
-    lineList.add(new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations)));
+    //lineList.add(new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations)));
+    Line <id> = new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations));
+    lineList.add(<id>);
     lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear();"
     ;
@@ -111,7 +118,10 @@ station:
     //declared with population
     ->template(separator = {","}, sname = {$sname.text}, cord = {$i.text+", "+$j.text}, pname = {$pname}  )
     //"Station <sname> = new Station(new Coordinate(<cord>)<separator> <pname>)"
-    "stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)));
+    
+    "Station <sname> = new Station(\"<sname>\"<separator> new Coordinate(<cord>));
+    stationList.add(<sname>);
+    //stationList.add(new Station(\"<sname>\"<separator> new Coordinate(<cord>)));
     stationMap.put(\"<sname>\"<separator> stationList.get(stationList.size() - 1));"
     
      | ^(STATION sname=ID) 
@@ -194,6 +204,7 @@ stat returns [String str, String print]
  
       //System.out.println($print);
       modLast($print);
+      funcs.add($i.text);
     }
     ->template() ""
    // ->template(id = {$i.text}, fp = {$f.str}, s= {$str} ,j = {$j.text})
@@ -360,14 +371,19 @@ arithExpr:
       //  |print_function
       //  ;
         
-func_call:
+func_call returns [String fun]:
       ^(FUNC_CALL ID params)
-      -> template(i={$ID.text}, p = {$params.text}) "<i>(<p; separator=\", \">)"
+      {$fun = $ID.text;
+      if (!funcs.contains($fun))
+        $fun = "tl." + $ID.text;
+      
+      }
+      -> template(i={$fun}, p = {$params.text}) "<i>(<p; separator=\", \">)"
       ;
         
 mod_procedures:
         ^(MOD_FUNCTIONS  params)
-        -> template(i={$MOD_FUNCTIONS.text}, p = {$params.text}) "<i>(<p; separator=\", \">)"
+        -> template(i={$MOD_FUNCTIONS.text}, p = {$params.text}) "sim.<i>(<p; separator=\", \">)"
         ;   
      
 print_function:
@@ -410,7 +426,7 @@ simulate:
         
         for(int time_iter=0; time_iter \< <time> ;time_iter++){
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
-                        sim.peopleArrive(stationList, time_iter);
+                        sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
                         

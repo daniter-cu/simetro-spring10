@@ -160,4 +160,20 @@ public class TimeLine {
     	}
     	return lineSpeed;
     }
+    
+    public int getAverageWaitTime(int time){
+		if(time<allPersons.size()){
+		ArrayList<Person> ps=allPersons.get(time);
+		int numOfPerson=ps.size();
+		int totalWait=0;
+		for (Person aPerson : ps)
+		{
+			totalWait+=aPerson.getTotalWaitTime();
+		}
+		int aw=totalWait/numOfPerson;
+		return aw;
+		}
+		else return -1;
+}
+
 }

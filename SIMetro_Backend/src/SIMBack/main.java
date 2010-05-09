@@ -72,15 +72,16 @@ public class main {
 				+" The rate is: "+SA.getPop().getPopItemArr().get(0).getRate());
 		System.out.println();
 		Simulate sim=new Simulate();
+		TimeLine tl=new TimeLine();
 
 		sim.createRoutingTables(stationList,lineList);
-                //sim.createTimeLine(60);
-		for(int time=0;time<12;time++){
+         
+		for(int time=0;time<60;time++){
                         System.out.println("\n*********************************At time "+time+"***********************************");
-			sim.peopleArrive(stationList, time);
-			sim.trainArrive(lineList, time);
-                        sim.trainMove(time);
-
+                        sim.peopleArrive(stationList, time);
+                        sim.trainArrive(lineList, time);
+                        sim.trainMove(time,tl);
+                        
                         System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)
                         {
@@ -89,6 +90,16 @@ public class main {
                         System.out.println("--------------------------------------------END----------------------------------------");
 
 		}
+		
+		int count=0;
+		for (ArrayList<Train> alt : tl.getAllTrains())
+			for (Train train : alt)
+			{
+				System.out.print("The Coordinate for the Train on "+train.getLine().getName()+" in time"+count+": ");
+				train.getCoordinate().printCoor();
+				System.out.println();
+			}
+	
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList);
 	}

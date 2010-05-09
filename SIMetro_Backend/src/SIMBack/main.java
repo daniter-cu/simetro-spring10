@@ -35,7 +35,7 @@ public class main {
 		al.add(SA);
 		al.add(SB);
 		al.add(SC);
-		Line LA= new Line("Line1", 0.01, 2.0, 100,al );
+		Line LA= new Line("Line1", 0.01, 0.05, 100,al );
                 LA.setRvsLine();
 		lineList.add(LA);
 		
@@ -44,7 +44,7 @@ public class main {
 		al2.add(SB);
 		al2.add(SD);
 		al2.add(SE);
-		Line LB=new Line("Line2",0.01,2.0,100,al2);
+		Line LB=new Line("Line2",0.01,0.05,100,al2);
                 LB.setRvsLine();
 		lineList.add(LB);
 		
@@ -53,7 +53,7 @@ public class main {
 		al3.add(SA);
 		al3.add(SE);
 		al3.add(SC);
-		Line LC=new Line("Line3",0.01,3.0,200,al3);
+		Line LC=new Line("Line3",0.01,0.05,200,al3);
                 LC.setRvsLine();
 		lineList.add(LC);
 
@@ -76,7 +76,7 @@ public class main {
 
 		sim.createRoutingTables(stationList,lineList);
          
-		for(int time=0;time<3;time++){
+		for(int time=0;time<600;time++){
                         System.out.println("\n*********************************At time "+time+"***********************************");
                         sim.peopleArrive(stationList, time);
                         sim.trainArrive(lineList, time);

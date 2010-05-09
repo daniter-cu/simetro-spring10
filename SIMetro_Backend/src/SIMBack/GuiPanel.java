@@ -109,9 +109,9 @@ public class GuiPanel extends Panel {
         }
         if(Time<allTrains.size())
         for(int i=0;i<allTrains.get(Time).size();i++) {
-        	int x=(int)allTrains.get(Time).get(i).getCoordinate().getX();
-        	int y=(int)allTrains.get(Time).get(i).getCoordinate().getY();
-        	g.drawImage(imageTrain, 50+40*x, 650-40*y, null);
+        	double x=allTrains.get(Time).get(i).getCoordinate().getX();
+        	double y=allTrains.get(Time).get(i).getCoordinate().getY();
+        	g.drawImage(imageTrain, (int)(50+40*x), (int)(650-40*y), null);
 
         }
         

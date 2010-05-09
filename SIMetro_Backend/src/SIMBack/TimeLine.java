@@ -161,7 +161,38 @@ public class TimeLine {
     	return lineSpeed;
     }
     
-    public int getAverageWaitTime(int time){
+    public double getRate(int time, Station S1, Station S2){
+    	double rate=0;
+    	if(time<allStations.size()){
+    		ArrayList<Station> st=allStations.get(time);
+    		for (Station aStation : st)
+    		{
+    			if (aStation.equals(S1))
+    				for(PopItem pi : aStation.getPop().getPopItemArr())
+    					if(pi.getDest().equals(S2))
+    						rate=pi.getRate();
+    		}
+    		 return rate;
+    		}
+    	else return -1;
+    	
+    }
+    
+    public int getNumWaiting(int time, Station S){
+    	int num=0;
+    	if(time<allStations.size()){
+    		ArrayList<Station> st=allStations.get(time);
+    		for (Station aStation : st)
+    		{
+    			if (aStation.equals(S))
+    				num=aStation.getCrowd().size();  			
+    		}
+    		 return num;
+    		}
+    	else return -1;
+    }
+    
+    public int getAvgWaitTime(int time){
 		if(time<allPersons.size()){
 		ArrayList<Person> ps=allPersons.get(time);
 		int numOfPerson=ps.size();

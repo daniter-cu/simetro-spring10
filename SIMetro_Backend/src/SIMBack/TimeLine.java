@@ -25,7 +25,8 @@ public class TimeLine {
     }
     
     public void addAllTrains(){
-    	allTrains.add(trains);  	
+    	
+    	allTrains.add(trains);
     }
     
     public ArrayList<ArrayList<Train>> getAllTrains(){

@@ -76,7 +76,7 @@ public class main {
 
 		sim.createRoutingTables(stationList,lineList);
          
-		for(int time=0;time<2;time++){
+		for(int time=0;time<3;time++){
                         System.out.println("\n*********************************At time "+time+"***********************************");
                         sim.peopleArrive(stationList, time);
                         sim.trainArrive(lineList, time);

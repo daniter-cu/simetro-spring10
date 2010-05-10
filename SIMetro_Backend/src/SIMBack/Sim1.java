@@ -104,7 +104,7 @@ int day[] = {0,12};
         sim.createRoutingTables(stationList,lineList);
         
         
-        for(int time_iter=0; time_iter < 400 ;time_iter++){
+        for(int time_iter=0; time_iter < 100 ;time_iter++){
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);

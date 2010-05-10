@@ -46,7 +46,7 @@ public class Simulate {
 			lineList.get(i).setRvsEdges();
 		}
 
-		System.out.println("edgeList.size() "+edgeList.size());
+		//System.out.println("edgeList.size() "+edgeList.size());
 
 		for(int si=0;si<stationList.size();si++) {
 			ArrayList<RoutingTab> RoutingTable=new ArrayList<RoutingTab>();
@@ -135,8 +135,8 @@ public class Simulate {
 		//look up in the population objects to see if new people should be created to arrive at each station
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
-		System.out.println("----------------PASSENGER ARRIVING INFOMATION:-----------------");
-		System.out.println("current time from peopleArrive is " + arriveTime);
+		System.out.println("----------------ARRIVING PASSENGER INFOMATION:-----------------");
+		//System.out.println("current time from peopleArrive is " + arriveTime);
 		//iterate through station list
 		for(int si=0;si<stationList.size();si++) {
 
@@ -236,14 +236,11 @@ public class Simulate {
 			//else just make rate an int
 			else
 				timeCreate = (int)lineRate;
-			System.out.println("Train should be created every " + timeCreate + " minutes");
-			//why is it saying local vars won't get read??
-
-			//am I using line rate correctly?  Go back to this.
-
+			//System.out.println("Train should be created every " + timeCreate + " minutes");
+			
 			//if current time is 0 or time mod line rate is 0, it's time for new trains to be created at first and last station of line
 			if (currTime == 0 || currTime % timeCreate == 0){
-				System.out.println("Time to create new train");
+				//System.out.println("Time to create new train");
 
 				//get first station of line
 				Station firstStation = lineRoute.get(0);
@@ -268,11 +265,11 @@ public class Simulate {
 				//firstTrain.getCoordinate().printCoor(firstCoords);
 				//System.out.println();
 				trains.add(firstTrain);
-				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + firstStation.getName());
+				System.out.println("New train created at time " + currTime + " on line " + aLine.getName() + " at station " + firstStation.getName());
 				//now create a train at last station
 				Train endTrain = new Train(aLine, currTime, lastCoords, lineCap, lineSpeed, true);
 				trains.add(endTrain);
-				System.out.println("New train created at " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
+				System.out.println("New train created at time " + currTime + " on line " + aLine.getName() + " at station " + lastStation.getName());
 
 			}
 
@@ -306,7 +303,7 @@ public class Simulate {
 
 			if (currTime==aTrain.getArriveTime())
 			{
-				System.out.println("A new train on "+aTrain.getLine().getName()+" is going to get people in Station "+aTrain.getCurrent().getName());
+				System.out.println("A new train on line "+aTrain.getLine().getName()+" is going to pick up passengers in Station "+aTrain.getCurrent().getName());
 				transfer(aTrain, currTime);
 				continue;
 			}
@@ -328,7 +325,7 @@ public class Simulate {
 			trains.remove(trainInDest.get(i));
 		}
 		tl.addAllPersons();
-		System.out.println("The Number of Train on Operation: "+trains.size());
+		System.out.println("The Number of Trains in Operation: "+trains.size());
 		System.out.println("----------------------------------END-----------------------------------");
 
 	}
@@ -348,7 +345,7 @@ public class Simulate {
 				personCount++;
 				//System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
 			}
-		System.out.println(personCount+" person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]" );
+		System.out.println(personCount+" people get on line ["+train.getLine().getName()+"] at station ["+station.getName()+"]" );
 		for (int i=0;i<personTransferred.size();i++)
 		{
 			station.removePerson(personTransferred.get(i));
@@ -361,11 +358,11 @@ public class Simulate {
 			{
 				station.addPerson(aPerson);
 				aPerson.setArrivalTime(currTime);
-				System.out.println("*****A person get off ["+train.getLine().getName()+"] At ["+station.getName()+"]");
+				System.out.println("*****A person gets off line ["+train.getLine().getName()+"] at station ["+station.getName()+"]");
 				if(aPerson.getDest().getName().equals(station.getName()))
 				{
 					aPerson.setDepartTime(currTime);
-					System.out.println("*****A person arrives his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
+					System.out.println("*****A person has arrived at his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
 				}
 				else {
 					aPerson.setNext(station.findNext(aPerson.getDest()));

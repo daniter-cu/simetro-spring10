@@ -159,7 +159,7 @@ public class Simulate {
 					int peopleCount = 0;
 
 					//create a new person up to the rate value
-					while (peopleCount < popRate){
+					//while (peopleCount < popRate){
 
 						//Parameters are as follows: arrivalTime = arriveTime, StationDest = destStation,
 						//StationSource = stationList.get(si), Station next = get from routing table
@@ -198,7 +198,7 @@ public class Simulate {
 
 						}
 
-					}
+					//}
 					//}
 
 				}

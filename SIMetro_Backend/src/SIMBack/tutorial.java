@@ -9,9 +9,9 @@ Station A = new Station("A", new Coordinate(1, 5));
     //stationList.add(new Station("A", new Coordinate(1, 5)));
     stationMap.put("A", stationList.get(stationList.size() - 1)); 
 
-Station B = new Station("B", new Coordinate(5, 4));
+Station B = new Station("B", new Coordinate(5, 10));
     stationList.add(B);
-    //stationList.add(new Station("B", new Coordinate(5, 4)));
+    //stationList.add(new Station("B", new Coordinate(5, 10)));
     stationMap.put("B", stationList.get(stationList.size() - 1)); 
 
 for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(B.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
@@ -37,8 +37,8 @@ for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(A.5)]").repl
     for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("(A, B, A)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaa));
     }
-    //lineList.add(new Line("t", 0.2, 100, 0.05,new ArrayList<Station>(tempList_stations)));
-    Line t = new Line("t", 0.2, 0.05, 100,new ArrayList<Station>(tempList_stations));
+    //lineList.add(new Line("t", 0.05, 100, 0.05,new ArrayList<Station>(tempList_stations)));
+    Line t = new Line("t", 0.05, 0.05, 100,new ArrayList<Station>(tempList_stations));
     lineList.add(t);
     lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear();  

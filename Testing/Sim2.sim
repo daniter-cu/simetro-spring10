@@ -1,19 +1,4 @@
-//set populations
-Population p1 {
-(s_5AV, 5) 
-}
 
-Population p2{
-(s_110ST, 10)
-}
-
-Population p3{
-(s_4AV, 3)
-}
-
-Population p4{
-(s_125ST, 10)
-}
 
 //set station coordinates and populations
 Station s_110ST {
@@ -47,6 +32,22 @@ Population(p4);
 }
 
 
+//set populations
+Population p1 {
+(s_5AV, 5) 
+}
+
+Population p2{
+(s_110ST, 10)
+}
+
+Population p3{
+(s_4AV, 3)
+}
+
+Population p4{
+(s_125ST, 10)
+}
 
 //construct lines 1, 2 and 3
 Line Line1 {
@@ -66,7 +67,7 @@ Speed(0.05);
 
 
 Line Line3{
-Stations(s_110ST, s_4AV, s_125);
+Stations(s_110ST, s_4AV, s_125ST);
 Frequency(0.01);
 Capacity(200);
 Speed(0.05);

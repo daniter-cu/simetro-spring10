@@ -1,0 +1,70 @@
+//set population going to station 5AV
+Population p1 {
+(s_5AV, 5) 
+}
+
+
+//set station coordinates
+//population starts out at station 110ST
+Station s_110ST {
+Coordinates (0,0);
+Population (p1);
+}
+
+
+Station s_116ST{
+Coordinates (0, 6);
+}
+
+
+
+Station s_125ST{
+Coordinates (0, 15); 
+Population (p2); 
+}
+
+
+Station s_5AV{
+Coordinates(10, 6);
+}
+
+
+Station s_4AV{
+Coordinates(15, 6);
+}
+
+
+//creates lines 1, 2 and 3
+Line Line1 {
+Stations(s_110ST, s_116ST, s_125ST);
+Frequency(0.005);
+Capacity (100);
+Speed (0.05);
+} 
+
+
+Line Line2{
+Stations(s_116ST, s_5AV, s_4AV);
+Frequency(0.005);
+Capacity(100);
+Speed(0.05);
+}
+
+
+Line Line3{
+Stations(s_110ST, s_4AV, s_125);
+Frequency(0.01);
+Capacity(200);
+Speed(0.05);
+}
+
+//set time
+Time day[0, 12];
+
+//run simulation
+Simulate(100){
+
+}
+
+//this creates valid AST up to showGUI();
+showGUI();

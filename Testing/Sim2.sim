@@ -1,0 +1,102 @@
+
+//set population1 going to station s_5AV
+Population p1 {
+(s_5AV, 5) 
+}
+
+
+//set stations
+
+//attach population1 to 110ST
+Station s_110ST {
+Coordinates (0,0);
+Population (p1);
+}
+
+
+Station s_116ST{
+Coordinates (0, 6);
+}
+
+
+
+Station s_125ST{
+Coordinates (0, 15); 
+Population (p2); 
+}
+
+
+Station s_5AV{
+Coordinates(10, 6);
+}
+
+
+Station s_4AV{
+Coordinates(15, 6);
+}
+
+
+//construct lines 1, 2 and 3
+Line Line1 {
+Stations(s_110ST, s_116ST, s_125ST);
+Frequency(0.005);
+Capacity (100);
+Speed (0.05);
+} 
+
+
+Line Line2{
+Stations(s_116ST, s_5AV, s_4AV);
+Frequency(0.005);
+Capacity(100);
+Speed(0.05);
+}
+
+
+Line Line3{
+Stations(s_110ST, s_4AV, s_125);
+Frequency(0.01);
+Capacity(200);
+Speed(0.05);
+}
+
+//set time
+Time early[0, 6];
+Time late[6, 12];
+
+
+//create stat that adds number of people waiting at 2 stations at time t
+Stat combineNumWaiting (Time t, Station A, Station B){
+
+	num people1 = getNumWaiting(t, A);
+	num people2 = getNumWaiting(t, B);
+
+	num total = people1 + people2;
+
+	return total;	
+	
+}
+
+//run simulation
+Simulate(100){
+
+	//get speed of trains on line3 in early period; speed should be .05
+	num speed = getSpeed(early, Line3);
+
+	print "Speed of trains on Line3 in the morning is " speed;
+
+	
+	//modify speed
+	changeSpeed(late, Line3, 0.08);
+
+	//get new speed
+	num newSpeed = getSpeed(late, Line3);
+
+	print "Speed of trains on Line3 in the evening is " newSpeed;
+	
+
+}
+
+num numberWaiting = combineNumWaiting(early, s_110ST, s_116ST);
+
+showGUI();

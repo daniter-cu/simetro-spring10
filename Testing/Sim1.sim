@@ -67,4 +67,4 @@ Simulate(100){
 }
 
 //this creates valid AST up to showGUI();
-showGUI();
+ShowGUI();

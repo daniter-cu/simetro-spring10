@@ -77,7 +77,7 @@ public class TimeLine {
     	int firstTime = t[0];
     	
     	double lineFreq = 0;
-    	if (firstTime <= allLines.size()){
+    	if (allLines != null && firstTime <= allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -110,7 +110,7 @@ public class TimeLine {
     	int firstTime = t[0];
     	
     	double lineCap = 0;
-    	if (firstTime <= allLines.size()){
+    	if (allLines != null && firstTime <= allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -140,10 +140,16 @@ public class TimeLine {
     //get capacity for line at time t
     public double getSpeed(int[] t, Line l){
     	
+    	//for testing purposes
+    	//int test = allLines.size();
+    	//System.out.println("size of line list is " + test);
+    	
     	int firstTime = t[0];
+    	System.out.println("first time is " + firstTime);
     	
     	double lineSpeed = 0;
-    	if (firstTime <= allLines.size()){
+    	
+    	if (allLines != null && firstTime <= allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -154,6 +160,8 @@ public class TimeLine {
     			//see if this is line you're looking for
     			if (aLine.getName().equals(l.getName())){
     				lineSpeed = aLine.getSpeed();
+    				
+    				//left in for testing purposes
     				//System.out.println("Line " + l.getName() + " speed at time " + t + ": " + lineSpeed);
     				break;
     				
@@ -175,7 +183,7 @@ public class TimeLine {
     	int firstTime = time[0];
     	
     	double rate=0;
-    	if(firstTime<allStations.size()){
+    	if(allStations != null && firstTime<allStations.size()){
     		ArrayList<Station> st=allStations.get(firstTime);
     		for (Station aStation : st)
     		{
@@ -191,9 +199,14 @@ public class TimeLine {
     }
     
     public int getNumWaiting(int[] time, Station S){
+    	
+    	//for testing purposes
+    	//int test = allStations.size();
+    	//System.out.println("size of stations list is " + test);
+    	
     	int num=0;
     	int firstTime = time[0];
-    	if(firstTime<allStations.size()){
+    	if(allStations != null && firstTime<allStations.size()){
     		ArrayList<Station> st=allStations.get(firstTime);
     		for (Station aStation : st)
     		{
@@ -207,8 +220,10 @@ public class TimeLine {
     
     public int getAvgWaitTime(int[] time){
     	
+    	
+    	
     	int firstTime = time[0];
-		if(firstTime<allPersons.size()){
+		if(allPersons != null && firstTime<allPersons.size()){
 		ArrayList<Person> ps=allPersons.get(firstTime);
 		int numOfPerson=ps.size();
 		int totalWait=0;
@@ -224,7 +239,7 @@ public class TimeLine {
     public int getNumPassengers(int[] time){
     	int firstTime = time[0];
     	int num = 0;
-    	if (firstTime <= allPersons.size()){
+    	if (allPersons != null && firstTime <= allPersons.size()){
     		
     		ArrayList<Person> ps = allPersons.get(firstTime);
     		num=ps.size();  	

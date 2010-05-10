@@ -77,7 +77,7 @@ public class TimeLine {
     	int firstTime = t[0];
     	
     	double lineFreq = 0;
-    	if (allLines != null && firstTime <= allLines.size()){
+    	if (allLines != null && firstTime < allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -110,7 +110,7 @@ public class TimeLine {
     	int firstTime = t[0];
     	
     	double lineCap = 0;
-    	if (allLines != null && firstTime <= allLines.size()){
+    	if (allLines != null && firstTime < allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -149,7 +149,7 @@ public class TimeLine {
     	
     	double lineSpeed = 0;
     	
-    	if (allLines != null && firstTime <= allLines.size()){
+    	if (allLines != null && firstTime < allLines.size()){
     		
     		ArrayList<Line> listLines = allLines.get(firstTime);
     	
@@ -239,7 +239,7 @@ public class TimeLine {
     public int getNumPassengers(int[] time){
     	int firstTime = time[0];
     	int num = 0;
-    	if (allPersons != null && firstTime <= allPersons.size()){
+    	if (allPersons != null && firstTime < allPersons.size()){
     		
     		ArrayList<Person> ps = allPersons.get(firstTime);
     		num=ps.size();  	

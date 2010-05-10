@@ -99,4 +99,6 @@ Simulate(100){
 
 num numberWaiting = combineNumWaiting(early, s_110ST, s_116ST);
 
+print "Number of people waiting at stations 110 and 116 in the morning is " numberWaiting; 
+
 showGUI();

@@ -78,7 +78,7 @@ Speed(0.05);
 Time day[0, 12];
 
 //run simulation
-Simulate(100){
+Simulate(600){
 
 }
 

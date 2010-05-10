@@ -93,6 +93,7 @@ Stat combineNumWaiting (Time t, Station A, Station B){
 //run simulation
 Simulate(600){
 
+
 	//get speed of trains on line3 in early period; speed should be .05
 	num speed = getSpeed(early, Line3);
 

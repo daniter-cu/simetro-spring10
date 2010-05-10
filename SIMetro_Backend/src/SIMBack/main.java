@@ -107,9 +107,10 @@ public class main {
 			count++;
 		}
 		
-		tl.getFrequency(10, LA);
-		//tl.getCapacity(10, LC);
-		System.out.println("" + tl.getCapacity(10, LC));
+		int[] timeArray = {10, 11, 12};
+		tl.getFrequency(timeArray, LA);
+		tl.getCapacity(timeArray, LC);
+		System.out.println("new Frequency" + tl.getFrequency(timeArray, LC));
 		
 		System.out.println(SA);
 		
@@ -123,10 +124,14 @@ public class main {
 		sim.changeFrequency(LA, 0.02);
 		sim.changeSpeed(LA, 2);
 	
-		System.out.println("The average watiting time is: "+tl.getAvgWaitTime(300));
-		System.out.println("The number of people waiting in Station "+SA.getName()+"at time "+599+" is: "+tl.getNumWaiting(300, SA));
-		System.out.println("The rate of population from SA to SD is: "+tl.getRate(5, SA, SD));
-		System.out.println("The number of people at time 300 is: "+tl.getNumPassengers(300));
+		System.out.println("frequency: " + tl.getFrequency(timeArray, LA));
+		System.out.println("capacity: " + tl.getCapacity(timeArray, LA));
+		System.out.println("speed: " + tl.getSpeed(timeArray, LA));
+		
+		System.out.println("The average watiting time is: "+tl.getAvgWaitTime(timeArray));
+		System.out.println("The number of people waiting in Station "+SA.getName()+"at time "+10+" is: "+tl.getNumWaiting(timeArray, SA));
+		System.out.println("The rate of population from SA to SD is: "+tl.getRate(timeArray, SA, SD));
+		System.out.println("The number of people at time 10 is: "+tl.getNumPassengers(timeArray));
 		ShowGui sg=new ShowGui();
 		sg.Show(stationList, lineList,tl.getAllTrains());
 	}

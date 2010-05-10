@@ -3,6 +3,17 @@ Population p1 {
 (s_5AV, 5) 
 }
 
+Population p2{
+(s_110ST, 10)
+}
+
+Population p3{
+(s_4AV, 3)
+}
+
+Population p4{
+(s_125ST, 10)
+}
 
 //set station coordinates
 //population starts out at station 110ST
@@ -14,6 +25,7 @@ Population (p1);
 
 Station s_116ST{
 Coordinates (0, 6);
+Population(p2);
 }
 
 
@@ -26,11 +38,13 @@ Population (p2);
 
 Station s_5AV{
 Coordinates(10, 6);
+Population(p3);
 }
 
 
 Station s_4AV{
 Coordinates(15, 6);
+Population(p4);
 }
 
 

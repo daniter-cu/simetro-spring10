@@ -134,7 +134,7 @@ int day[] = {10,15};
 double val = pplTimesTwo(day, B); 
 //this will print "This is twice the number of people waiting at Station A at time 10 to time 15: 20"
 
-//print "This is twice the number of people waiting at station A at time " day.start "to time " day.end  ": " val;
+System.out.println("This is twice the number of people waiting at station A at time "+day+": "+val+"");
  
 }
 public static double pplTimesTwo( int[] t, Station A )

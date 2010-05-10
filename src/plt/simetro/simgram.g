@@ -63,7 +63,7 @@ line:
     'Stations' '(' idlist ')' ';' 
     'Frequency' '(' f=NUM ')' ';'
     'Capacity' '(' c=INTEGER ')' ';'
-    'Speed' '(' s=INTEGER ')' ';' 
+    'Speed' '(' s=NUM ')' ';' 
     '}' 
     -> ^(LINE ID ^(STATIONS idlist) ^(FREQUENCY $f) ^(CAPACITY $c) ^(SPEED $s) )
     ;
@@ -131,7 +131,7 @@ expression_statement:
 		;
 
 blockstmt:
-          '{'(s+=statements)* '}' -> ^(BLOCKSTMT statements) 
+          '{'(s+=statements)* '}' -> ^(BLOCKSTMT statements*) 
           ;
 
 derived_type: 'Station' | 'Line' | 'Time' | 'Population' ;      
@@ -275,5 +275,6 @@ ID: ('a' ..'z' | 'A'..'Z')('a' ..'z' |'_'| 'A'..'Z' | '0'..'9')*;
 WS: (' ' | '\n' | '\t' | '\r' | '\f' )+ {$channel = HIDDEN;} ;
 COMMENT: '//' .* ('\n' | '\r') {$channel = HIDDEN;};
 MULTICOMMENT: '/*' .* '*/' {$channel = HIDDEN;};
+
 INTEGER: ('0' .. '9')+;
-NUM: INTEGER ('.'? INTEGER)? ;
+NUM: INTEGER '.' INTEGER ;

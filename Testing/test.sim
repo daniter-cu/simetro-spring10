@@ -1,0 +1,105 @@
+// 3 stations S1,S2,S3 in a triangle with lines between each pair of them with identical capacity, speed and frequency
+
+// I am willing to double the frequency of one of the lines. Which line should I choose: Use the average number of waiting people per station as the performance criteria
+
+// for each Line in Lines
+	// getFrequency(Line)
+	// double the Frequency of Line
+	// run simulation
+	// Find the new avg. number of waiting people per station in the system
+	// Restore the originial frquency of Line
+
+// Display the statistics map in increasing order of OverallAvgWaitNumber: (LineWithIncreasedFrequency, OverallAvgWaitNumber)
+
+
+// -------------------------------------------
+
+//set station coordinates and populations
+Station S1 {
+Coordinates(0,0);
+Population(p1);
+}
+
+
+Station S2{
+Coordinates(3,4);
+Population(p2);
+}
+
+Station S3{
+Coordinates(6,0);
+Population(p3);
+}
+
+
+Population p1 {
+(S2, 10)
+(S3, 20)
+}
+
+Population p2 {
+(S3, 35)
+(S1, 10)
+}
+
+Population p3 {
+(S1, 20)
+}
+
+
+//construct lines 1, 2 and 3
+Line Line1 {
+Stations(S1, S2, S1);
+Frequency(0.005);
+Capacity (100);
+Speed (0.05);
+}
+
+Line Line2{
+Stations(S2, S3, S2);
+Frequency(0.005);
+Capacity(100);
+Speed(0.05);
+}
+
+Line Line3{
+Stations(S3, S1, S3);
+Frequency(0.005);
+Capacity(100);
+Speed(0.05);
+}
+
+
+//set time
+Time early[1, 6];
+
+Stat AvgNumWaiting (Time t, Station A, Station B, Station C){
+
+	num people1 = getNumWaiting(t, A);
+	num people2 = getNumWaiting(t, B);
+	num people3 = getNumWaiting(t, C);
+
+	num total = people1 + people2 + people3;
+
+	num ret = total /3;
+	return ret;
+}
+
+
+//run simulation
+Simulate(100){
+
+	//get frequency of train on line1 in early period
+	num freq = getFrequency(early, Line1);
+
+	//modify frequency
+	num chan = freq*2;
+	changeFrequency(early, Line1, chan);
+
+}
+
+num numberWaiting = AvgNumWaiting(early, S1, S2, S3);
+
+print "Average Number of people waiting per station in the morning is " numberWaiting; 
+
+ShowGUI();

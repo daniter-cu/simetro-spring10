@@ -21,7 +21,7 @@ public class Train implements Cloneable{
                if(reverse)
                 {
                     this.line=line.getRvsLine();
-                    System.out.println("this train is on reverse direction of "+line.getName());
+                    //System.out.println("this train is on reverse direction of "+line.getName());
                 }
                 else this.line=line;
                 this.arrivalTime = arrivalTime;
@@ -75,12 +75,12 @@ public class Train implements Cloneable{
                 if(temp>0)
                 {
                     timeDistLeft=temp;
-                    System.out.println("*****A train on "+onEdge+"th edge of "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+"time distance left: "+temp);
+                    System.out.println("*****A train on the "+onEdge+"th edge of line "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+" time distance left: "+temp);
                     return false;
                 }
                 else 
                 {
-                    System.out.println("*****A train on "+line.getName()+" arrives "+line.getEdge(onEdge).getS2().getName());
+                    System.out.println("*****A train on line "+line.getName()+" arrives at edge "+line.getEdge(onEdge).getS2().getName());
                     return true;
                 }
         }
@@ -88,7 +88,7 @@ public class Train implements Cloneable{
         public boolean arriveDest(){
                 if(line.edgeNumber()==onEdge+1)
                 {
-                    System.out.println("On "+line.getName()+": a Train get Destination!");
+                    System.out.println("On line "+line.getName()+": a Train gets to its Destination!");
                     return true;
                 }
                 else return false;

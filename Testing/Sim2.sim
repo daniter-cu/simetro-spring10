@@ -1,13 +1,21 @@
-
-//set population1 going to station s_5AV
+//set populations
 Population p1 {
 (s_5AV, 5) 
 }
 
+Population p2{
+(s_110ST, 10)
+}
 
-//set stations
+Population p3{
+(s_4AV, 3)
+}
 
-//attach population1 to 110ST
+Population p4{
+(s_125ST, 10)
+}
+
+//set station coordinates and populations
 Station s_110ST {
 Coordinates (0,0);
 Population (p1);
@@ -16,6 +24,7 @@ Population (p1);
 
 Station s_116ST{
 Coordinates (0, 6);
+Population(p2);
 }
 
 
@@ -28,12 +37,15 @@ Population (p2);
 
 Station s_5AV{
 Coordinates(10, 6);
+Population(p3);
 }
 
 
 Station s_4AV{
 Coordinates(15, 6);
+Population(p4);
 }
+
 
 
 //construct lines 1, 2 and 3

@@ -108,11 +108,13 @@ int late[] = {6,12};
         sim.createRoutingTables(stationList,lineList);
         
         
-        for(int time_iter=0; time_iter < 400 ;time_iter++){
+        for(int time_iter=0; time_iter < 100 ;time_iter++){
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
+                        tl.addStations(stationList);
+                        tl.addLines(lineList);
                         
                      /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)
@@ -124,7 +126,6 @@ int late[] = {6,12};
 
 
            {
-
 
            	//get speed of trains on line3 in early period; speed should be .05
            	double speed = tl.getSpeed(early, Line3);

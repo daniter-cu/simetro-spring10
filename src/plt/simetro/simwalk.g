@@ -439,6 +439,8 @@ simulate:
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
+                        tl.addStations(stationList);
+                        tl.addLines(lineList);
                         
                      /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)

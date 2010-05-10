@@ -55,7 +55,7 @@ Line Line1 {
 Stations(s_110ST, s_116ST, s_125ST);
 Frequency(0.005);
 Capacity (100);
-Speed (0.05);
+Speed (0.15);
 } 
 
 

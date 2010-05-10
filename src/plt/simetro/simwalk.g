@@ -85,7 +85,7 @@ types returns [String print]
 //==DERIVED TYPES==
 
 line: 
-    ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=NUM) ^(CAPACITY c=INTEGER) ^(SPEED s=INTEGER) )
+    ^(LINE ID ^(STATIONS i=idlist) ^(FREQUENCY f=NUM) ^(CAPACITY c=INTEGER) ^(SPEED s=NUM) )
     {
    // System.out.println("Line " + $ID + "= new Line("+$i.s+","+$f.text+"," +$c.text +","+ $s.text+");");
     String[] stationArr= new String($i.text).split(",");
@@ -99,7 +99,7 @@ line:
         tempList_stations.add(stationMap.get((String)<n>));
     }
     //lineList.add(new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations)));
-    Line <id> = new Line(\"<id>\"<separator> <f><separator> <c><separator> <s><separator>new ArrayList\<Station\>(tempList_stations));
+    Line <id> = new Line(\"<id>\"<separator> <f><separator> <s><separator> <c><separator>new ArrayList\<Station\>(tempList_stations));
     lineList.add(<id>);
     lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear();"
@@ -256,6 +256,7 @@ statements  :
         |func_call
         | print_function 
         |simulate
+        | mod_procedures
         ;
  
 expression_statement returns [String str]:
@@ -264,7 +265,7 @@ expression_statement returns [String str]:
         ;
 
 blockstmt:
-         ^(BLOCKSTMT statements) 
+         ^(BLOCKSTMT statements*) 
           ;
 
 derived_type: 
@@ -383,11 +384,16 @@ func_call returns [String fun]:
         
 mod_procedures:
         ^(MOD_FUNCTIONS  params)
-        -> template(i={$MOD_FUNCTIONS.text}, p = {$params.text}) "sim.<i>(<p; separator=\", \">)"
+        -> template(i={$MOD_FUNCTIONS.text}, p = {$params.params}, t= {$params.time}) 
+        <<
+        if(time_iter == <t>[0])
+          sim.<i>(<p; separator=", ">);
+        >>
         ;   
      
-print_function:
-        ^('print' STRING )
+print_function returns [String print]
+@init{$print = "";}:
+    /*    ^('print' STRING )
         -> template( mystring = {$STRING.text} )
         "System.out.println(\"<mystring>\");"
         
@@ -397,7 +403,11 @@ print_function:
         
         | ^('print' ID )  
         -> template( myID = {$ID.text} )
-        "System.out.println(<myID>);"
+        "System.out.println(<myID>);"*/
+        
+        ^('print' (s=STRING {$print+="\""+$s+"\""+"+";}| s=ID {$print+=$s+"+";}| f=func_call{$print+=$s+"+";})*)
+        ->template(s={$print})
+        "System.out.println(<s>\"\");"
         //{System.out.println("System.out.println(\" Hello World\")");}
         ;
 
@@ -419,7 +429,7 @@ simulate:
         ->template( blk = {$blockstmt.text}, time = {$INTEGER} )
         <<
         Simulate sim=new Simulate();
-        TimeLine tl=new TimeLine();
+        //TimeLine tl=new TimeLine();
         
         sim.createRoutingTables(stationList,lineList);
         
@@ -481,13 +491,13 @@ formal_param returns [String str]:
         |^('Station' ID)  {$str = "Station " + $ID.text;}
         |^('Line' ID)  {$str = "Line " + $ID.text;}
         |^('Population' ID) {$str = "Population " + $ID.text;}  
-        |^('Time' ID)  {$str = "double " + $ID.text;}
+        |^('Time' ID)  {$str = "int[] " + $ID.text;}
         |^('String' ID) {$str = "String " + $ID.text;}
         ; 
 
-params:
+params returns [List params, String time]:
        // ^(PARAM (ID | NUM |('+'|'-'|'*'|'/'|'^')? INTEGER)* )
-       ^(PARAM (ID| NUM | INTEGER)* specialparam?)
+       ^(PARAM t=ID l+=(ID| NUM | INTEGER)* specialparam?) {$time = $t.text; $params=$l;}
         ;
 
     //    -> ^(PARAM  $a* $b* $a* )

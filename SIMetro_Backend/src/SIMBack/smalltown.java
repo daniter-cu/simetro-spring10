@@ -1,7 +1,7 @@
 package SIMBack;import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;public class smalltown { static ArrayList<Station> stationList=new ArrayList<Station>();static ArrayList<Line> lineList=new ArrayList<Line>();static ArrayList<Population> populationList=new ArrayList<Population>();static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();static HashMap<String, Station> stationMap=new HashMap<String, Station>();static ArrayList<Station> tempList_stations=new ArrayList<Station>();public static void main (String[] args)  {  
-
+/*
 Station s_110ST = new Station("s_110ST", new Coordinate(0, 0));
     stationList.add(s_110ST);
     //stationList.add(new Station("s_110ST", new Coordinate(0, 0)));
@@ -85,12 +85,12 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_116ST.5)]")
                         }
                         System.out.println("--------------------------------------------END----------------------------------------");
 */
-
+/*
 
            {
            System.out.println("Done");
            }
-        }
+        }*/
         /*
         int count=1;
         for (ArrayList<Train> alt : tl.getAllTrains()) {
@@ -108,7 +108,7 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_116ST.5)]")
         
         
         
-       
+     /*  
         
 
 
@@ -156,9 +156,9 @@ x = 1;
 //ShowGUI();	 //keep outside simulate block
 
 
+*/
 
-
-}
+}/*
 public static double statA( int b, int a )
 {
 a = 6;
@@ -167,4 +167,4 @@ a = (a + b);
 
 return a;
 }
- }
+ */}

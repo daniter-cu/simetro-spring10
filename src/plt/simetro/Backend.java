@@ -94,6 +94,7 @@ public class Backend {
             globals += "static ArrayList<PopItem> popItemList=new ArrayList<PopItem>();\r";
             globals += "static HashMap<String, Station> stationMap=new HashMap<String, Station>();\r";
             globals += "static ArrayList<Station> tempList_stations=new ArrayList<Station>();\r\r";
+            globals += "static TimeLine tl=new TimeLine();\r\r";
             
             BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
             try {

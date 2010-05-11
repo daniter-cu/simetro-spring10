@@ -92,7 +92,7 @@ for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(S1.20)]").r
 
 
 //set time
-int early[] = {1,6};
+int early[] = {10,60};
 
 
 
@@ -125,13 +125,13 @@ int early[] = {1,6};
            {
 
            	//get frequency of train on line1 in early period
-           	double freq = tl.getFrequency(early, Line1);
+           	double freq = tl.getFrequency(early, Line2);
 
            	//modify frequency
-           	double chan = (freq * 2);
+           	double chan = (freq * 4);
            	
                    if(time_iter == early[0])
-                     sim.changeFrequency(Line1, chan);
+                     sim.changeFrequency(Line2, chan);
                    
 
            }

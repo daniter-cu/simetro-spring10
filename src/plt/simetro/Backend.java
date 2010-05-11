@@ -35,7 +35,7 @@ public class Backend {
 			//String file = new String("./Testing/smalltown_file.sim");
 			//String file = new String("./Testing/smalltown.sim");
 			
-			String file ="Sim2.sim";
+			String file = args[0]+".sim";
 			
 			String input_path = "./Testing/";
 			String output_path = "./SIMetro_Backend/src/SIMBACK/";

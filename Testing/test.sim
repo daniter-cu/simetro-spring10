@@ -49,7 +49,7 @@ Population p3 {
 
 //construct lines 1, 2 and 3
 Line Line1 {
-//Stations(S1, S2, S1);
+//Stations(S1, S2);
 Stations(S1, S2);
 Frequency(0.005);
 Capacity (100);
@@ -57,7 +57,7 @@ Speed (0.05);
 }
 
 Line Line2{
-//Stations(S2, S3, S2);
+//Stations(S2, S3);
 Stations(S2, S3);
 Frequency(0.005);
 Capacity(100);
@@ -65,7 +65,7 @@ Speed(0.05);
 }
 
 Line Line3{
-//Stations(S3, S1, S3);
+//Stations(S3, S1);
 Stations(S3, S1);
 Frequency(0.005);
 Capacity(100);
@@ -74,7 +74,7 @@ Speed(0.05);
 
 
 //set time
-Time early[1, 6];
+Time early[10, 60];
 
 Stat AvgNumWaiting (Time t, Station A, Station B, Station C){
 
@@ -93,11 +93,11 @@ Stat AvgNumWaiting (Time t, Station A, Station B, Station C){
 Simulate(100){
 
 	//get frequency of train on line1 in early period
-	num freq = getFrequency(early, Line1);
+	num freq = getFrequency(early, Line2);
 
 	//modify frequency
-	num chan = freq*2;
-	changeFrequency(early, Line1, chan);
+	num chan = freq*4;
+	changeFrequency(early, Line2, chan);
 
 }
 

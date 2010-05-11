@@ -39,25 +39,33 @@ Station s_4AV = new Station("s_4AV", new Coordinate(15, 6));
 for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_5AV.5)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(a.toString().split("\\.")[0])), Double.parseDouble(new String(a.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_110ST").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_110ST").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(s_110ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aa.toString().split("\\.")[0])), Double.parseDouble(new String(aa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_125ST").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_125ST").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(s_4AV.3)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_5AV").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_5AV").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaaa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_4AV").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_4AV").setPop(populationList.get(populationList.size()-1));
+
     
 
 //creates lines 1, 2 and 3
@@ -65,11 +73,12 @@ for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10
     for (Object aaaaa : new ArrayList<Object>( Arrays.asList(new String("(s_110ST, s_116ST, s_125ST)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaaaa));
     }
-    //lineList.add(new Line("Line1", 0.005, 100, 0.05,new ArrayList<Station>(tempList_stations)));
-    Line Line1 = new Line("Line1", 0.005, 0.05, 100,new ArrayList<Station>(tempList_stations));
+    //lineList.add(new Line("Line1", 0.005, 100, 0.15,new ArrayList<Station>(tempList_stations)));
+    Line Line1 = new Line("Line1", 0.005, 0.15, 100,new ArrayList<Station>(tempList_stations));
     lineList.add(Line1);
     lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear(); 
+
 
 
 
@@ -104,11 +113,13 @@ int day[] = {0,12};
         sim.createRoutingTables(stationList,lineList);
         
         
-        for(int time_iter=0; time_iter < 100 ;time_iter++){
+        for(int time_iter=0; time_iter < 400 ;time_iter++){
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
                         sim.trainMove(time_iter,tl);
+                        tl.addStations(stationList);
+                        tl.addLines(lineList);
                         
                      /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)

@@ -35,9 +35,12 @@ public class Backend {
 			//String file = new String("./Testing/smalltown_file.sim");
 			//String file = new String("./Testing/smalltown.sim");
 			
-			String file = "./Testing/" + args[0]+ ".sim";
+			String file ="Sim2.sim";
+			
+			String input_path = "./Testing/";
+			String output_path = "./SIMetro_Backend/src/SIMBACK/";
 			//==PARSER/LEXER
-			CharStream charStream = new ANTLRFileStream(file);
+			CharStream charStream = new ANTLRFileStream(input_path+file);
 			simgramLexer lexer = new simgramLexer(charStream );
 
 			//TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -95,8 +98,10 @@ public class Backend {
             globals += "static HashMap<String, Station> stationMap=new HashMap<String, Station>();\r";
             globals += "static ArrayList<Station> tempList_stations=new ArrayList<Station>();\r\r";
             globals += "static TimeLine tl=new TimeLine();\r\r";
+
+            System.out.println(output_path + file.replaceAll(".sim", ".java"));
             
-            BufferedWriter outputStream = new BufferedWriter( new FileWriter(file.replace(".sim", ".java") ));
+            BufferedWriter outputStream = new BufferedWriter( new FileWriter(output_path + file.replaceAll(".sim", ".java")));
             try {
             	outputStream.write( mypackage+imports+header + globals + main + tokenStream.toString() + print + " \r\r\r}" );
               }

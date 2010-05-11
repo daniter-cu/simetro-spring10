@@ -184,7 +184,7 @@ public class Simulate {
 									//add new person to list linked with station
 									sourceStation.addPerson(aPerson);
 									persons.add(aPerson);
-									System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
+									//System.out.println("New person created at time " + arriveTime + " arriving at station " + sourceStation.getName() + " going to " + destStation.getName() + ", next station is "+ nextStation.getName());
 									//increment peopleCount
 									peopleCount++;
 

@@ -91,7 +91,7 @@ idlist : i+=ID (',' i+=ID)* -> ^(IDLIST $i*) ;
 stat:
         'Stat' ID '(' f=formal_params ')' '{'
         (s=statements)*
-        'return' r=ID ';'
+        'return' r=arithExpr ';'
         '}' -> ^(STAT ID $f statements* ^(RETURN $r))
         ;
         

@@ -49,21 +49,24 @@ Population p3 {
 
 //construct lines 1, 2 and 3
 Line Line1 {
-Stations(S1, S2, S1);
+//Stations(S1, S2, S1);
+Stations(S1, S2);
 Frequency(0.005);
 Capacity (100);
 Speed (0.05);
 }
 
 Line Line2{
-Stations(S2, S3, S2);
+//Stations(S2, S3, S2);
+Stations(S2, S3);
 Frequency(0.005);
 Capacity(100);
 Speed(0.05);
 }
 
 Line Line3{
-Stations(S3, S1, S3);
+//Stations(S3, S1, S3);
+Stations(S3, S1);
 Frequency(0.005);
 Capacity(100);
 Speed(0.05);

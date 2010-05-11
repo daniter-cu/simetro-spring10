@@ -136,7 +136,7 @@ public class Line implements Cloneable {
         }
 
         public void setRvsEdges(){
-            System.out.println("Reverse edges of "+name+" set");
+//            System.out.println("Reverse edges of "+name+" set");
             for(int i=edges.size()-1;i>=0;i--)
             {
                 edges.get(i).setRvsEdge();
@@ -164,7 +164,7 @@ public class Line implements Cloneable {
                     {
                         rvsRoute.add(route.get(i));                       
                     }
-                    System.out.println("\nReverse Direction of "+name+" is Created:");
+//                    System.out.println("\nReverse Direction of "+name+" is Created:");
                     Line rLine=new Line(name, rate, speed, capacity,rvsRoute);
                     rvsLine=rLine;
         }

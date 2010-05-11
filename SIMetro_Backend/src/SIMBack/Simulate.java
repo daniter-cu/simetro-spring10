@@ -75,18 +75,18 @@ public class Simulate {
 
 		}
 
-		System.out.println("Original Routing Table:");
-		for(int i=0;i<stationList.size();i++) {
-			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
-			for(int j=0;j<stationList.get(i).getRoutingTable().size();j++) {
-				System.out.println("Dest: "+stationList.get(i).getRoutingTable().get(j).getDest().getName()
-						+"\tDist: "+stationList.get(i).getRoutingTable().get(j).getDist()
-						+"\tLine: "+stationList.get(i).getRoutingTable().get(j).getLine().getName()
-						+"\tNext: "+stationList.get(i).getRoutingTable().get(j).getNext().getName());
-			}
-		}
+//		System.out.println("Original Routing Table:");
+//		for(int i=0;i<stationList.size();i++) {
+//			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
+//			for(int j=0;j<stationList.get(i).getRoutingTable().size();j++) {
+//				System.out.println("Dest: "+stationList.get(i).getRoutingTable().get(j).getDest().getName()
+//						+"\tDist: "+stationList.get(i).getRoutingTable().get(j).getDist()
+//						+"\tLine: "+stationList.get(i).getRoutingTable().get(j).getLine().getName()
+//						+"\tNext: "+stationList.get(i).getRoutingTable().get(j).getNext().getName());
+//			}
+//		}
 		//		System.out.println("===="+stationList.get(0).getRTabByDest(stationList.get(1)).getDist());
-		System.out.println("Constructing...");
+//		System.out.println("Constructing...");
 		for(int i=0;i<stationList.size()-1;i++) {
 			//			System.out.println("i:"+i);
 			for(int si=0;si<stationList.size();si++) {
@@ -115,8 +115,8 @@ public class Simulate {
 
 
 		}
-		System.out.println();
-		System.out.println("Routing Table all constructed!");
+//		System.out.println();
+		System.out.println("Routing Table constructed!");
 		for(int i=0;i<stationList.size();i++) {
 			System.out.println("RoutingTable for Station "+stationList.get(i).getName());
 			for(int j=0;j<stationList.get(i).getRoutingTable().size();j++) {
@@ -135,7 +135,7 @@ public class Simulate {
 		//look up in the population objects to see if new people should be created to arrive at each station
 		//for each new person, create him using	public Person(int arrivalTime, Station dest, Station source, Station next)
 		//by also looking up the routing table
-		System.out.println("----------------ARRIVING PASSENGER INFOMATION:-----------------");
+//		System.out.println("----------------ARRIVING PASSENGER INFOMATION:-----------------");
 		//System.out.println("current time from peopleArrive is " + arriveTime);
 		//iterate through station list
 		for(int si=0;si<stationList.size();si++) {
@@ -207,7 +207,7 @@ public class Simulate {
 		//set persons in timeline
 		//tl.setTime(arriveTime);
 		//tl.setPersons(persons);
-		System.out.println("-----------------------------END---------------------------");
+//		System.out.println("-----------------------------END---------------------------");
 	}
 
 	public void trainArrive(ArrayList<Line> lineList, int currTime){
@@ -215,7 +215,7 @@ public class Simulate {
 		//using public Train(Line line, int arrivalTime, Coordinate coordinate,int capacity, double speed)
 
 		int timeCreate = 0;
-		System.out.println("\n----------------TRAIN CREATING INFOMATION:-----------------");
+//		System.out.println("\n----------------TRAIN CREATING INFOMATION:-----------------");
 
 		//iterate through list of lines
 		for(int i=0;i<lineList.size();i++) {
@@ -276,7 +276,7 @@ public class Simulate {
 		}
 		//tl.setTime(currTime);
 		//tl.setTrains(trains);
-		System.out.println("---------------------------END------------------------------");
+//		System.out.println("---------------------------END------------------------------");
 	}
 
 	public void trainMove(int currTime, TimeLine tl) {
@@ -286,7 +286,7 @@ public class Simulate {
 		//                                   load the people that are waiting to get on this train
 
 		ArrayList<Train> trainInDest=new ArrayList<Train>();
-		System.out.println("\n-------------------------TRANSFER INFOMATION:-------------------------");
+//		System.out.println("\n-------------------------TRANSFER INFOMATION:-------------------------");
 		for (Train aTrain : trains)
 		{
 			//System.out.println("The coordinate of the train on "+aTrain.getLine().getName()+" is ( "+aTrain.getCoordinate().getX()+" , "+aTrain.getCoordinate().getY()+" )");
@@ -303,7 +303,7 @@ public class Simulate {
 
 			if (currTime==aTrain.getArriveTime())
 			{
-				System.out.println("A new train on line "+aTrain.getLine().getName()+" is going to pick up passengers in Station "+aTrain.getCurrent().getName());
+//				System.out.println("A new train on line "+aTrain.getLine().getName()+" is going to pick up passengers in Station "+aTrain.getCurrent().getName());
 				transfer(aTrain, currTime);
 				continue;
 			}
@@ -326,7 +326,7 @@ public class Simulate {
 		}
 		tl.addAllPersons();
 		System.out.println("The Number of Trains in Operation: "+trains.size());
-		System.out.println("----------------------------------END-----------------------------------");
+//		System.out.println("----------------------------------END-----------------------------------");
 
 	}
 
@@ -345,7 +345,7 @@ public class Simulate {
 				personCount++;
 				//System.out.println("*****A person get on ["+train.getLine().getName()+"] At ["+station.getName()+"]");
 			}
-		System.out.println(personCount+" people get on line ["+train.getLine().getName()+"] at station ["+station.getName()+"]" );
+//		System.out.println(personCount+" people get on line ["+train.getLine().getName()+"] at station ["+station.getName()+"]" );
 		for (int i=0;i<personTransferred.size();i++)
 		{
 			station.removePerson(personTransferred.get(i));
@@ -358,11 +358,11 @@ public class Simulate {
 			{
 				station.addPerson(aPerson);
 				aPerson.setArrivalTime(currTime);
-				System.out.println("*****A person gets off line ["+train.getLine().getName()+"] at station ["+station.getName()+"]");
+//				System.out.println("*****A person gets off line ["+train.getLine().getName()+"] at station ["+station.getName()+"]");
 				if(aPerson.getDest().getName().equals(station.getName()))
 				{
 					aPerson.setDepartTime(currTime);
-					System.out.println("*****A person has arrived at his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
+//					System.out.println("*****A person has arrived at his/her destination: "+" ["+station.getName()+"]! Have a good day!!!");
 				}
 				else {
 					aPerson.setNext(station.findNext(aPerson.getDest()));

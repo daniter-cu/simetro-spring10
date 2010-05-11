@@ -75,12 +75,12 @@ public class Train implements Cloneable{
                 if(temp>0)
                 {
                     DistLeft=temp;
-                    System.out.println("*****A train on the "+onEdge+"th edge of line "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+" distance left: "+temp);
+//                    System.out.println("*****A train on the "+onEdge+"th edge of line "+line.getName()+" is running between "+line.getEdge(onEdge).getS1().getName()+" => "+line.getEdge(onEdge).getS2().getName()+" distance left: "+temp);
                     return false;
                 }
                 else 
                 {
-                    System.out.println("*****A train on line "+line.getName()+" arrives at edge "+line.getEdge(onEdge).getS2().getName());
+//                    System.out.println("*****A train on line "+line.getName()+" arrives at edge "+line.getEdge(onEdge).getS2().getName());
                     return true;
                 }
         }

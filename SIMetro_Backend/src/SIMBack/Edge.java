@@ -16,7 +16,7 @@ public class Edge {
 		this.dist = dist;
 		this.line = line;
 		this.timedist=timedist;
-		System.out.println("Edge created: "+s1.getName()+"<==>"+s2.getName()+"\tDistance: "+dist+"\tTime: "+timedist+"\tLine: "+line.getName());
+//		System.out.println("Edge created: "+s1.getName()+"<==>"+s2.getName()+"\tDistance: "+dist+"\tTime: "+timedist+"\tLine: "+line.getName());
 	}
 	
 	public void setS1(Station s1) {
@@ -53,7 +53,7 @@ public class Edge {
 	}
 
         public void setRvsEdge(){
-               System.out.println("Reverse Edge is Created:");
+//               System.out.println("Reverse Edge is Created:");
                Edge temp=new Edge(s2, s1, dist,timedist, line);
                rvsEdge=temp;
         }

@@ -38,25 +38,34 @@ Station s_4AV = new Station("s_4AV", new Coordinate(15, 6));
 for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_5AV.5)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(a.toString().split("\\.")[0])), Double.parseDouble(new String(a.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_110ST").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_110ST").setPop(populationList.get(populationList.size()-1));
+
     
+
 
 for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(s_110ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aa.toString().split("\\.")[0])), Double.parseDouble(new String(aa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_125ST").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_125ST").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(s_4AV.3)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_5AV").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_5AV").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaaa.toString().split("\\.")[1]))));
     }
-    stationMap.get("s_4AV").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("s_4AV").setPop(populationList.get(populationList.size()-1));
+
     
 
 //construct lines 1, 2 and 3
@@ -93,8 +102,8 @@ for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10
     tempList_stations.clear();
 
 //set time
-int early[] = {40,80};
-int late[] = {80,100};
+int early[] = {1,100};
+int late[] = {101,200};
 
 
 //create stat that adds number of people waiting at 2 stations at time t
@@ -131,13 +140,11 @@ int late[] = {80,100};
            	//get speed of trains on line3 in early period; speed should be .05
            	double speed = tl.getSpeed(early, Line3);
 
-           	System.out.println("Speed of trains on Line3 in the morning is "+speed+"");
-
            	
            	//modify speed
            	
                    if(time_iter == late[0])
-                     sim.changeSpeed(Line3, 0.08);
+                     sim.changeSpeed(Line3, 0.2);
                    
 
            	//get new speed
@@ -170,7 +177,7 @@ int late[] = {80,100};
 
 double numberWaiting = combineNumWaiting(early, s_110ST, s_116ST);
 
-System.out.println("Number of people waiting at stations 110 and 116 in the morning is "+numberWaiting+""); 
+//print "Number of people waiting at stations 110 and 116 in the morning is " numberWaiting; 
 
 
         ShowGui sg=new ShowGui();

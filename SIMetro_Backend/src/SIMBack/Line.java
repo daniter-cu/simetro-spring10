@@ -34,6 +34,16 @@ public class Line implements Cloneable {
     
     public void changeSpeed(double speed) {
     	this.speed=speed;
+    	for (Edge aEdge : edges)
+    	{	
+    		System.out.println("The old timeDist is: "+aEdge.getTimedist());
+    		aEdge.setTimedist(((int)(aEdge.getDist()*100/speed))/100.0);
+    		System.out.println("The new timeDist is: "+aEdge.getTimedist());
+    	}
+    	for (Edge aEdge : rvsLine.edges)
+    	{
+    		aEdge.setTimedist(((int)(aEdge.getDist()*100/speed))/100.0);
+    	}
     }
     
     public void changeCapacity(int cap) {

@@ -37,25 +37,31 @@ Station S3 = new Station("S3", new Coordinate(6, 0));
 for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(S2.10), (S3.20)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(a.toString().split("\\.")[0])), Double.parseDouble(new String(a.toString().split("\\.")[1]))));
     }
-    stationMap.get("S1").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("S1").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(S3.35), (S1.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aa.toString().split("\\.")[0])), Double.parseDouble(new String(aa.toString().split("\\.")[1]))));
     }
-    stationMap.get("S2").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("S2").setPop(populationList.get(populationList.size()-1));
+
     
 
 for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(S1.20)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaa.toString().split("\\.")[1]))));
     }
-    stationMap.get("S3").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get("S3").setPop(populationList.get(populationList.size()-1));
+
     
 
 
 //construct lines 1, 2 and 3
 
-    for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("(S1, S2, S1)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
+    for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("(S1, S2)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaaa));
     }
     //lineList.add(new Line("Line1", 0.005, 100, 0.05,new ArrayList<Station>(tempList_stations)));
@@ -65,7 +71,7 @@ for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(S1.20)]").r
     tempList_stations.clear();
 
 
-    for (Object aaaaa : new ArrayList<Object>( Arrays.asList(new String("(S2, S3, S2)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
+    for (Object aaaaa : new ArrayList<Object>( Arrays.asList(new String("(S2, S3)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaaaa));
     }
     //lineList.add(new Line("Line2", 0.005, 100, 0.05,new ArrayList<Station>(tempList_stations)));
@@ -75,7 +81,7 @@ for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(S1.20)]").r
     tempList_stations.clear();
 
 
-    for (Object aaaaaa : new ArrayList<Object>( Arrays.asList(new String("(S3, S1, S3)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
+    for (Object aaaaaa : new ArrayList<Object>( Arrays.asList(new String("(S3, S1)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaaaaa));
     }
     //lineList.add(new Line("Line3", 0.005, 100, 0.05,new ArrayList<Station>(tempList_stations)));
@@ -103,7 +109,9 @@ int early[] = {1,6};
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
-                        sim.trainMove(time_iter,tl);                        tl.addStations(stationList);                        tl.addLines(lineList);
+                        sim.trainMove(time_iter,tl);
+                        tl.addStations(stationList);
+                        tl.addLines(lineList);
                         
                      /*   System.out.println("------------------------------------STATION INFOMATION---------------------------------");
                         for(Station aStation : stationList)

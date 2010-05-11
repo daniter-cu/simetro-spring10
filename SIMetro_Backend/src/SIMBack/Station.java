@@ -9,6 +9,7 @@ public class Station implements Cloneable{
 	private Population pop;
 	private ArrayList<Person> crowd=new ArrayList<Person>();
 
+	private ArrayList<Integer> people_time_idx = new ArrayList<Integer>();
 
 	public Station() {
 		super();
@@ -66,6 +67,22 @@ public class Station implements Cloneable{
 		return s;
 	}
 
+	//added for getnumwaiting
+	public int get_people_time(int start_time, int end_time) {
+		if (people_time_idx.isEmpty() || end_time < start_time || end_time < 0) 
+			{ return 0; }
+		else { 
+			//System.out.println("people each time:" + people_time_idx.get(end_time));
+			return  (people_time_idx.get(end_time)).intValue() + get_people_time(start_time, end_time-1);
+		}	
+	}
+	//for get num waiting
+	public void set_people_time(int time) {
+		people_time_idx.add(new Integer(time) );
+	}
+	
+	
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -131,6 +148,10 @@ public class Station implements Cloneable{
 
 			cloned.crowd = (ArrayList<Person>) crowd.clone();
 
+			//added here
+			cloned.people_time_idx = (ArrayList<Integer>) people_time_idx.clone();
+			
+			
 			return cloned;
 		}
 		catch(CloneNotSupportedException e){

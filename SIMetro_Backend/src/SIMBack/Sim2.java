@@ -35,7 +35,7 @@ Station s_4AV = new Station("s_4AV", new Coordinate(15, 6));
 
 
 //set populations
-for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_5AV.5)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
+for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_5AV.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(a.toString().split("\\.")[0])), Double.parseDouble(new String(a.toString().split("\\.")[1]))));
     }
     populationList.add(new Population(popItemList));
@@ -44,7 +44,7 @@ for (Object a : new ArrayList<Object>( Arrays.asList(new String("[(s_5AV.5)]").r
     
 
 
-for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(s_110ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
+for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(s_110ST.0)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aa.toString().split("\\.")[0])), Double.parseDouble(new String(aa.toString().split("\\.")[1]))));
     }
     populationList.add(new Population(popItemList));
@@ -52,7 +52,7 @@ for (Object aa : new ArrayList<Object>( Arrays.asList(new String("[(s_110ST.10)]
 
     
 
-for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(s_4AV.3)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
+for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(s_4AV.0)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaa.toString().split("\\.")[1]))));
     }
     populationList.add(new Population(popItemList));
@@ -60,7 +60,7 @@ for (Object aaa : new ArrayList<Object>( Arrays.asList(new String("[(s_4AV.3)]")
 
     
 
-for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
+for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.0)]").replaceAll("\\s+|\\(|\\)|\\[|\\]", "").split(",")))) {
         popItemList.add(new PopItem(stationMap.get(new String(aaaa.toString().split("\\.")[0])), Double.parseDouble(new String(aaaa.toString().split("\\.")[1]))));
     }
     populationList.add(new Population(popItemList));
@@ -155,22 +155,7 @@ int late[] = {101,200};
 
            }
         }
-        /*
-        int count=1;
-        for (ArrayList<Train> alt : tl.getAllTrains()) {
-            for (Train train : alt)
-            {
-                System.out.print("The Coordinate for the Train on "+train.getLine().getName()+" in time"+count+": ");
-                train.getCoordinate().printCoor();
-                System.out.println();
-            }
-            count++;
-        }
-    */
-       // ShowGui sg=new ShowGui();
-        //sg.Show(stationList, lineList,tl.getAllTrains());
-        
-        
+
         
        
         
@@ -184,12 +169,12 @@ int late[] = {101,200};
         
 
 double numberWaiting = combineNumWaiting(early, s_110ST, s_116ST);
+System.out.println("================================\r\r\r\r\r");
+System.out.println("Number of people waiting at stations 110 and 116 in the morning is " + numberWaiting); 
+System.out.println("Number of people waiting at stations 110 is " + tl.getNumWaiting(early,s_110ST) ); System.out.println("Number of people waiting at stations 116 is " + tl.getNumWaiting(early,s_116ST) ); System.out.println("Number of people waiting at stations 125 is " + tl.getNumWaiting(early,s_125ST) ); System.out.println("Number of people waiting at stations 4AV is " + tl.getNumWaiting(early,s_4AV) ); System.out.println("Number of people waiting at stations 5AV is " + tl.getNumWaiting(early,s_5AV) ); 
 
-//print "Number of people waiting at stations 110 and 116 in the morning is " numberWaiting; 
-
-
-        ShowGui sg=new ShowGui();
-        sg.Show(stationList, lineList,tl.getAllTrains());
+        //ShowGui sg=new ShowGui();
+        //sg.Show(stationList, lineList,tl.getAllTrains());
         
 }
 public static double combineNumWaiting( int[] t, Station A, Station B )

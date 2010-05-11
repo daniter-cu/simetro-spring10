@@ -198,20 +198,20 @@ public class TimeLine {
     	
     }
     
-    public int getNumWaiting(int[] time, Station S){
-    	
+    public int getNumWaiting(int[] time, Station S){ 	
     	//for testing purposes
     	//int test = allStations.size();
     	//System.out.println("size of stations list is " + test);
     	
     	int num=0;
-    	int firstTime = time[0];
+    	int firstTime = time[0];	//not sure why this was time[0]!!
     	if(allStations != null && firstTime<allStations.size()){
     		ArrayList<Station> st=allStations.get(firstTime);
     		for (Station aStation : st)
     		{
     			if (aStation.equals(S))
-    				num=aStation.getCrowd().size();  			
+    				//num=aStation.getCrowd().size(); 
+    				num = aStation.get_people_time(time[0], time[1]);
     		}
     		 return num;
     		}

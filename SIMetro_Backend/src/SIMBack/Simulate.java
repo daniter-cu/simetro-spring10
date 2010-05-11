@@ -158,6 +158,8 @@ public class Simulate {
 					int popRate = (int)anItem.getRate();
 					int peopleCount = 0;
 
+					//this is for get num waiting
+					stationList.get(si).set_people_time(popRate);
 					//create a new person up to the rate value
 					//while (peopleCount < popRate){
 
@@ -167,6 +169,7 @@ public class Simulate {
 						Station sourceStation = stationList.get(si);
 
 						ArrayList<RoutingTab> aTable = sourceStation.getRoutingTable();
+						
 
 
 						for(int j=0; j < aTable.size(); j++) {
@@ -191,7 +194,8 @@ public class Simulate {
 									//add new person to persons array list
 
 								}//end of while
-
+								
+								
 								//break the loop so that it does not keep looking up the routing table	
 								break;
 							}//end of if

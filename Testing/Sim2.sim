@@ -75,8 +75,8 @@ Speed(0.05);
 }
 
 //set time
-Time early[1, 50];
-Time late[51, 200];
+Time early[1, 100];
+Time late[101, 200];
 
 
 //create stat that adds number of people waiting at 2 stations at time t

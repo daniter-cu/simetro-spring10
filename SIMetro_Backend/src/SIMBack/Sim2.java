@@ -64,8 +64,8 @@ for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10
     for (Object aaaaa : new ArrayList<Object>( Arrays.asList(new String("(s_110ST, s_116ST, s_125ST)").replaceAll("\\s+|\\(|\\)", "").split(",")))) {
         tempList_stations.add(stationMap.get((String)aaaaa));
     }
-    //lineList.add(new Line("Line1", 0.005, 100, 0.05,new ArrayList<Station>(tempList_stations)));
-    Line Line1 = new Line("Line1", 0.005, 0.05, 100,new ArrayList<Station>(tempList_stations));
+    //lineList.add(new Line("Line1", 0.005, 100, 0.15,new ArrayList<Station>(tempList_stations)));
+    Line Line1 = new Line("Line1", 0.005, 0.15, 100,new ArrayList<Station>(tempList_stations));
     lineList.add(Line1);
     lineList.get(lineList.size() - 1).setRvsLine();
     tempList_stations.clear(); 
@@ -93,8 +93,8 @@ for (Object aaaa : new ArrayList<Object>( Arrays.asList(new String("[(s_125ST.10
     tempList_stations.clear();
 
 //set time
-int early[] = {1,6};
-int late[] = {6,12};
+int early[] = {40,80};
+int late[] = {80,100};
 
 
 //create stat that adds number of people waiting at 2 stations at time t
@@ -108,7 +108,7 @@ int late[] = {6,12};
         sim.createRoutingTables(stationList,lineList);
         
         
-        for(int time_iter=0; time_iter < 100 ;time_iter++){
+        for(int time_iter=0; time_iter < 400 ;time_iter++){
                         System.out.println("\n*********************************At time "+time_iter+"***********************************");
                         sim.peopleArrive(stationList, time_iter, tl);
                         sim.trainArrive(lineList, time_iter);
@@ -126,6 +126,7 @@ int late[] = {6,12};
 
 
            {
+
 
            	//get speed of trains on line3 in early period; speed should be .05
            	double speed = tl.getSpeed(early, Line3);

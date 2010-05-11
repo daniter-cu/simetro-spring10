@@ -159,7 +159,9 @@ population:
     "for (Object <n> : new ArrayList\<Object\>( Arrays.asList(new String(\"<p>\").replaceAll(\"\\\s+|\\\(|\\\)|\\\[|\\\]\", \"\").split(\",\")))) {
         popItemList.add(new PopItem(stationMap.get(new String(<n>.toString().split(\"\\\.\")[0])), Double.parseDouble(new String(<n>.toString().split(\"\\\.\")[1]))));
     }
-    stationMap.get(\"<mystn>\").setPop(new Population(popItemList));
+    populationList.add(new Population(popItemList));
+    stationMap.get(\"<mystn>\").setPop(populationList.get(populationList.size()-1));
+
     ";
     
   
@@ -195,7 +197,7 @@ idlist returns [String s]
 
 stat returns [String str, String print]
 @init {$str = ""; $print ="";}:
-    ^(STAT i=ID f=formal_params ((s=statements) {$str+=$s.text + "\n";})* ^(RETURN j=ID)) //fix this, should be able to return text nums too
+    ^(STAT i=ID f=formal_params ((s=statements) {$str+=$s.text + "\n";})* ^(RETURN j=arithExpr)) //fix this, should be able to return text nums too
     {$print += "public static double " + $i.text + "( " + $f.str + " )\n";
       $print += "{\n";
       $print += $str + "\n";
@@ -290,12 +292,12 @@ foreach:
 	        type = "Station"; 
 	        type_list = "stationList";
 	        }
-	    else if (new String($derived_type.text).equals("Line")) {
+	     else if (new String($derived_type.text).equals("Line")) {
             type = "Line";
             type_list = "lineList";
             }
 	        //case "Time": type_list break;
-	    else if (new String($derived_type.text).equals("Population")) {
+	     else if (new String($derived_type.text).equals("Population")) {
             type="Population";
             type_list = "populationList";
             }
